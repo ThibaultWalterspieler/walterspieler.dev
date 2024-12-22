@@ -8,6 +8,7 @@ import { TypedLocale } from "payload";
 import NavigationLink from "@/components/NavigationLink";
 import { MenuContext } from "@/contexts/MenuContext";
 import { I18N_CONFIG } from "@/lib/i18n/config";
+import { cn } from "@/lib/utils";
 import { MainMenu } from "@payload-types";
 
 type Props = {
@@ -51,8 +52,11 @@ const MainMenuItems: FC<Props> = (props) => {
   if (!items) return null;
 
   return (
-    <div className="flex h-full w-full flex-col justify-between p-4 text-sm">
-      <nav className="flex h-full flex-col gap-3 pt-20 md:hidden md:pt-0">
+    <div
+      className={cn("flex h-full w-full flex-col justify-between p-4 text-sm")}
+    >
+      {/* Mobile */}
+      <nav className={cn("flex h-full flex-col gap-3 pt-20 md:hidden md:pt-0")}>
         {items.map((item, i) => {
           if (typeof item.page !== "number") {
             return (
@@ -61,7 +65,11 @@ const MainMenuItems: FC<Props> = (props) => {
                   external={item.external || false}
                   label={item.label || ""}
                   lang={lang}
-                  path={getPath(item.page?.slug || "", lang)}
+                  path={
+                    !item.external
+                      ? getPath(item.page?.slug || "", lang)
+                      : item.path || ""
+                  }
                   type={item.type || ""}
                 />
               </motion.div>
@@ -69,7 +77,9 @@ const MainMenuItems: FC<Props> = (props) => {
           }
         })}
       </nav>
-      <nav className="hidden h-full flex-col gap-3 pt-20 md:flex md:pt-0">
+
+      {/* Desktop */}
+      <nav className={cn("hidden h-full flex-col gap-3 pt-20 md:flex md:pt-0")}>
         {items.map((item) => {
           if (typeof item.page !== "number") {
             return (
@@ -78,7 +88,11 @@ const MainMenuItems: FC<Props> = (props) => {
                 key={item.id}
                 label={item.label || ""}
                 lang={lang}
-                path={getPath(item.page?.slug || "", lang)}
+                path={
+                  !item.external
+                    ? getPath(item.page?.slug || "", lang)
+                    : item.path || ""
+                }
                 type={item.type || ""}
               />
             );

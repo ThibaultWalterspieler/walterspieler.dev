@@ -75,19 +75,20 @@ const NavigationLink: FC<Props> = (props) => {
       onClick={() => {
         closeMainMenu();
       }}
+      target={external ? "_blank" : undefined}
       rel={external ? "noreferrer nofollow" : undefined}
     >
-      <div className="flex items-center gap-2 text-xl md:text-base">
+      <div className={cn("flex items-center gap-2 text-xl md:text-base")}>
         {type === "home" && <BoltIcon className="w-4" />}
         {type === "blog" && <Sparkle className="w-4" />}
         {type === "experiences" && <DraftingCompass className="w-4" />}
         {type === "99Stud" && <WeAreStudio99 className="w-4" />}
         {type === "contact" && <Nfc className="w-4" />}
-        <span className="overflow-hidden text-ellipsis">{label}</span>
+        <span className={cn("overflow-hidden text-ellipsis")}>{label}</span>
       </div>
       {type === "contact" && (
         <ExternalLink
-          className="absolute right-4 w-4 text-stone-400"
+          className={cn("absolute right-4 w-4 text-stone-400")}
           strokeWidth={1}
         />
       )}
