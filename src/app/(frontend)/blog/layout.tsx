@@ -5,12 +5,11 @@ import { getPayload, TypedLocale } from "payload";
 import LoadingSpinner from "@/components/Common/LoadingSpinner";
 import SideMenu from "@/components/Common/SideMenu";
 import SideMenuContent from "@/components/Common/SideMenuContent";
-import { getDictionary } from "@/lib/i18n/utils";
+import * as m from "@/paraglide/messages.js";
+import { languageTag } from "@/paraglide/runtime";
 import config from "@payload-config";
 
-type Params = Promise<{
-  lang: TypedLocale;
-}>;
+type Params = Promise<{}>;
 
 type Props = PropsWithChildren<{
   params: Params;
@@ -28,16 +27,18 @@ const getBlogPosts = async (lang: TypedLocale) => {
 };
 
 const BlogLayout: FC<Props> = async (props) => {
-  const { children, params } = props;
-  const { lang } = await params;
+  const { children } = props;
 
-  const dictionary = await getDictionary(lang);
-
-  const blogPosts = await getBlogPosts(lang);
+  const blogPosts = await getBlogPosts(languageTag());
 
   return (
     <>
-      <SideMenu collection="blog" displayReturnButton isInner lang={lang}>
+      <SideMenu
+        collection="blog"
+        displayReturnButton
+        isInner
+        lang={languageTag()}
+      >
         <Suspense fallback={<LoadingSpinner />}>
           <SideMenuContent
             collection="blog"
@@ -46,8 +47,8 @@ const BlogLayout: FC<Props> = async (props) => {
               uid: post.slug,
               startDate: post.createdAt,
             }))}
-            lang={lang}
-            title={dictionary.firstLevelPages.blog}
+            lang={languageTag()}
+            title={m.blogPageTitle()}
           />
         </Suspense>
       </SideMenu>

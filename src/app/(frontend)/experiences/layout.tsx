@@ -6,6 +6,7 @@ import LoadingSpinner from "@/components/Common/LoadingSpinner";
 import SideMenu from "@/components/Common/SideMenu";
 import SideMenuContent from "@/components/Common/SideMenuContent";
 import { getDictionary } from "@/lib/i18n/utils";
+import { languageTag } from "@/paraglide/runtime";
 import config from "@payload-config";
 
 type Params = Promise<{
@@ -37,12 +38,7 @@ const ExperiencesLayout: FC<Props> = async (props) => {
 
   return (
     <>
-      <SideMenu
-        collection="experiences"
-        displayReturnButton
-        isInner
-        lang={lang}
-      >
+      <SideMenu collection="experiences" displayReturnButton isInner>
         <Suspense fallback={<LoadingSpinner />}>
           <SideMenuContent
             collection="experiences"
@@ -60,7 +56,7 @@ const ExperiencesLayout: FC<Props> = async (props) => {
               .filter(
                 (item): item is NonNullable<typeof item> => item !== undefined,
               )}
-            lang={lang}
+            lang={languageTag()}
             title={dictionary.firstLevelPages.experiences}
           />
         </Suspense>

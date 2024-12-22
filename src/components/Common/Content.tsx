@@ -1,8 +1,7 @@
 import { FC } from "react";
 
+import { Link } from "@/lib/i18n";
 import clsx from "clsx";
-import Link from "next/link";
-import { TypedLocale } from "payload";
 
 import ExperiencesBlock from "@/components/Blocks/ExperiencesBlock";
 import SocialsBlock from "@/components/Blocks/SocialsBlock";
@@ -12,12 +11,11 @@ import { Page } from "@payload-types";
 
 type Props = {
   content: Page["content"];
-  lang: TypedLocale;
   className?: string;
 };
 
 const Content: FC<Props> = (props) => {
-  const { content, lang, className } = props;
+  const { content, className } = props;
 
   return (
     <div className={clsx(className)}>
@@ -36,7 +34,6 @@ const Content: FC<Props> = (props) => {
               <ExperiencesBlock
                 experiencePosts={content.experiencePost}
                 key={content?.id}
-                lang={lang}
               />
             );
           case "MySocials":

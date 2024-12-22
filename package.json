@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "^0.5.4",
+    "@inlang/paraglide-next": "0.7.5",
     "@lexical/list": "0.20.0",
     "@lexical/rich-text": "0.20.0",
     "@payloadcms/db-postgres": "3.5.0",
@@ -60,6 +61,7 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@inlang/paraglide-js": "1.11.3",
     "@tailwindcss/postcss": "4.0.0-beta.3",
     "@types/negotiator": "^0.6.3",
     "@types/node": "^20.11.19",

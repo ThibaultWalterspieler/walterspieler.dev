@@ -2,10 +2,9 @@
 
 import { FC } from "react";
 
+import { Link, useRouter } from "@/lib/i18n";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { CalendarIcon } from "lucide-react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { TypedLocale } from "payload";
 
 import { A, H3 } from "@/components/Common/Typography";
@@ -14,6 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import { formatDateToMonthYear } from "@/lib/date";
 import { I18N_CONFIG } from "@/lib/i18n/config";
 import { cn } from "@/lib/utils";
+import { languageTag } from "@/paraglide/runtime";
 
 type Props = {
   title: string;
@@ -58,7 +58,7 @@ const ExperienceCard: FC<Props> = (props) => {
         if (relatedWorkPostSlug) {
           router.push(
             lang !== I18N_CONFIG.defaultLocale
-              ? `/${lang}/experiences/${relatedWorkPostSlug}`
+              ? `/${languageTag()}/experiences/${relatedWorkPostSlug}`
               : `/experiences/${relatedWorkPostSlug}`,
           );
         }
@@ -148,11 +148,7 @@ const ExperienceCard: FC<Props> = (props) => {
               <Button asChild variant="outline">
                 <Link
                   aria-label={`Read more about ${title}`}
-                  href={
-                    lang !== I18N_CONFIG.defaultLocale
-                      ? `/${lang}/experiences/${relatedWorkPostSlug}`
-                      : `/experiences/${relatedWorkPostSlug}`
-                  }
+                  href={`/experiences/${relatedWorkPostSlug}`}
                 >
                   {buttonLabel} {title}
                 </Link>

@@ -2,7 +2,7 @@
 
 import { FC, use } from "react";
 
-import Link from "next/link";
+import { Link } from "@/lib/i18n";
 
 import { Button } from "@/components/ui/button";
 import {

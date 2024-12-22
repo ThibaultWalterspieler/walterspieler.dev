@@ -5,6 +5,7 @@ import { I18N_CONFIG } from "@/lib/i18n/config";
 import config from "@payload-config";
 import { BlogPost, ExperiencePost, Page } from "@payload-types";
 
+import { languageTag } from "@/paraglide/runtime";
 import { BASE_URL } from "../../../next.constants.mjs";
 
 const getMe = async (lang: TypedLocale) => {
@@ -44,7 +45,7 @@ const getMetadata = async (
       title: pageMeta?.title || "",
       description: pageMeta?.description || "",
       images: {
-        url: image?.url || `/images/og/main_${lang}.png`,
+        url: image?.url || `/images/og/main_${languageTag()}.png`,
         alt: image?.alt || "",
         type: image?.mimeType || "image/png",
       },
@@ -55,9 +56,9 @@ const getMetadata = async (
       siteName: "Portfolio of Thibault Walterspieler",
       description: pageMeta?.description || "",
       locale: lang,
-      url: lang === I18N_CONFIG.defaultLocale ? "/" : `/${lang}`,
+      url: lang === I18N_CONFIG.defaultLocale ? "/" : `/${languageTag()}`,
       images: {
-        url: image?.url || `/images/og/main_${lang}.png`,
+        url: image?.url || `/images/og/main_${languageTag()}.png`,
         alt: image?.alt || "",
         type: image?.mimeType || "image/png",
       },

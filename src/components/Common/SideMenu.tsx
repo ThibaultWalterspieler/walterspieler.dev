@@ -2,18 +2,15 @@
 
 import { FC, PropsWithChildren, use } from "react";
 
+import { Link } from "@/lib/i18n";
 import { AnimatePresence, motion, Variants } from "framer-motion";
 import { ChevronLeft, Command, X } from "lucide-react";
-import Link from "next/link";
-import { TypedLocale } from "payload";
 
 import ScrollArea from "@/components/Common/ScrollArea";
 import { MenuContext } from "@/contexts/MenuContext";
-import { I18N_CONFIG } from "@/lib/i18n/config";
 import { cn } from "@/lib/utils";
 
 type Props = {
-  lang: TypedLocale;
   isInner?: boolean;
   collection?: "blog" | "experiences";
   displayReturnButton?: boolean;
@@ -36,7 +33,7 @@ const iconVariants: Variants = {
 };
 
 const SideMenu: FC<Props> = (props) => {
-  const { children, isInner, lang, displayReturnButton, collection } = props;
+  const { children, isInner, displayReturnButton, collection } = props;
 
   const {
     isMainMenuOpen,
@@ -59,7 +56,7 @@ const SideMenu: FC<Props> = (props) => {
     <>
       {!isMainMenuOpen ? (
         <>
-          <div className="absolute right-4 top-8 z-50 rounded-lg border border-grey bg-metal/5 p-2 backdrop-blur lg:hidden">
+          <div className="border-grey bg-metal/5 absolute top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
             <motion.div
               animate={isMainMenuOpen ? "open" : "closed"}
               initial="closed"
@@ -80,21 +77,17 @@ const SideMenu: FC<Props> = (props) => {
               className={cn("block", {
                 hidden: isMainMenuOpen || isInnerMenuOpen,
               })}
-              href={
-                lang === I18N_CONFIG.defaultLocale
-                  ? `/${collection}`
-                  : `/${lang}/${collection}`
-              }
+              href={`/${collection}`}
               onClick={openInnerMenu}
             >
-              <div className="fixed left-4 top-8 z-50 rounded-lg border border-grey bg-metal/5 p-2 backdrop-blur lg:hidden">
+              <div className="border-grey bg-metal/5 fixed top-8 left-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
                 <ChevronLeft size={24} />
               </div>
             </Link>
           )}
         </>
       ) : (
-        <div className="absolute right-4 top-8 z-50 rounded-lg border border-grey bg-metal/80 p-2 backdrop-blur lg:hidden">
+        <div className="border-grey bg-metal/80 absolute top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
           <motion.div
             animate={isMainMenuOpen ? "open" : "closed"}
             initial="closed"
@@ -115,7 +108,7 @@ const SideMenu: FC<Props> = (props) => {
       {isInner ? (
         <motion.div
           animate="animate"
-          className={cn("fixed z-10 bg-eerie-dark", {
+          className={cn("bg-eerie-dark fixed z-10", {
             hidden: !isInnerMenuOpen,
             "md:block": !isInnerMenuOpen || isInnerMenuOpen,
           })}
@@ -134,7 +127,7 @@ const SideMenu: FC<Props> = (props) => {
               <>
                 <motion.div
                   animate={{ opacity: 1 }}
-                  className="fixed z-40 w-screen bg-eerie-dark/80 backdrop-blur-3xl md:hidden"
+                  className="bg-eerie-dark/80 fixed z-40 w-screen backdrop-blur-3xl md:hidden"
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
                   transition={{
@@ -150,7 +143,7 @@ const SideMenu: FC<Props> = (props) => {
             )}
           </AnimatePresence>
           <ScrollArea
-            className={cn(scrollAreaClasses, "hidden bg-eerie-dark md:block")}
+            className={cn(scrollAreaClasses, "bg-eerie-dark hidden md:block")}
           >
             {children}
           </ScrollArea>

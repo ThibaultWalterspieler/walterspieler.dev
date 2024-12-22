@@ -9,6 +9,7 @@ import ArticleBreadcrumb from "@/components/Articles/ArticleBreadcrumb";
 import ScrollArea from "@/components/Common/ScrollArea";
 import getSchemaNewsArticle from "@/lib/schema-dts/news-article";
 import getMetadata from "@/lib/seo/metadata";
+import { languageTag } from "@/paraglide/runtime";
 import config from "@payload-config";
 
 type Params = Promise<{
@@ -65,13 +66,13 @@ const BlogPostPage: FC<Props> = async (props) => {
           <div className="content">
             <ArticleBreadcrumb
               collection="blog"
-              lang={lang}
+              lang={languageTag()}
               title={blogPost.title}
             />
             <Article
               collection="blog"
               content={blogPost}
-              lang={lang}
+              lang={languageTag()}
               slug={slug}
             />
           </div>

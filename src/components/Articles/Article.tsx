@@ -7,6 +7,7 @@ import Content from "@/components/Common/Content";
 import { A, H1, P } from "@/components/Common/Typography";
 import MotionArticle from "@/components/Framer/MotionArticle";
 import { Separator } from "@/components/ui/separator";
+import { languageTag } from "@/paraglide/runtime";
 import { BlogPost, ExperiencePost } from "@payload-types";
 
 type CommonProps = {
@@ -72,7 +73,7 @@ const Article: FC<Props> = (props) => {
             />
           )}
       </div>
-      <Content content={content.content} lang={lang} />
+      <Content content={content.content} lang={languageTag()} />
     </MotionArticle>
   );
 };

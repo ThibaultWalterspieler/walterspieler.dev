@@ -5,8 +5,8 @@ import { getPayload, TypedLocale } from "payload";
 
 import EmptyLayout from "@/components/Common/EmptyLayout";
 import MenuInitializer from "@/contexts/MenuContext/MenuInitializer";
-import { getDictionary } from "@/lib/i18n/utils";
 import getMetadata from "@/lib/seo/metadata";
+import * as m from "@/paraglide/messages.js";
 import config from "@payload-config";
 
 type Params = Promise<{
@@ -40,12 +40,10 @@ const Blog: FC<Props> = async (props) => {
   const { params } = props;
   const { lang } = await params;
 
-  const dictionary = await getDictionary(lang);
-
   return (
     <>
       <MenuInitializer isInnerMenuOpen />
-      <EmptyLayout label={dictionary.selectABlogPost} />
+      <EmptyLayout label={m.selectBlogPost()} />
     </>
   );
 };

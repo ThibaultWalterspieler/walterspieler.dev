@@ -1,7 +1,6 @@
 import { FC } from "react";
 
-import Link from "next/link";
-import { Locale, TypedLocale } from "payload";
+import { Link } from "@/lib/i18n";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,64 +11,39 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import * as m from "@/paraglide/messages.js";
+import { languageTag } from "@/paraglide/runtime";
+import config from "@payload-config";
 
-type Props = {
-  title: string;
-  currentLang: TypedLocale;
-  locales: Locale[];
-};
+const LangSelector: FC = async () => {
+  const { localization } = await config;
 
-const LangSelector: FC<Props> = (props) => {
-  const { locales, currentLang, title } = props;
+  if (!localization) return null;
 
-  // const currentLangPlaceholder = l;
-
-  // const handleLocaleChange = (newLocale: string) => {
-  //   const selectedLocale = locales.find((locale) => locale.lang === newLocale);
-  //   if (selectedLocale) {
-  //     router.push(selectedLocale.url);
-  //   }
-  // };
-
-  const currentLocale = locales.find((locale) => locale.code === currentLang);
+  const currentLocale = localization.locales.find(
+    (locale) => locale.code === languageTag(),
+  );
+  const currentLocaleLabel =
+    typeof currentLocale?.label === "string" && currentLocale?.label;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">
-          {typeof currentLocale?.label === "string"
-            ? currentLocale?.label
-            : currentLocale?.label.en}
-        </Button>
+        <Button variant="outline">{currentLocaleLabel}</Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>{title}</DropdownMenuLabel>
+        <DropdownMenuLabel>{m.languageMenuTitle()}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {locales.map((locale) => {
-          return (
-            <DropdownMenuItem asChild key={locale.code}>
-              <Link href={`/${locale.code}`}>
-                {typeof locale.label === "string"
-                  ? locale.label
-                  : locale.label.en}
-              </Link>
-            </DropdownMenuItem>
-          );
-        })}
-
-        {/* {locales.map((locale) => {
-          const localeLabel =
-            localeLabels[locale.lang as LocaleKey] || locale.lang;
-          return (
-            <DropdownMenuCheckboxItem
-              checked={locale.lang === currentLang}
-              key={locale.lang}
-              onCheckedChange={() => handleLocaleChange(locale.lang)}
-            >
-              {localeLabel}
-            </DropdownMenuCheckboxItem>
-          );
-        })} */}
+        <DropdownMenuItem asChild disabled={!currentLocale}>
+          <Link href={`/`} locale={"fr"}>
+            Français 🇫🇷
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild disabled={!currentLocale}>
+          <Link href={`/`} locale={"en"}>
+            English 🇬🇧
+          </Link>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
