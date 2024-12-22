@@ -53,7 +53,7 @@ const ExperienceCard: FC<Props> = (props) => {
 
   return (
     <div
-      className="group bg-metal relative my-8 w-full cursor-pointer overflow-hidden rounded-xl"
+      className="bg-metal group relative my-8 w-full cursor-pointer overflow-hidden rounded-xl"
       onClick={() => {
         if (relatedWorkPostSlug) {
           router.push(
@@ -72,7 +72,7 @@ const ExperienceCard: FC<Props> = (props) => {
     >
       <div
         className={cn(
-          "absolute right-5 bottom-0 left-0 h-px w-80 bg-linear-to-l from-transparent via-white/30 via-10% to-transparent",
+          "bg-linear-to-l absolute bottom-0 left-0 right-5 h-px w-80 from-transparent via-white/30 via-10% to-transparent",
         )}
       />
       <motion.div
