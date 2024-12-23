@@ -9,7 +9,6 @@ import ScrollArea from "@/components/Common/ScrollArea";
 import { H1 } from "@/components/Common/Typography";
 import { Separator } from "@/components/ui/separator";
 import getMetadata from "@/lib/seo/metadata";
-import { languageTag } from "@/paraglide/runtime";
 import config from "@payload-config";
 
 type Params = Promise<{
@@ -51,7 +50,7 @@ const OpenSourcePage: FC<Props> = async (props) => {
             {page.title}
           </H1>
           <Separator className="my-6" />
-          <Content content={page.content} lang={languageTag()} />
+          <Content content={page.content} />
         </div>
       </div>
     </ScrollArea>

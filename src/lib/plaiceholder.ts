@@ -18,7 +18,7 @@ const getImage = async (src: string) => {
 
     return { ...plaiceholder, img: { src } };
   } catch (err) {
-    console.error(`Error getting ${src}`, err);
+    console.error(`Error getting ${src}. Returning fallback image.`, err);
     return {
       img: { src },
       // Base 64 of main OG image

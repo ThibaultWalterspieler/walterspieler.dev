@@ -5,13 +5,11 @@ import { FC } from "react";
 import { Link, useRouter } from "@/lib/i18n";
 import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { CalendarIcon } from "lucide-react";
-import { TypedLocale } from "payload";
 
 import { A, H3 } from "@/components/Common/Typography";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatDateToMonthYear } from "@/lib/date";
-import { I18N_CONFIG } from "@/lib/i18n/config";
 import { cn } from "@/lib/utils";
 import { languageTag } from "@/paraglide/runtime";
 
@@ -26,7 +24,6 @@ type Props = {
     difference?: string | null;
   };
   relatedWorkPostSlug: string;
-  lang: TypedLocale;
   buttonLabel: string;
   tags: {
     name: string;
@@ -40,7 +37,6 @@ const ExperienceCard: FC<Props> = (props) => {
     // logo,
     duration,
     link,
-    lang,
     relatedWorkPostSlug,
     buttonLabel,
     tags,
@@ -56,11 +52,7 @@ const ExperienceCard: FC<Props> = (props) => {
       className="bg-metal group relative my-8 w-full cursor-pointer overflow-hidden rounded-xl"
       onClick={() => {
         if (relatedWorkPostSlug) {
-          router.push(
-            lang !== I18N_CONFIG.defaultLocale
-              ? `/${languageTag()}/experiences/${relatedWorkPostSlug}`
-              : `/experiences/${relatedWorkPostSlug}`,
-          );
+          router.push(`/experiences/${relatedWorkPostSlug}`);
         }
       }}
       onMouseMove={(e) => {
@@ -72,7 +64,7 @@ const ExperienceCard: FC<Props> = (props) => {
     >
       <div
         className={cn(
-          "bg-linear-to-l absolute bottom-0 left-0 right-5 h-px w-80 from-transparent via-white/30 via-10% to-transparent",
+          "absolute right-5 bottom-0 left-0 h-px w-80 bg-linear-to-l from-transparent via-white/30 via-10% to-transparent",
         )}
       />
       <motion.div
@@ -97,11 +89,15 @@ const ExperienceCard: FC<Props> = (props) => {
                 <>
                   <CalendarIcon className="mr-1 h-4 w-4 text-stone-400" />
                   {!duration.end && <span>Since</span>}
-                  <span>{formatDateToMonthYear(duration.start, lang)}</span>
+                  <span>
+                    {formatDateToMonthYear(duration.start, languageTag())}
+                  </span>
                   {duration.end && (
                     <>
                       <span> - </span>
-                      <span>{formatDateToMonthYear(duration.end, lang)}</span>
+                      <span>
+                        {formatDateToMonthYear(duration.end, languageTag())}
+                      </span>
                       <Separator
                         className="mx-2 hidden h-4 md:block"
                         orientation="vertical"

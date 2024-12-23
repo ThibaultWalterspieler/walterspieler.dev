@@ -9,7 +9,6 @@ import ArticleBreadcrumb from "@/components/Articles/ArticleBreadcrumb";
 import ScrollArea from "@/components/Common/ScrollArea";
 import getSchemaNewsArticle from "@/lib/schema-dts/news-article";
 import getMetadata from "@/lib/seo/metadata";
-import { languageTag } from "@/paraglide/runtime";
 import config from "@payload-config";
 
 type Params = Promise<{
@@ -64,17 +63,8 @@ const BlogPostPage: FC<Props> = async (props) => {
       <ScrollArea className="z-0 flex flex-col lg:pl-72">
         <div className="content-wrapper mt-14 lg:mt-0">
           <div className="content">
-            <ArticleBreadcrumb
-              collection="blog"
-              lang={languageTag()}
-              title={blogPost.title}
-            />
-            <Article
-              collection="blog"
-              content={blogPost}
-              lang={languageTag()}
-              slug={slug}
-            />
+            <ArticleBreadcrumb collection="blog" title={blogPost.title} />
+            <Article collection="blog" content={blogPost} slug={slug} />
           </div>
         </div>
       </ScrollArea>

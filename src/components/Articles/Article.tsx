@@ -1,17 +1,14 @@
 import { FC } from "react";
 
 import Image from "next/image";
-import { TypedLocale } from "payload";
 
 import Content from "@/components/Common/Content";
 import { A, H1, P } from "@/components/Common/Typography";
 import MotionArticle from "@/components/Motion/MotionArticle";
 import { Separator } from "@/components/ui/separator";
-import { languageTag } from "@/paraglide/runtime";
 import { BlogPost, ExperiencePost } from "@payload-types";
 
 type CommonProps = {
-  lang: TypedLocale;
   slug: string;
 };
 
@@ -34,7 +31,7 @@ const variants = {
 };
 
 const Article: FC<Props> = (props) => {
-  const { collection, content, lang } = props;
+  const { collection, content } = props;
 
   const externalLink = null;
 
@@ -73,7 +70,7 @@ const Article: FC<Props> = (props) => {
             />
           )}
       </div>
-      <Content content={content.content} lang={languageTag()} />
+      <Content content={content.content} />
     </MotionArticle>
   );
 };

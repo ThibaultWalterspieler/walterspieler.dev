@@ -33,12 +33,7 @@ const BlogLayout: FC<Props> = async (props) => {
 
   return (
     <>
-      <SideMenu
-        collection="blog"
-        displayReturnButton
-        isInner
-        lang={languageTag()}
-      >
+      <SideMenu collection="blog" displayReturnButton isInner>
         <Suspense fallback={<LoadingSpinner />}>
           <SideMenuContent
             collection="blog"
@@ -47,7 +42,6 @@ const BlogLayout: FC<Props> = async (props) => {
               uid: post.slug,
               startDate: post.createdAt,
             }))}
-            lang={languageTag()}
             title={m.blogPageTitle()}
           />
         </Suspense>

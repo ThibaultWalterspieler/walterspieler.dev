@@ -29,12 +29,11 @@ const getExperiencePosts = async (lang: TypedLocale) => {
 };
 
 const ExperiencesLayout: FC<Props> = async (props) => {
-  const { children, params } = props;
-  const { lang } = await params;
+  const { children } = props;
 
-  const dictionary = await getDictionary(lang);
+  const dictionary = await getDictionary(languageTag());
 
-  const experiencePosts = await getExperiencePosts(lang);
+  const experiencePosts = await getExperiencePosts(languageTag());
 
   return (
     <>
@@ -56,7 +55,6 @@ const ExperiencesLayout: FC<Props> = async (props) => {
               .filter(
                 (item): item is NonNullable<typeof item> => item !== undefined,
               )}
-            lang={languageTag()}
             title={dictionary.firstLevelPages.experiences}
           />
         </Suspense>

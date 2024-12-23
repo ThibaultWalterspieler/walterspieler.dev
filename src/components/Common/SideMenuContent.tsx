@@ -4,14 +4,13 @@ import { FC, use, useMemo } from "react";
 
 import { Link, usePathname } from "@/lib/i18n";
 import { ChevronRight } from "lucide-react";
-import { TypedLocale } from "payload";
 
 import { MenuContext } from "@/contexts/MenuContext";
 import { formatDateToMonthYear } from "@/lib/date";
 import { cn } from "@/lib/utils";
+import { languageTag } from "@/paraglide/runtime";
 
 type Props = {
-  lang: TypedLocale;
   title: string;
   collection: "blog" | "experiences";
   data: {
@@ -23,7 +22,7 @@ type Props = {
 };
 
 const SideMenuContent: FC<Props> = (props) => {
-  const { lang, data, title, collection } = props;
+  const { data, title, collection } = props;
 
   const { closeInnerMenu } = use(MenuContext) ?? {};
 
@@ -72,12 +71,14 @@ const SideMenuContent: FC<Props> = (props) => {
                   </span>
                   {(item.startDate || (item.startDate && item.endDate)) && (
                     <div className="flex items-center gap-1 text-sm">
-                      <span>{formatDateToMonthYear(item.startDate, lang)}</span>
+                      <span>
+                        {formatDateToMonthYear(item.startDate, languageTag())}
+                      </span>
                       {item.endDate && (
                         <>
                           <span> - </span>
                           <span>
-                            {formatDateToMonthYear(item.endDate, lang)}
+                            {formatDateToMonthYear(item.endDate, languageTag())}
                           </span>
                         </>
                       )}

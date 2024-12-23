@@ -38,7 +38,6 @@ const ExperiencesBlock: FC<Props> = async (props) => {
                 difference,
               }}
               key={experiencePost.id}
-              lang={languageTag()}
               link={experiencePost.experience.companyWebsite || ""}
               logo={""}
               relatedWorkPostSlug={experiencePost.slug}

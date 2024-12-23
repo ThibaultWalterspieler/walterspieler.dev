@@ -1,7 +1,6 @@
 import { FC } from "react";
 
 import { Link } from "@/lib/i18n";
-import { TypedLocale } from "payload";
 
 import {
   Breadcrumb,
@@ -12,20 +11,21 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { getDictionary } from "@/lib/i18n/utils";
+import { languageTag } from "@/paraglide/runtime";
 
 type Props = {
   title: string;
-  lang: TypedLocale;
+
   collection: "experiences" | "blog";
 };
 
 const ArticleBreadcrumb: FC<Props> = async (props) => {
-  const { title, lang, collection } = props;
+  const { title, collection } = props;
 
-  const dictionary = await getDictionary(lang);
+  const dictionary = await getDictionary(languageTag());
 
   return (
-    <Breadcrumb className="mb-5 duration-300 animate-in fade-in">
+    <Breadcrumb className="animate-in fade-in mb-5 duration-300">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>

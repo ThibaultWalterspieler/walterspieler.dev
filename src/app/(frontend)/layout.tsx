@@ -50,8 +50,6 @@ const LangRootLayout: FC<Props> = async (props) => {
   const me = await getMe(languageTag());
   const mainMenu = await getMainMenu(languageTag());
 
-  console.log(languageTag());
-
   return (
     <LanguageProvider>
       <html lang={languageTag()}>
