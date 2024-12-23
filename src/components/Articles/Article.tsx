@@ -4,9 +4,10 @@ import Image from "next/image";
 import { TypedLocale } from "payload";
 
 import Content from "@/components/Common/Content";
-import { A, H1, P } from "@/components/Common/Typography";
+import { H1, P } from "@/components/Common/Typography";
 import MotionArticle from "@/components/Motion/MotionArticle";
 import { Separator } from "@/components/ui/separator";
+import { formatDateToDayMonthYear } from "@/lib/date";
 import { BlogPost, ExperiencePost } from "@payload-types";
 
 type CommonProps = {
@@ -35,8 +36,6 @@ const variants = {
 const Article: FC<Props> = (props) => {
   const { collection, content, lang } = props;
 
-  const externalLink = null;
-
   if (typeof content === "number") return null;
 
   return (
@@ -48,11 +47,9 @@ const Article: FC<Props> = (props) => {
     >
       <div className="mb-8 flex flex-col">
         <H1 className="mb-5">{content.title}</H1>
-        {externalLink && (
-          <A className="mb-2" href={externalLink} rel={"noopener nofollow"}>
-            LINK
-          </A>
-        )}
+        <time className="mb-5 text-stone-400" dateTime={content.createdAt}>
+          {formatDateToDayMonthYear(content.createdAt, lang)}
+        </time>
         <span className="mb-5 text-stone-400">
           <P>{content.description}</P>
         </span>

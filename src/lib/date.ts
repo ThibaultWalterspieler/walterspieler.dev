@@ -73,4 +73,11 @@ const formatDateToMonthYear = (date: Date | string, locale: TypedLocale) => {
   return format(date, "MMM yyyy", { locale: selectedLocale });
 };
 
-export { formatDateDiff, formatDateToMonthYear };
+const formatDateToDayMonthYear = (date: Date | string, locale: TypedLocale) => {
+  const locales = { en: enGB, fr: fr };
+  const selectedLocale = locales[locale];
+
+  return format(date, "PPP", { locale: selectedLocale });
+};
+
+export { formatDateDiff, formatDateToDayMonthYear, formatDateToMonthYear };
