@@ -2,8 +2,6 @@
 
 import { FC, use } from "react";
 
-import { Link } from "@/lib/i18n";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MenuContext } from "@/contexts/MenuContext";
+import { Link } from "@/lib/i18n";
 
 type Props = {
   title: string;

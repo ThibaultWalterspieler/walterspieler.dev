@@ -75,8 +75,8 @@ const NavigationLink: FC<Props> = (props) => {
       onClick={() => {
         closeMainMenu();
       }}
-      target={external ? "_blank" : undefined}
       rel={external ? "noreferrer nofollow" : undefined}
+      target={external ? "_blank" : undefined}
     >
       <div className={cn("flex items-center gap-2 text-xl md:text-base")}>
         {type === "home" && <BoltIcon className="w-4" />}

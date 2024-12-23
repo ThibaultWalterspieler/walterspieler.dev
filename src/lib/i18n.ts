@@ -1,5 +1,6 @@
-import type { AvailableLanguageTag } from "@/paraglide/runtime";
 import { Middleware, Navigation, PrefixStrategy } from "@inlang/paraglide-next";
+
+import type { AvailableLanguageTag } from "@/paraglide/runtime";
 
 const strategy = PrefixStrategy<AvailableLanguageTag>({
   prefixDefault: "never",

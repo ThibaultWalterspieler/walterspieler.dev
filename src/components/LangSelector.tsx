@@ -1,7 +1,5 @@
 import { FC } from "react";
 
-import { Link } from "@/lib/i18n";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,6 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Link } from "@/lib/i18n";
 import * as m from "@/paraglide/messages.js";
 import { languageTag } from "@/paraglide/runtime";
 import config from "@payload-config";

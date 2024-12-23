@@ -12,12 +12,6 @@ import getMetadata from "@/lib/seo/metadata";
 import { languageTag } from "@/paraglide/runtime";
 import config from "@payload-config";
 
-type Params = Promise<{}>;
-
-type Props = {
-  params: Params;
-};
-
 const getMe = async (lang: TypedLocale) => {
   const payload = await getPayload({
     config,
@@ -38,7 +32,7 @@ const getHomePage = async (lang: TypedLocale) => {
   return pages.docs[0];
 };
 
-const HomeLang: FC<Props> = async () => {
+const HomeLang: FC = async () => {
   const me = await getMe(languageTag());
   const homePage = await getHomePage(languageTag());
 

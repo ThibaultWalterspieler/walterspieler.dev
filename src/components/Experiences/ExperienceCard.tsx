@@ -2,14 +2,14 @@
 
 import { FC } from "react";
 
-import { Link, useRouter } from "@/lib/i18n";
-import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 import { CalendarIcon } from "lucide-react";
+import { motion, useMotionTemplate, useMotionValue } from "motion/react";
 
 import { A, H3 } from "@/components/Common/Typography";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatDateToMonthYear } from "@/lib/date";
+import { Link, useRouter } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { languageTag } from "@/paraglide/runtime";
 

@@ -1,7 +1,5 @@
 import { FC } from "react";
 
-import { Link } from "@/lib/i18n";
-
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,6 +8,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Link } from "@/lib/i18n";
 import { getDictionary } from "@/lib/i18n/utils";
 import { languageTag } from "@/paraglide/runtime";
 

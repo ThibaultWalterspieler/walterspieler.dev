@@ -7,6 +7,7 @@ import EmptyLayout from "@/components/Common/EmptyLayout";
 import MenuInitializer from "@/contexts/MenuContext/MenuInitializer";
 import getMetadata from "@/lib/seo/metadata";
 import * as m from "@/paraglide/messages.js";
+import { languageTag } from "@/paraglide/runtime";
 import config from "@payload-config";
 
 type Params = Promise<{
@@ -36,10 +37,7 @@ const getBlogPage = async (lang: TypedLocale) => {
   return pages.docs[0];
 };
 
-const Blog: FC<Props> = async (props) => {
-  const { params } = props;
-  const { lang } = await params;
-
+const Blog: FC<Props> = async () => {
   return (
     <>
       <MenuInitializer isInnerMenuOpen />
@@ -48,13 +46,10 @@ const Blog: FC<Props> = async (props) => {
   );
 };
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { params } = props;
-  const { lang } = await params;
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getBlogPage(languageTag());
 
-  const page = await getBlogPage(lang);
-
-  return getMetadata(page.meta, lang);
+  return getMetadata(page.meta, languageTag());
 }
 
 export default Blog;

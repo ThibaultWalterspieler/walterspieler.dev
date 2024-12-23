@@ -1,5 +1,6 @@
 import { FC, PropsWithChildren } from "react";
 
+import { LanguageProvider } from "@inlang/paraglide-next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import dynamic from "next/dynamic";
 import { Space_Grotesk } from "next/font/google";
@@ -12,14 +13,9 @@ import SideMenu from "@/components/Common/SideMenu";
 import { MenuContextProvider } from "@/contexts/MenuContext";
 import { cn } from "@/lib/utils";
 import { languageTag } from "@/paraglide/runtime.js";
-import { LanguageProvider } from "@inlang/paraglide-next";
 import config from "@payload-config";
 
-type Params = Promise<{}>;
-
-type Props = PropsWithChildren<{
-  params: Params;
-}>;
+type Props = PropsWithChildren;
 
 const PostHogPageView = dynamic(
   () => import("../../components/PostHogPageView"),

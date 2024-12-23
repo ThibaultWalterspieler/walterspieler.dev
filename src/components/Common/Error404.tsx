@@ -1,8 +1,7 @@
 import { FC } from "react";
 
-import { Link } from "@/lib/i18n";
-
 import { Button } from "@/components/ui/button";
+import { Link } from "@/lib/i18n";
 
 type Props = {
   label?: string;

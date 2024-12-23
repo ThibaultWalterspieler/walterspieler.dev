@@ -2,12 +2,12 @@
 
 import { FC, PropsWithChildren, use } from "react";
 
-import { Link } from "@/lib/i18n";
-import { AnimatePresence, motion, Variants } from "framer-motion";
 import { ChevronLeft, Command, X } from "lucide-react";
+import { AnimatePresence, motion, Variants } from "motion/react";
 
 import ScrollArea from "@/components/Common/ScrollArea";
 import { MenuContext } from "@/contexts/MenuContext";
+import { Link } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -56,7 +56,7 @@ const SideMenu: FC<Props> = (props) => {
     <>
       {!isMainMenuOpen ? (
         <>
-          <div className="border-grey bg-metal/5 absolute right-4 top-8 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
+          <div className="border-grey bg-metal/5 absolute top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
             <motion.div
               animate={isMainMenuOpen ? "open" : "closed"}
               initial="closed"
@@ -80,14 +80,14 @@ const SideMenu: FC<Props> = (props) => {
               href={`/${collection}`}
               onClick={openInnerMenu}
             >
-              <div className="border-grey bg-metal/5 fixed left-4 top-8 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
+              <div className="border-grey bg-metal/5 fixed top-8 left-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
                 <ChevronLeft size={24} />
               </div>
             </Link>
           )}
         </>
       ) : (
-        <div className="border-grey bg-metal/80 absolute right-4 top-8 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
+        <div className="border-grey bg-metal/80 absolute top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
           <motion.div
             animate={isMainMenuOpen ? "open" : "closed"}
             initial="closed"

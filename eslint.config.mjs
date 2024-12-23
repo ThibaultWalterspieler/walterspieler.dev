@@ -23,6 +23,7 @@ const config = [
       "src/app/(payload)/**/*",
       "src/payload/migrations/**/*",
       "src/payload/payload-types.ts",
+      "src/paraglide/**/*",
     ],
   },
   {

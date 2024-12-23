@@ -9,11 +9,7 @@ import * as m from "@/paraglide/messages.js";
 import { languageTag } from "@/paraglide/runtime";
 import config from "@payload-config";
 
-type Params = Promise<{}>;
-
-type Props = PropsWithChildren<{
-  params: Params;
-}>;
+type Props = PropsWithChildren;
 
 const getBlogPosts = async (lang: TypedLocale) => {
   const payload = await getPayload({

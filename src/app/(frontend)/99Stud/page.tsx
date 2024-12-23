@@ -38,7 +38,7 @@ const getPage = async (lang: TypedLocale) => {
   return pages.docs[0];
 };
 
-const Stud99Page: FC<Props> = async (props) => {
+const Stud99Page: FC<Props> = async () => {
   const jsonLd = getSchemaOrganization();
 
   const page = await getPage(languageTag());
@@ -64,7 +64,7 @@ const Stud99Page: FC<Props> = async (props) => {
   );
 };
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   const page = await getPage(languageTag());
 
   return getMetadata(page.meta, languageTag());

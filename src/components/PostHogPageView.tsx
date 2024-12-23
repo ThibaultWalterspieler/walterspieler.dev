@@ -2,9 +2,10 @@
 
 import { useEffect } from "react";
 
-import { usePathname } from "@/lib/i18n"
 import { useSearchParams } from "next/navigation";
 import { usePostHog } from "posthog-js/react";
+
+import { usePathname } from "@/lib/i18n";
 
 export default function PostHogPageView() {
   const pathname = usePathname();

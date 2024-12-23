@@ -2,11 +2,11 @@
 
 import { FC, use, useMemo } from "react";
 
-import { Link, usePathname } from "@/lib/i18n";
 import { ChevronRight } from "lucide-react";
 
 import { MenuContext } from "@/contexts/MenuContext";
 import { formatDateToMonthYear } from "@/lib/date";
+import { Link, usePathname } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 import { languageTag } from "@/paraglide/runtime";
 

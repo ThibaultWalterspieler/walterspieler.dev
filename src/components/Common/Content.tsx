@@ -1,11 +1,11 @@
 import { FC } from "react";
 
-import { Link } from "@/lib/i18n";
 import clsx from "clsx";
 
 import ExperiencesBlock from "@/components/Blocks/ExperiencesBlock";
 import SocialsBlock from "@/components/Blocks/SocialsBlock";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/lib/i18n";
 import SerializeLexical from "@/lib/payload/lexical/Serialize";
 import { Page } from "@payload-types";
 

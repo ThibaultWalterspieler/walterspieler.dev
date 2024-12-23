@@ -2,10 +2,10 @@ import { Metadata } from "next";
 import { getPayload, TypedLocale } from "payload";
 
 import { I18N_CONFIG } from "@/lib/i18n/config";
+import { languageTag } from "@/paraglide/runtime";
 import config from "@payload-config";
 import { BlogPost, ExperiencePost, Page } from "@payload-types";
 
-import { languageTag } from "@/paraglide/runtime";
 import { BASE_URL } from "../../../next.constants.mjs";
 
 const getMe = async (lang: TypedLocale) => {
