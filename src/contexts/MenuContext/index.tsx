@@ -63,9 +63,7 @@ const MenuContextProvider: FC<PropsWithChildren> = (props) => {
     openInnerMenu,
   };
 
-  return (
-    <MenuContext.Provider value={contextValue}>{children}</MenuContext.Provider>
-  );
+  return <MenuContext value={contextValue}>{children}</MenuContext>;
 };
 
 export { MenuContext, MenuContextProvider };
