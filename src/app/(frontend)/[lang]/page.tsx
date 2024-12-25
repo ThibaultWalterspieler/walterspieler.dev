@@ -9,6 +9,7 @@ import { H1 } from "@/components/Common/Typography";
 import { Separator } from "@/components/ui/separator";
 import getSchemaProfilePage from "@/lib/schema-dts/profile-page";
 import getMetadata from "@/lib/seo/metadata";
+import { cn } from "@/lib/utils";
 import config from "@payload-config";
 
 type Params = Promise<{
@@ -59,20 +60,26 @@ const HomeLang: FC<Props> = async (props) => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
       />
-      <ScrollArea className="flex flex-col">
-        <div className="content-wrapper">
-          <div className="content animate-in fade-in duration-700">
-            <H1 className="text-spotlight mb-4 max-w-[60vw] md:mb-4 md:max-w-full">
+      <ScrollArea className={cn("flex flex-col")}>
+        <div
+          className={cn("content-wrapper", "animate-in fade-in duration-700")}
+        >
+          <div className={cn("content animate-in fade-in duration-700")}>
+            <H1
+              className={cn(
+                "text-spotlight mb-4 max-w-[60vw] md:mb-4 md:max-w-full",
+              )}
+            >
               {me.fullName}
               <span
-                className={
-                  "mt-3 block text-xl font-normal text-stone-400 md:text-2xl"
-                }
+                className={cn(
+                  "mt-3 block text-xl font-normal text-stone-400 md:text-2xl",
+                )}
               >
                 {me.role}
               </span>
             </H1>
-            <Separator className="my-6" />
+            <Separator className={cn("my-6")} />
             <Content content={homePage.content} lang={lang} />
           </div>
         </div>
