@@ -34,7 +34,7 @@ const variants = {
 };
 
 const Article: FC<Props> = (props) => {
-  const { collection, content, lang } = props;
+  const { content, lang } = props;
 
   if (typeof content === "number") return null;
 
