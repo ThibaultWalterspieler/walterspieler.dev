@@ -32,14 +32,20 @@ export const ExperiencePosts: CollectionConfig = {
     },
     {
       name: "description",
-      localized: true,
       type: "textarea",
+      localized: true,
     },
     {
       name: "experience",
       type: "relationship",
       relationTo: "experiences",
       required: true,
+    },
+    {
+      name: "mainImage",
+      type: "upload",
+      relationTo: "media",
+      localized: true,
     },
     {
       name: "content",

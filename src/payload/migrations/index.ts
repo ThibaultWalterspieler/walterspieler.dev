@@ -4,6 +4,8 @@ import * as migration_20241129_164302_add_localization_media_alt from './2024112
 import * as migration_20241129_174207_add_versionning_to_blog_post____xp_post from './20241129_174207_add_versionning_to_blog_post____xp_post';
 import * as migration_20241130_164001_rename_WeAreStudio99_to_99Stud from './20241130_164001_rename_WeAreStudio99_to_99Stud';
 import * as migration_20241202_132356_add_label_to_social from './20241202_132356_add_label_to_social';
+import * as migration_20241225_153641_add_mainImage_to_experience_post from './20241225_153641_add_mainImage_to_experience_post';
+import * as migration_20241225_155310_localize_desc_to_blog_post_desc from './20241225_155310_localize_desc_to_blog_post_desc';
 
 export const migrations = [
   {
@@ -34,6 +36,16 @@ export const migrations = [
   {
     up: migration_20241202_132356_add_label_to_social.up,
     down: migration_20241202_132356_add_label_to_social.down,
-    name: '20241202_132356_add_label_to_social'
+    name: '20241202_132356_add_label_to_social',
+  },
+  {
+    up: migration_20241225_153641_add_mainImage_to_experience_post.up,
+    down: migration_20241225_153641_add_mainImage_to_experience_post.down,
+    name: '20241225_153641_add_mainImage_to_experience_post',
+  },
+  {
+    up: migration_20241225_155310_localize_desc_to_blog_post_desc.up,
+    down: migration_20241225_155310_localize_desc_to_blog_post_desc.down,
+    name: '20241225_155310_localize_desc_to_blog_post_desc'
   },
 ];

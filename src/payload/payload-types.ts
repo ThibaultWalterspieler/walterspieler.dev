@@ -233,6 +233,7 @@ export interface ExperiencePost {
   title: string;
   description?: string | null;
   experience: number | Experience;
+  mainImage?: (number | null) | Media;
   content?:
     | (
         | {
@@ -682,6 +683,7 @@ export interface ExperiencePostsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   experience?: T;
+  mainImage?: T;
   content?:
     | T
     | {

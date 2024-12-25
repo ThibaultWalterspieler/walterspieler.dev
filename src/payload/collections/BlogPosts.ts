@@ -32,6 +32,7 @@ export const BlogPosts: CollectionConfig = {
     {
       name: "description",
       type: "textarea",
+      localized: true,
     },
     {
       name: "authors",

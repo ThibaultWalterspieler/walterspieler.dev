@@ -47,15 +47,17 @@ const Article: FC<Props> = (props) => {
     >
       <div className="mb-8 flex flex-col">
         <H1 className="mb-5">{content.title}</H1>
-        <time className="mb-5 text-stone-400" dateTime={content.createdAt}>
+        <time
+          className="mb-5 text-sm text-stone-400"
+          dateTime={content.createdAt}
+        >
           {formatDateToDayMonthYear(content.createdAt, lang)}
         </time>
-        <span className="mb-5 text-stone-400">
+        <Separator />
+        <span className="mt-5 mb-5 text-stone-400">
           <P>{content.description}</P>
         </span>
-        {collection === "experiences" && <Separator />}
-        {collection === "blog" &&
-          content.mainImage &&
+        {content.mainImage &&
           typeof content.mainImage !== "number" &&
           content.mainImage.url && (
             <Image
