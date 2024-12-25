@@ -62,7 +62,7 @@ const Article: FC<Props> = (props) => {
           content.mainImage.url && (
             <Image
               alt={content.mainImage.alt || "Main article image"}
-              className="rounded-t-lg object-cover lg:max-h-[550px] lg:max-w-full"
+              className="rounded-lg object-cover lg:max-h-[550px] lg:max-w-full"
               height={content.mainImage.height || 0}
               priority={true}
               sizes="(max-width: 768px) 90vw, (max-width: 1024px) 688px, 768px"
