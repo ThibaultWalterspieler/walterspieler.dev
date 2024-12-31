@@ -45,6 +45,7 @@
     "motion": "^11.15.0",
     "negotiator": "^0.6.3",
     "next": "15.0.4",
+    "next-themes": "^0.4.4",
     "payload": "3.9.0",
     "pino": "^9.5.0",
     "pino-pretty": "^13.0.0",
@@ -54,6 +55,7 @@
     "react-dom": "19.0.0",
     "schema-dts": "^1.1.2",
     "sharp": "^0.33.5",
+    "shiki": "^1.24.4",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7"
   },
