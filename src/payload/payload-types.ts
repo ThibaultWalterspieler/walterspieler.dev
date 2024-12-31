@@ -135,6 +135,16 @@ export interface Page {
             blockType: 'Image';
           }
         | {
+            showMultiplePackageOptions?: boolean | null;
+            codeLanguage?: ('shell' | 'typescript' | 'javascript' | 'python') | null;
+            commandMap: {
+              [k: string]: string;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ScriptCopyBtn';
+          }
+        | {
             code?: string | null;
             id?: string | null;
             blockName?: string | null;
@@ -269,6 +279,16 @@ export interface ExperiencePost {
             blockType: 'Code';
           }
         | {
+            showMultiplePackageOptions?: boolean | null;
+            codeLanguage?: ('shell' | 'typescript' | 'javascript' | 'python') | null;
+            commandMap: {
+              [k: string]: string;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ScriptCopyBtn';
+          }
+        | {
             quote?: {
               root: {
                 type: string;
@@ -392,6 +412,16 @@ export interface BlogPost {
             id?: string | null;
             blockName?: string | null;
             blockType: 'Code';
+          }
+        | {
+            showMultiplePackageOptions?: boolean | null;
+            codeLanguage?: ('shell' | 'typescript' | 'javascript' | 'python') | null;
+            commandMap: {
+              [k: string]: string;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'ScriptCopyBtn';
           }
         | {
             quote?: {
@@ -557,6 +587,15 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        ScriptCopyBtn?:
+          | T
+          | {
+              showMultiplePackageOptions?: T;
+              codeLanguage?: T;
+              commandMap?: T;
+              id?: T;
+              blockName?: T;
+            };
         Code?:
           | T
           | {
@@ -647,6 +686,15 @@ export interface BlogPostsSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        ScriptCopyBtn?:
+          | T
+          | {
+              showMultiplePackageOptions?: T;
+              codeLanguage?: T;
+              commandMap?: T;
+              id?: T;
+              blockName?: T;
+            };
         Quote?:
           | T
           | {
@@ -705,6 +753,15 @@ export interface ExperiencePostsSelect<T extends boolean = true> {
           | T
           | {
               code?: T;
+              id?: T;
+              blockName?: T;
+            };
+        ScriptCopyBtn?:
+          | T
+          | {
+              showMultiplePackageOptions?: T;
+              codeLanguage?: T;
+              commandMap?: T;
               id?: T;
               blockName?: T;
             };

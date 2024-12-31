@@ -6,6 +6,7 @@ import * as migration_20241130_164001_rename_WeAreStudio99_to_99Stud from './202
 import * as migration_20241202_132356_add_label_to_social from './20241202_132356_add_label_to_social';
 import * as migration_20241225_153641_add_mainImage_to_experience_post from './20241225_153641_add_mainImage_to_experience_post';
 import * as migration_20241225_155310_localize_desc_to_blog_post_desc from './20241225_155310_localize_desc_to_blog_post_desc';
+import * as migration_20241231_092831_add_copy_script_block from './20241231_092831_add_copy_script_block';
 
 export const migrations = [
   {
@@ -46,6 +47,11 @@ export const migrations = [
   {
     up: migration_20241225_155310_localize_desc_to_blog_post_desc.up,
     down: migration_20241225_155310_localize_desc_to_blog_post_desc.down,
-    name: '20241225_155310_localize_desc_to_blog_post_desc'
+    name: '20241225_155310_localize_desc_to_blog_post_desc',
+  },
+  {
+    up: migration_20241231_092831_add_copy_script_block.up,
+    down: migration_20241231_092831_add_copy_script_block.down,
+    name: '20241231_092831_add_copy_script_block'
   },
 ];

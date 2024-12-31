@@ -7,6 +7,7 @@ import { ImageBlock } from "../blocks/Image";
 import { MySocialsBlock } from "../blocks/MySocials";
 import { ParagraphBlock } from "../blocks/Paragraph";
 import { QuoteBlock } from "../blocks/Quote";
+import { ScriptCopyBtnBlock } from "../blocks/ScriptCopyBtn";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -33,6 +34,7 @@ export const Pages: CollectionConfig = {
       blocks: [
         ParagraphBlock,
         ImageBlock,
+        ScriptCopyBtnBlock,
         CodeBlock,
         QuoteBlock,
         ExperienceBlock,

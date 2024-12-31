@@ -1,3 +1,5 @@
+import { ScriptCopyBtnBlock } from "@/payload/blocks/ScriptCopyBtn";
+
 import { CodeBlock } from "../blocks/Code";
 import { ImageBlock } from "../blocks/Image";
 import { ParagraphBlock } from "../blocks/Paragraph";
@@ -49,7 +51,13 @@ export const BlogPosts: CollectionConfig = {
     {
       name: "content",
       type: "blocks",
-      blocks: [ParagraphBlock, ImageBlock, CodeBlock, QuoteBlock],
+      blocks: [
+        ParagraphBlock,
+        ImageBlock,
+        CodeBlock,
+        ScriptCopyBtnBlock,
+        QuoteBlock,
+      ],
       localized: true,
     },
     {
