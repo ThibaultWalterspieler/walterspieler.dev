@@ -105,8 +105,8 @@ dependencies:
     specifier: ^3.0.0
     version: 3.0.0(sharp@0.33.5)
   posthog-js:
-    specifier: ^1.131.0
-    version: 1.203.1
+    specifier: ^1.203.2
+    version: 1.203.2
   react:
     specifier: 19.0.0
     version: 19.0.0
@@ -8113,17 +8113,17 @@ packages:
     resolution: {integrity: sha512-i/hbxIE9803Alj/6ytL7UHQxRvZkI9O4Sy+J3HGc4F4oo/2eQAjTSNJ0bfxyse3bH0nuVesCk+3IRLaMtG3H6w==}
     dev: false
 
-  /posthog-js@1.203.1:
-    resolution: {integrity: sha512-r/WiSyz6VNbIKEV/30+aD5gdrYkFtmZwvqNa6h9frl8hG638v098FrXaq3EYzMcCdkQf3phaZTDIAFKegpiTjw==}
+  /posthog-js@1.203.2:
+    resolution: {integrity: sha512-3aLpEhM4i9sQQtobRmDttJ3rTW1+gwQ9HL7QiOeDueE2T7CguYibYS7weY1UhXMerx5lh1A7+szlOJTTibifLQ==}
     dependencies:
       core-js: 3.39.0
       fflate: 0.4.8
-      preact: 10.25.3
+      preact: 10.25.4
       web-vitals: 4.2.4
     dev: false
 
-  /preact@10.25.3:
-    resolution: {integrity: sha512-dzQmIFtM970z+fP9ziQ3yG4e3ULIbwZzJ734vaMVUTaKQ2+Ru1Ou/gjshOYVHCcd1rpAelC6ngjvjDXph98unQ==}
+  /preact@10.25.4:
+    resolution: {integrity: sha512-jLdZDb+Q+odkHJ+MpW/9U5cODzqnB+fy2EiHSZES7ldV5LK7yjlVzTp7R8Xy6W6y75kfK8iWYtFVH7lvjwrCMA==}
     dev: false
 
   /prelude-ls@1.2.1:
