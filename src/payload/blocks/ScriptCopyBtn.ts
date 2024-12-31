@@ -1,4 +1,5 @@
 import { Block } from "payload";
+import { bundledLanguages } from "shiki";
 
 export const ScriptCopyBtnBlock: Block = {
   slug: "ScriptCopyBtn",
@@ -11,7 +12,7 @@ export const ScriptCopyBtnBlock: Block = {
     {
       name: "codeLanguage",
       type: "select",
-      options: ["shell", "typescript", "javascript", "python"],
+      options: Object.keys(bundledLanguages),
       defaultValue: "shell",
     },
     {
