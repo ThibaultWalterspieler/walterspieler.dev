@@ -496,6 +496,12 @@ export interface Page {
             blockName?: string | null;
             blockType: 'button';
           }
+        | {
+            tweetId: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'TweetCard';
+          }
       )[]
     | null;
   meta?: {
@@ -920,6 +926,12 @@ export interface ExperiencePost {
             id?: string | null;
             blockName?: string | null;
             blockType: 'Quote';
+          }
+        | {
+            tweetId: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'TweetCard';
           }
       )[]
     | null;
@@ -1364,6 +1376,12 @@ export interface BlogPost {
             blockName?: string | null;
             blockType: 'Quote';
           }
+        | {
+            tweetId: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'TweetCard';
+          }
       )[]
     | null;
   relatedExperiencePosts?: (number | ExperiencePost)[] | null;
@@ -1558,6 +1576,13 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        TweetCard?:
+          | T
+          | {
+              tweetId?: T;
+              id?: T;
+              blockName?: T;
+            };
       };
   meta?:
     | T
@@ -1623,6 +1648,13 @@ export interface BlogPostsSelect<T extends boolean = true> {
           | T
           | {
               quote?: T;
+              id?: T;
+              blockName?: T;
+            };
+        TweetCard?:
+          | T
+          | {
+              tweetId?: T;
               id?: T;
               blockName?: T;
             };
@@ -1693,6 +1725,13 @@ export interface ExperiencePostsSelect<T extends boolean = true> {
           | T
           | {
               quote?: T;
+              id?: T;
+              blockName?: T;
+            };
+        TweetCard?:
+          | T
+          | {
+              tweetId?: T;
               id?: T;
               blockName?: T;
             };

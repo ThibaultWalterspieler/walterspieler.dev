@@ -8,6 +8,7 @@ import ExperiencesBlock from "@/components/Blocks/ExperiencesBlock";
 import SocialsBlock from "@/components/Blocks/SocialsBlock";
 import { Button } from "@/components/ui/button";
 import ScriptCopyBtn from "@/components/ui/script-copy-btn";
+import { TweetCard } from "@/components/ui/tweet-card";
 import SerializeLexical from "@/lib/payload/lexical/Serialize";
 import { Page } from "@payload-types";
 
@@ -74,6 +75,14 @@ const Content: FC<Props> = (props) => {
                 darkTheme="one-dark-pro"
                 key={content?.id}
                 showMultiplePackageOptions={true}
+              />
+            );
+          case "TweetCard":
+            return (
+              <TweetCard
+                className="my-5 shadow-2xl"
+                id={content.tweetId}
+                key={content?.id}
               />
             );
         }

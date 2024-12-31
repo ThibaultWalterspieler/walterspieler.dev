@@ -8,6 +8,7 @@ import { MySocialsBlock } from "../blocks/MySocials";
 import { ParagraphBlock } from "../blocks/Paragraph";
 import { QuoteBlock } from "../blocks/Quote";
 import { ScriptCopyBtnBlock } from "../blocks/ScriptCopyBtn";
+import { TweetCardBlock } from "../blocks/TweetCard";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -40,6 +41,7 @@ export const Pages: CollectionConfig = {
         ExperienceBlock,
         MySocialsBlock,
         ButtonBlock,
+        TweetCardBlock,
       ],
       localized: true,
     },
