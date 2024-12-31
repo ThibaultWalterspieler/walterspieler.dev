@@ -7,6 +7,7 @@ import { TypedLocale } from "payload";
 import ExperiencesBlock from "@/components/Blocks/ExperiencesBlock";
 import SocialsBlock from "@/components/Blocks/SocialsBlock";
 import { Button } from "@/components/ui/button";
+import ScriptCopyBtn from "@/components/ui/script-copy-btn";
 import SerializeLexical from "@/lib/payload/lexical/Serialize";
 import { Page } from "@payload-types";
 
@@ -63,6 +64,17 @@ const Content: FC<Props> = (props) => {
                   </Button>
                 ) : null}
               </div>
+            );
+          case "ScriptCopyBtn":
+            return (
+              <ScriptCopyBtn
+                className="my-5"
+                codeLanguage="shell"
+                commandMap={content.commandMap}
+                darkTheme="one-dark-pro"
+                key={content?.id}
+                showMultiplePackageOptions={true}
+              />
             );
         }
       })}

@@ -11,15 +11,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-stone-900 text-stone-50 hover:bg-stone-900/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90",
+          "bg-metal text-stone-50 hover:bg-metal/90 dark:bg-stone-50 dark:text-stone-900 dark:hover:bg-stone-50/90",
         destructive:
           "bg-red-500 text-stone-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-stone-50 dark:hover:bg-red-900/90",
         outline:
-          "border border-stone-200 bg-white hover:bg-stone-100 hover:text-stone-900 dark:border-grey dark:bg-metal dark:hover:bg-eerie-light dark:hover:text-stone-50",
+          "border border-grey bg-white hover:bg-stone-100 hover:text-stone-900 dark:border-grey dark:bg-metal dark:hover:bg-eerie-light dark:hover:text-stone-50",
         secondary:
           "bg-stone-100 text-stone-900 hover:bg-stone-100/80 dark:bg-metal border-grey dark:text-stone-50 dark:hover:bg-stone-800/80",
         ghost:
-          "hover:bg-stone-100 hover:text-stone-900 dark:hover:bg-stone-800 dark:hover:text-stone-50",
+          "hover:bg-eerie-light hover:text-stone-900 dark:hover:bg-eerie-light dark:hover:text-stone-50",
         link: "text-stone-900 underline-offset-4 hover:underline dark:hover:text-pearl-light dark:text-stone-50",
       },
       size: {
