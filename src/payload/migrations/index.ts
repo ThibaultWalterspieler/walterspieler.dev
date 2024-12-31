@@ -8,6 +8,7 @@ import * as migration_20241225_153641_add_mainImage_to_experience_post from './2
 import * as migration_20241225_155310_localize_desc_to_blog_post_desc from './20241225_155310_localize_desc_to_blog_post_desc';
 import * as migration_20241231_092831_add_copy_script_block from './20241231_092831_add_copy_script_block';
 import * as migration_20241231_093638_add_support_for_all_shiki_supported_langs from './20241231_093638_add_support_for_all_shiki_supported_langs';
+import * as migration_20241231_134733_add_tweet_card_block from './20241231_134733_add_tweet_card_block';
 
 export const migrations = [
   {
@@ -58,6 +59,11 @@ export const migrations = [
   {
     up: migration_20241231_093638_add_support_for_all_shiki_supported_langs.up,
     down: migration_20241231_093638_add_support_for_all_shiki_supported_langs.down,
-    name: '20241231_093638_add_support_for_all_shiki_supported_langs'
+    name: '20241231_093638_add_support_for_all_shiki_supported_langs',
+  },
+  {
+    up: migration_20241231_134733_add_tweet_card_block.up,
+    down: migration_20241231_134733_add_tweet_card_block.down,
+    name: '20241231_134733_add_tweet_card_block'
   },
 ];
