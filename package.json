@@ -57,10 +57,11 @@
     "sharp": "^0.33.5",
     "shiki": "^1.24.4",
     "tailwind-merge": "^2.6.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "tailwindcss": "4.0.0-beta.3",
+    "@tailwindcss/postcss": "4.0.0-beta.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "4.0.0-beta.3",
     "@types/node": "^22.10.2",
     "@types/react": "19.0.2",
     "@types/react-dom": "19.0.2",
@@ -69,7 +70,6 @@
     "postcss": "^8.4.39",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.9",
-    "tailwindcss": "4.0.0-beta.3",
     "typescript": "^5.3.3"
   },
   "packageManager": "pnpm@9.4.0+sha512.f549b8a52c9d2b8536762f99c0722205efc5af913e77835dbccc3b0b0b2ca9e7dc8022b78062c17291c48e88749c70ce88eb5a74f1fa8c4bf5e18bb46c8bd83a",
