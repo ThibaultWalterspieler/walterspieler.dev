@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import { FC, PropsWithChildren, Suspense } from "react";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import dynamic from "next/dynamic";
@@ -75,7 +75,9 @@ const LangRootLayout: FC<Props> = async (props) => {
           )}
         >
           <SpeedInsights />
-          <PostHogPageView />
+          <Suspense>
+            <PostHogPageView />
+          </Suspense>
           <MenuContextProvider>
             <div className="lg:flex">
               <SideMenu lang={lang}>
