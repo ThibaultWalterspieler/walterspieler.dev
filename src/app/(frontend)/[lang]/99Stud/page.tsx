@@ -20,30 +20,14 @@ type Props = {
   params: Params;
 };
 
-const getPage = cache(async (lang: TypedLocale) => {
-  const payload = await getPayload({
-    config,
-  });
-  const pages = await payload.find({
-    collection: "pages",
-    where: { slug: { equals: "99Stud" } },
-    locale: lang,
-  });
-
-  if (!pages.docs[0]) {
-    notFound();
-  }
-
-  return pages.docs[0];
-});
+export const revalidate = 3600;
 
 const Stud99Page: FC<Props> = async (props) => {
   const { params } = props;
   const { lang } = await params;
 
-  const jsonLd = getSchemaOrganization();
-
   const page = await getPage(lang);
+  const jsonLd = getSchemaOrganization();
 
   return (
     <>
@@ -65,6 +49,23 @@ const Stud99Page: FC<Props> = async (props) => {
     </>
   );
 };
+
+const getPage = cache(async (lang: TypedLocale) => {
+  const payload = await getPayload({
+    config,
+  });
+  const pages = await payload.find({
+    collection: "pages",
+    where: { slug: { equals: "99Stud" } },
+    locale: lang,
+  });
+
+  if (!pages.docs[0]) {
+    notFound();
+  }
+
+  return pages.docs[0];
+});
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { params } = props;

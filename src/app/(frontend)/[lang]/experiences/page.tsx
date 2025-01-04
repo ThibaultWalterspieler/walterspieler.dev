@@ -19,6 +19,8 @@ type Props = {
   params: Params;
 };
 
+export const revalidate = 3600;
+
 const getExperiencePage = async (lang: TypedLocale) => {
   const payload = await getPayload({
     config,

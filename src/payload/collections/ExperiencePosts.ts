@@ -1,11 +1,11 @@
 import { ScriptCopyBtnBlock } from "@/payload/blocks/ScriptCopyBtn";
 import { TweetCardBlock } from "@/payload/blocks/TweetCard";
-import { revalidateExperiencePost } from "@/payload/collections/hooks/revalidateExperiencePost";
 
 import { CodeBlock } from "../blocks/Code";
 import { ImageBlock } from "../blocks/Image";
 import { ParagraphBlock } from "../blocks/Paragraph";
 import { QuoteBlock } from "../blocks/Quote";
+import { revalidateExperiencePost } from "./hooks/revalidateExperiencePost";
 
 import type { CollectionConfig } from "payload";
 

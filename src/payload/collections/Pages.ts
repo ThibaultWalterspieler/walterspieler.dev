@@ -9,6 +9,7 @@ import { ParagraphBlock } from "../blocks/Paragraph";
 import { QuoteBlock } from "../blocks/Quote";
 import { ScriptCopyBtnBlock } from "../blocks/ScriptCopyBtn";
 import { TweetCardBlock } from "../blocks/TweetCard";
+import { revalidatePage } from "./hooks/revalidatePage";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -46,4 +47,7 @@ export const Pages: CollectionConfig = {
       localized: true,
     },
   ],
+  hooks: {
+    afterChange: [revalidatePage],
+  },
 };

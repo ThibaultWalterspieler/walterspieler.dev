@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { cache, FC } from "react";
 
 import { Metadata } from "next";
 import { getPayload, TypedLocale } from "payload";
@@ -20,32 +20,16 @@ type Props = {
   params: Params;
 };
 
-const getMe = async (lang: TypedLocale) => {
-  const payload = await getPayload({
-    config,
-  });
-  return payload.findGlobal({ slug: "me", locale: lang });
-};
-
-const getHomePage = async (lang: TypedLocale) => {
-  const payload = await getPayload({
-    config,
-  });
-  const pages = await payload.find({
-    collection: "pages",
-    where: { slug: { equals: "home" } },
-    locale: lang,
-  });
-
-  return pages.docs[0];
-};
+export const revalidate = 3600;
 
 const HomeLang: FC<Props> = async (props) => {
   const { params } = props;
   const { lang } = await params;
 
-  const me = await getMe(lang);
-  const homePage = await getHomePage(lang);
+  const meData = getMe(lang);
+  const homePageData = getHomePage(lang);
+
+  const [me, homePage] = await Promise.all([meData, homePageData]);
 
   const jsonLd = getSchemaProfilePage(
     me.fullName,
@@ -86,6 +70,26 @@ const HomeLang: FC<Props> = async (props) => {
       </ScrollArea>
     </>
   );
+};
+
+const getHomePage = cache(async (lang: TypedLocale) => {
+  const payload = await getPayload({
+    config,
+  });
+  const pages = await payload.find({
+    collection: "pages",
+    where: { slug: { equals: "home" } },
+    locale: lang,
+  });
+
+  return pages.docs[0];
+});
+
+const getMe = async (lang: TypedLocale) => {
+  const payload = await getPayload({
+    config,
+  });
+  return payload.findGlobal({ slug: "me", locale: lang });
 };
 
 export async function generateMetadata(props: Props): Promise<Metadata> {

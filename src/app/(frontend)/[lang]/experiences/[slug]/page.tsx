@@ -9,7 +9,7 @@ import ArticleBreadcrumb from "@/components/Articles/ArticleBreadcrumb";
 import ScrollArea from "@/components/Common/ScrollArea";
 import getSchemaNewsArticle from "@/lib/schema-dts/news-article";
 import getMetadata from "@/lib/seo/metadata";
-import { default as configPromise } from "@payload-config";
+import config from "@payload-config";
 
 type Params = Promise<{
   lang: TypedLocale;
@@ -21,7 +21,7 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: configPromise });
+  const payload = await getPayload({ config });
   const experiencesPosts = await payload.find({
     collection: "experiencePosts",
     limit: 1000,
@@ -85,7 +85,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 const getExperiencePost = cache(async (slug: string, lang: TypedLocale) => {
   const payload = await getPayload({
-    config: configPromise,
+    config,
   });
 
   const experiencesPosts = await payload.find({

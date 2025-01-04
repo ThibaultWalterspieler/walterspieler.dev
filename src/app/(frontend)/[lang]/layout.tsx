@@ -48,8 +48,10 @@ const LangRootLayout: FC<Props> = async (props) => {
   const { children, params } = props;
   const { lang } = await params;
 
-  const me = await getMe(lang);
-  const mainMenu = await getMainMenu(lang);
+  const meData = await getMe(lang);
+  const mainMenuData = await getMainMenu(lang);
+
+  const [me, mainMenu] = await Promise.all([meData, mainMenuData]);
 
   return (
     <html lang={lang}>

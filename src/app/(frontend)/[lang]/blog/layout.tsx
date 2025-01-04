@@ -16,17 +16,6 @@ type Props = PropsWithChildren<{
   params: Params;
 }>;
 
-const getBlogPosts = async (lang: TypedLocale) => {
-  const payload = await getPayload({
-    config,
-  });
-
-  return payload.find({
-    collection: "blogPosts",
-    locale: lang,
-  });
-};
-
 const BlogLayout: FC<Props> = async (props) => {
   const { children, params } = props;
   const { lang } = await params;
@@ -54,6 +43,17 @@ const BlogLayout: FC<Props> = async (props) => {
       <div className="relative flex-1">{children}</div>
     </>
   );
+};
+
+const getBlogPosts = async (lang: TypedLocale) => {
+  const payload = await getPayload({
+    config,
+  });
+
+  return payload.find({
+    collection: "blogPosts",
+    locale: lang,
+  });
 };
 
 export default BlogLayout;
