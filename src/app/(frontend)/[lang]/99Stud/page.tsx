@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { cache, FC } from "react";
 
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -20,7 +20,7 @@ type Props = {
   params: Params;
 };
 
-const getPage = async (lang: TypedLocale) => {
+const getPage = cache(async (lang: TypedLocale) => {
   const payload = await getPayload({
     config,
   });
@@ -35,7 +35,7 @@ const getPage = async (lang: TypedLocale) => {
   }
 
   return pages.docs[0];
-};
+});
 
 const Stud99Page: FC<Props> = async (props) => {
   const { params } = props;
