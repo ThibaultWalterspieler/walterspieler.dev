@@ -1,5 +1,6 @@
 import { ScriptCopyBtnBlock } from "@/payload/blocks/ScriptCopyBtn";
 import { TweetCardBlock } from "@/payload/blocks/TweetCard";
+import { revalidateExperiencePost } from "@/payload/collections/hooks/revalidateExperiencePost";
 
 import { CodeBlock } from "../blocks/Code";
 import { ImageBlock } from "../blocks/Image";
@@ -64,4 +65,5 @@ export const ExperiencePosts: CollectionConfig = {
       localized: true,
     },
   ],
+  hooks: { afterChange: [revalidateExperiencePost] },
 };

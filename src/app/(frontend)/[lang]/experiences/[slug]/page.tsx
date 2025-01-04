@@ -1,15 +1,15 @@
-import { FC } from "react";
+import { cache, FC } from "react";
 
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { TypedLocale, getPayload } from "payload";
+import { getPayload, TypedLocale } from "payload";
 
 import Article from "@/components/Articles/Article";
 import ArticleBreadcrumb from "@/components/Articles/ArticleBreadcrumb";
 import ScrollArea from "@/components/Common/ScrollArea";
 import getSchemaNewsArticle from "@/lib/schema-dts/news-article";
 import getMetadata from "@/lib/seo/metadata";
-import config from "@payload-config";
+import { default as configPromise } from "@payload-config";
 
 type Params = Promise<{
   lang: TypedLocale;
@@ -20,27 +20,20 @@ type Props = {
   params: Params;
 };
 
-const getExperiencePost = async (slug: string, lang: TypedLocale) => {
-  const payload = await getPayload({
-    config,
-  });
-
+export async function generateStaticParams() {
+  const payload = await getPayload({ config: configPromise });
   const experiencesPosts = await payload.find({
     collection: "experiencePosts",
-    locale: lang,
-    where: {
-      slug: {
-        equals: slug,
-      },
+    limit: 1000,
+    select: {
+      slug: true,
     },
   });
 
-  if (!experiencesPosts.docs[0]) {
-    notFound();
-  }
-
-  return experiencesPosts.docs[0];
-};
+  return experiencesPosts.docs.map((experiencePost) => ({
+    slug: experiencePost.slug,
+  }));
+}
 
 const ExperiencePage: FC<Props> = async (props) => {
   const { params } = props;
@@ -89,5 +82,27 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   return getMetadata(page.meta, lang);
 }
+
+const getExperiencePost = cache(async (slug: string, lang: TypedLocale) => {
+  const payload = await getPayload({
+    config: configPromise,
+  });
+
+  const experiencesPosts = await payload.find({
+    collection: "experiencePosts",
+    locale: lang,
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+  });
+
+  if (!experiencesPosts.docs[0]) {
+    notFound();
+  }
+
+  return experiencesPosts.docs[0];
+});
 
 export default ExperiencePage;
