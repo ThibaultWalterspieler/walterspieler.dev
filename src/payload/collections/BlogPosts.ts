@@ -5,6 +5,7 @@ import { CodeBlock } from "../blocks/Code";
 import { ImageBlock } from "../blocks/Image";
 import { ParagraphBlock } from "../blocks/Paragraph";
 import { QuoteBlock } from "../blocks/Quote";
+import { revalidateBlogPost } from "./hooks/revalidateBlogPost";
 
 import type { CollectionConfig } from "payload";
 
@@ -69,4 +70,7 @@ export const BlogPosts: CollectionConfig = {
       hasMany: true,
     },
   ],
+  hooks: {
+    afterChange: [revalidateBlogPost],
+  },
 };

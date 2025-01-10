@@ -30,9 +30,9 @@ import type {
   SerializedTextNode,
 } from "lexical";
 
-interface Props {
+type Props = {
   nodes: SerializedLexicalNode[];
-}
+};
 
 function escapeHtml(value: string) {
   const string = String(value);

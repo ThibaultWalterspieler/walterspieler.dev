@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { cache, FC } from "react";
 
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -20,27 +20,20 @@ type Props = {
   params: Params;
 };
 
-const getBlogPost = async (slug: string, lang: TypedLocale) => {
-  const payload = await getPayload({
-    config,
-  });
-
+export async function generateStaticParams() {
+  const payload = await getPayload({ config });
   const blogPosts = await payload.find({
     collection: "blogPosts",
-    locale: lang,
-    where: {
-      slug: {
-        equals: slug,
-      },
+    limit: 1000,
+    select: {
+      slug: true,
     },
   });
 
-  if (!blogPosts.docs[0]) {
-    notFound();
-  }
-
-  return blogPosts.docs[0];
-};
+  return blogPosts.docs.map((blogPost) => ({
+    slug: blogPost.slug,
+  }));
+}
 
 const BlogPostPage: FC<Props> = async (props) => {
   const { params } = props;
@@ -80,6 +73,28 @@ const BlogPostPage: FC<Props> = async (props) => {
     </>
   );
 };
+
+const getBlogPost = cache(async (slug: string, lang: TypedLocale) => {
+  const payload = await getPayload({
+    config,
+  });
+
+  const blogPosts = await payload.find({
+    collection: "blogPosts",
+    locale: lang,
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+  });
+
+  if (!blogPosts.docs[0]) {
+    notFound();
+  }
+
+  return blogPosts.docs[0];
+});
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { params } = props;

@@ -18,6 +18,22 @@ type Props = {
   params: Params;
 };
 
+export const revalidate = 3600;
+
+const Blog: FC<Props> = async (props) => {
+  const { params } = props;
+  const { lang } = await params;
+
+  const dictionary = await getDictionary(lang);
+
+  return (
+    <>
+      <MenuInitializer isInnerMenuOpen />
+      <EmptyLayout label={dictionary.selectABlogPost} />
+    </>
+  );
+};
+
 const getBlogPage = async (lang: TypedLocale) => {
   const payload = await getPayload({
     config,
@@ -34,20 +50,6 @@ const getBlogPage = async (lang: TypedLocale) => {
   });
 
   return pages.docs[0];
-};
-
-const Blog: FC<Props> = async (props) => {
-  const { params } = props;
-  const { lang } = await params;
-
-  const dictionary = await getDictionary(lang);
-
-  return (
-    <>
-      <MenuInitializer isInnerMenuOpen />
-      <EmptyLayout label={dictionary.selectABlogPost} />
-    </>
-  );
 };
 
 export async function generateMetadata(props: Props): Promise<Metadata> {

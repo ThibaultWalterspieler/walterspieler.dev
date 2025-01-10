@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { cache, FC } from "react";
 
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -19,22 +19,7 @@ type Props = {
   params: Params;
 };
 
-const getPage = async (lang: TypedLocale) => {
-  const payload = await getPayload({
-    config,
-  });
-  const pages = await payload.find({
-    collection: "pages",
-    where: { slug: { equals: "open-source" } },
-    locale: lang,
-  });
-
-  if (!pages.docs[0]) {
-    notFound();
-  }
-
-  return pages.docs[0];
-};
+export const revalidate = 3600;
 
 const OpenSourcePage: FC<Props> = async (props) => {
   const { params } = props;
@@ -56,6 +41,23 @@ const OpenSourcePage: FC<Props> = async (props) => {
     </ScrollArea>
   );
 };
+
+const getPage = cache(async (lang: TypedLocale) => {
+  const payload = await getPayload({
+    config,
+  });
+  const pages = await payload.find({
+    collection: "pages",
+    where: { slug: { equals: "open-source" } },
+    locale: lang,
+  });
+
+  if (!pages.docs[0]) {
+    notFound();
+  }
+
+  return pages.docs[0];
+});
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { params } = props;

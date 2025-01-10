@@ -5,6 +5,7 @@ import { CodeBlock } from "../blocks/Code";
 import { ImageBlock } from "../blocks/Image";
 import { ParagraphBlock } from "../blocks/Paragraph";
 import { QuoteBlock } from "../blocks/Quote";
+import { revalidateExperiencePost } from "./hooks/revalidateExperiencePost";
 
 import type { CollectionConfig } from "payload";
 
@@ -64,4 +65,5 @@ export const ExperiencePosts: CollectionConfig = {
       localized: true,
     },
   ],
+  hooks: { afterChange: [revalidateExperiencePost] },
 };
