@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { TypedLocale } from "payload";
 
-import ExperienceCard from "@/components/Experiences/ExperienceCard";
+import ExperienceCard from "@/features/experiences/components/ExperienceCard";
 import { formatDateDiff } from "@/lib/date";
 import { ExperiencePost } from "@payload-types";
 
