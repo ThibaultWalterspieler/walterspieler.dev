@@ -259,7 +259,7 @@ const SerializeLexical = async ({ nodes }: Props) => {
                     height={value.height ?? 0}
                     placeholder="blur"
                     priority={isImageThePriority}
-                    sizes="(max-width: 768px) 90vw, (max-width: 1024px) 688px, 768px"
+                    sizes="(min-width: 1280px) calc(100vw - 657px), (min-width: 1024px) calc(100vw - 609px), calc(100vw - 48px)"
                     src={value.url}
                     width={value.width ?? 0}
                   />

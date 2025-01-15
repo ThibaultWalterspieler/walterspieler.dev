@@ -65,7 +65,7 @@ const Article: FC<Props> = (props) => {
               className="rounded-lg object-cover lg:max-h-[550px] lg:max-w-full"
               height={content.mainImage.height || 0}
               priority={true}
-              sizes="(max-width: 768px) 90vw, (max-width: 1024px) 688px, 768px"
+              sizes="(min-width: 1280px) calc(100vw - 657px), (min-width: 1024px) calc(100vw - 609px), calc(100vw - 48px)"
               src={content.mainImage.url}
               width={content.mainImage.width || 0}
             />
