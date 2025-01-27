@@ -1,6 +1,6 @@
 import { FC, SVGProps } from "react";
 
-const WeAreStudio99: FC<SVGProps<SVGSVGElement>> = (props) => (
+const Stud99: FC<SVGProps<SVGSVGElement>> = (props) => (
   <svg
     fill="none"
     height="17"
@@ -17,4 +17,4 @@ const WeAreStudio99: FC<SVGProps<SVGSVGElement>> = (props) => (
   </svg>
 );
 
-export default WeAreStudio99;
+export default Stud99;

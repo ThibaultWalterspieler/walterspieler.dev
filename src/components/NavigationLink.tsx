@@ -13,7 +13,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { TypedLocale } from "payload";
 
-import WeAreStudio99 from "@/components/Icons/Company/WeAreStudio99";
+import Stud99 from "@/components/Icons/Company/Stud99";
 import { MenuContext } from "@/contexts/MenuContext";
 import { cn } from "@/lib/utils";
 
@@ -82,7 +82,7 @@ const NavigationLink: FC<Props> = (props) => {
         {type === "home" && <BoltIcon className="w-4" />}
         {type === "blog" && <Sparkle className="w-4" />}
         {type === "experiences" && <DraftingCompass className="w-4" />}
-        {type === "99Stud" && <WeAreStudio99 className="w-4" />}
+        {type === "99Stud" && <Stud99 className="w-4" />}
         {type === "contact" && <Nfc className="w-4" />}
         <span className={cn("overflow-hidden text-ellipsis")}>{label}</span>
       </div>
