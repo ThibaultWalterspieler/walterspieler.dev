@@ -225,7 +225,7 @@ const SerializeLexical = async ({ nodes }: Props) => {
 
               return (
                 <A
-                  href={escapeHtml(fields.url)}
+                  href={escapeHtml(fields.url || "")}
                   key={index}
                   rel={rel}
                   target={fields.newTab ? "_blank" : undefined}
