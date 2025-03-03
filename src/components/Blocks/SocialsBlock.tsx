@@ -23,11 +23,11 @@ const SocialIcon: FC<SocialIconProps> = (props) => {
 
   switch (label.toLowerCase()) {
     case "linkedin":
-      return <LinkedInLogoIcon className="mr-2 h-4 w-4" />;
+      return <LinkedInLogoIcon className="mr-2 size-4" />;
     case "stackoverflow":
-      return <StackIcon className="mr-2 h-4 w-4" />;
+      return <StackIcon className="mr-2 size-4" />;
     case "instagram":
-      return <InstagramLogoIcon className="mr-2 h-4 w-4" />;
+      return <InstagramLogoIcon className="mr-2 size-4" />;
     case "malt":
       return <Malt className="mr-2" />;
     default:

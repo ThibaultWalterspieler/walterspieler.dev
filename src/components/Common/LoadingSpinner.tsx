@@ -9,7 +9,7 @@ const LoadingSpinner: FC = () => {
         aria-label="loading"
         className={cn(
           "inline-block",
-          "h-4 w-4",
+          "size-4",
           "text-pearl",
           "animate-spin rounded-full border-[2px] border-current border-t-transparent",
         )}

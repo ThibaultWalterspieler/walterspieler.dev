@@ -19,7 +19,7 @@ const BreadcrumbList = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <ol
     className={cn(
-      "flex flex-wrap items-center gap-1.5 break-words text-sm text-stone-500 dark:text-stone-400 sm:gap-2.5",
+      "flex flex-wrap items-center gap-1.5 text-sm break-words text-stone-500 sm:gap-2.5 dark:text-stone-400",
       className,
     )}
     ref={ref}
@@ -102,7 +102,7 @@ const BreadcrumbEllipsis = ({
     role="presentation"
     {...props}
   >
-    <MoreHorizontal className="h-4 w-4" />
+    <MoreHorizontal className="size-4" />
     <span className="sr-only">More</span>
   </span>
 );

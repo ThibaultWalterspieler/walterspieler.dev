@@ -95,7 +95,7 @@ const ExperienceCard: FC<Props> = (props) => {
             <div className="flex items-center text-sm text-stone-400 md:gap-1">
               {duration.start && (
                 <>
-                  <CalendarIcon className="mr-1 h-4 w-4 text-stone-400" />
+                  <CalendarIcon className="mr-1 size-4 text-stone-400" />
                   {!duration.end && <span>Since</span>}
                   <span>{formatDateToMonthYear(duration.start, lang)}</span>
                   {duration.end && (
