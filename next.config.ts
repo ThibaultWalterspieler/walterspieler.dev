@@ -4,9 +4,17 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
+    // 1 day in seconds
+    minimumCacheTTL: 60 * 60 * 24,
     remotePatterns: [
       {
         hostname: "pbs.twimg.com",
+      },
+      {
+        hostname: "utfs.io",
+      },
+      {
+        hostname: "api.uploadthing.com",
       },
       {
         hostname: "walterspieler.dev",
