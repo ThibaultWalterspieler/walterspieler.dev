@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "pbs.twimg.com",
       },
+      {
+        hostname: "walterspieler.dev",
+      },
     ],
   },
   redirects: async () => {
