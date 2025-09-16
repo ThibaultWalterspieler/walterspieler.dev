@@ -106,7 +106,7 @@ export interface Config {
     me: MeSelect<false> | MeSelect<true>;
     mainMenu: MainMenuSelect<false> | MainMenuSelect<true>;
   };
-  locale: 'en' | 'fr';
+  locale: 'en';
   user: User & {
     collection: 'users';
   };

@@ -49,10 +49,6 @@ export default buildConfig({
         code: "en",
         label: "English 🇬🇧",
       },
-      {
-        code: "fr",
-        label: "Français 🇫🇷",
-      },
     ],
     defaultLocale: "en",
   },
