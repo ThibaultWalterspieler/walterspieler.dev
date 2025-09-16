@@ -14,7 +14,7 @@ import { cn } from "@/lib/utils";
 import config from "@payload-config";
 
 type Params = Promise<{
-  lang: TypedLocale;
+  lang: string;
 }>;
 
 type Props = PropsWithChildren<{
@@ -47,14 +47,15 @@ const getMainMenu = async (lang: TypedLocale) => {
 const LangRootLayout: FC<Props> = async (props) => {
   const { children, params } = props;
   const { lang } = await params;
+  const typedLang = lang as TypedLocale;
 
-  const meData = await getMe(lang);
-  const mainMenuData = await getMainMenu(lang);
+  const meData = await getMe(typedLang);
+  const mainMenuData = await getMainMenu(typedLang);
 
   const [me, mainMenu] = await Promise.all([meData, mainMenuData]);
 
   return (
-    <html lang={lang}>
+    <html lang={typedLang}>
       {process.env.NODE_ENV === "production" && (
         <Script
           async
@@ -82,8 +83,8 @@ const LangRootLayout: FC<Props> = async (props) => {
           </Suspense>
           <MenuContextProvider>
             <div className="lg:flex">
-              <SideMenu lang={lang}>
-                <MainMenuContent lang={lang} mainMenu={mainMenu} me={me} />
+              <SideMenu lang={typedLang}>
+                <MainMenuContent lang={typedLang} mainMenu={mainMenu} me={me} />
               </SideMenu>
               <div className="blueprint-layout flex flex-1">{children}</div>
             </div>

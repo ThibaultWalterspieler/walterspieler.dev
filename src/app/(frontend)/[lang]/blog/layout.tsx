@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, Suspense } from "react";
+import { PropsWithChildren, Suspense } from "react";
 
 import { getPayload, TypedLocale } from "payload";
 
@@ -9,24 +9,25 @@ import { getDictionary } from "@/lib/i18n/utils";
 import config from "@payload-config";
 
 type Params = Promise<{
-  lang: TypedLocale;
+  lang: string;
 }>;
 
 type Props = PropsWithChildren<{
   params: Params;
 }>;
 
-const BlogLayout: FC<Props> = async (props) => {
+const BlogLayout = async (props: Props) => {
   const { children, params } = props;
   const { lang } = await params;
+  const typedLang = lang as TypedLocale;
 
-  const dictionary = await getDictionary(lang);
+  const dictionary = await getDictionary(typedLang);
 
-  const blogPosts = await getBlogPosts(lang);
+  const blogPosts = await getBlogPosts(typedLang);
 
   return (
     <>
-      <SideMenu collection="blog" displayReturnButton isInner lang={lang}>
+      <SideMenu collection="blog" displayReturnButton isInner lang={typedLang}>
         <Suspense fallback={<LoadingSpinner />}>
           <SideMenuContent
             collection="blog"
@@ -35,7 +36,7 @@ const BlogLayout: FC<Props> = async (props) => {
               uid: post.slug,
               startDate: post.createdAt,
             }))}
-            lang={lang}
+            lang={typedLang}
             title={dictionary.firstLevelPages.blog}
           />
         </Suspense>

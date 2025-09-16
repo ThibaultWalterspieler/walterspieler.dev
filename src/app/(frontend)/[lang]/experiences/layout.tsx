@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, Suspense } from "react";
+import { PropsWithChildren, Suspense } from "react";
 
 import { getPayload, TypedLocale } from "payload";
 
@@ -9,7 +9,7 @@ import { getDictionary } from "@/lib/i18n/utils";
 import config from "@payload-config";
 
 type Params = Promise<{
-  lang: TypedLocale;
+  lang: string;
 }>;
 
 type Props = PropsWithChildren<{
@@ -27,13 +27,14 @@ const getExperiencePosts = async (lang: TypedLocale) => {
   });
 };
 
-const ExperiencesLayout: FC<Props> = async (props) => {
+const ExperiencesLayout = async (props: Props) => {
   const { children, params } = props;
   const { lang } = await params;
+  const typedLang = lang as TypedLocale;
 
-  const dictionary = await getDictionary(lang);
+  const dictionary = await getDictionary(typedLang);
 
-  const experiencePosts = await getExperiencePosts(lang);
+  const experiencePosts = await getExperiencePosts(typedLang);
 
   return (
     <>
@@ -41,7 +42,7 @@ const ExperiencesLayout: FC<Props> = async (props) => {
         collection="experiences"
         displayReturnButton
         isInner
-        lang={lang}
+        lang={typedLang}
       >
         <Suspense fallback={<LoadingSpinner />}>
           <SideMenuContent
@@ -60,7 +61,7 @@ const ExperiencesLayout: FC<Props> = async (props) => {
               .filter(
                 (item): item is NonNullable<typeof item> => item !== undefined,
               )}
-            lang={lang}
+            lang={typedLang}
             title={dictionary.firstLevelPages.experiences}
           />
         </Suspense>
