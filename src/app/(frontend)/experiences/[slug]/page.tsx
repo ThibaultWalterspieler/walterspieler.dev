@@ -2,7 +2,7 @@ import { cache, FC } from "react";
 
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPayload, TypedLocale } from "payload";
+import { getPayload } from "payload";
 
 import Article from "@/components/Articles/Article";
 import ArticleBreadcrumb from "@/components/Articles/ArticleBreadcrumb";
@@ -12,7 +12,6 @@ import getMetadata from "@/lib/seo/metadata";
 import config from "@payload-config";
 
 type Params = Promise<{
-  lang: TypedLocale;
   slug: string;
 }>;
 
@@ -37,9 +36,9 @@ export async function generateStaticParams() {
 
 const ExperiencePage: FC<Props> = async (props) => {
   const { params } = props;
-  const { lang, slug } = await params;
+  const { slug } = await params;
 
-  const experiencesPost = await getExperiencePost(slug, lang);
+  const experiencesPost = await getExperiencePost(slug);
 
   const jsonLd = getSchemaNewsArticle(
     experiencesPost.meta?.title || experiencesPost.title,
@@ -58,13 +57,11 @@ const ExperiencePage: FC<Props> = async (props) => {
           <div className="content">
             <ArticleBreadcrumb
               collection="experiences"
-              lang={lang}
               title={experiencesPost.title}
             />
             <Article
               collection="experiences"
               content={experiencesPost}
-              lang={lang}
               slug={slug}
             />
           </div>
@@ -76,21 +73,20 @@ const ExperiencePage: FC<Props> = async (props) => {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { params } = props;
-  const { lang, slug } = await params;
+  const { slug } = await params;
 
-  const page = await getExperiencePost(slug, lang);
+  const page = await getExperiencePost(slug);
 
-  return getMetadata(page.meta, lang);
+  return getMetadata(page.meta);
 }
 
-const getExperiencePost = cache(async (slug: string, lang: TypedLocale) => {
+const getExperiencePost = cache(async (slug: string) => {
   const payload = await getPayload({
     config,
   });
 
   const experiencesPosts = await payload.find({
     collection: "experiencePosts",
-    locale: lang,
     where: {
       slug: {
         equals: slug,

@@ -1,6 +1,6 @@
 import { PropsWithChildren, Suspense } from "react";
 
-import { getPayload, TypedLocale } from "payload";
+import { getPayload } from "payload";
 
 import LoadingSpinner from "@/components/Common/LoadingSpinner";
 import SideMenu from "@/components/Common/SideMenu";
@@ -8,26 +8,18 @@ import SideMenuContent from "@/components/Common/SideMenuContent";
 import { getDictionary } from "@/lib/i18n/utils";
 import config from "@payload-config";
 
-type Params = Promise<{
-  lang: string;
-}>;
-
-type Props = PropsWithChildren<{
-  params: Params;
-}>;
+type Props = PropsWithChildren;
 
 const BlogLayout = async (props: Props) => {
-  const { children, params } = props;
-  const { lang } = await params;
-  const typedLang = lang as TypedLocale;
+  const { children } = props;
 
-  const dictionary = await getDictionary(typedLang);
+  const dictionary = await getDictionary();
 
-  const blogPosts = await getBlogPosts(typedLang);
+  const blogPosts = await getBlogPosts();
 
   return (
     <>
-      <SideMenu collection="blog" displayReturnButton isInner lang={typedLang}>
+      <SideMenu collection="blog" displayReturnButton isInner>
         <Suspense fallback={<LoadingSpinner />}>
           <SideMenuContent
             collection="blog"
@@ -36,7 +28,6 @@ const BlogLayout = async (props: Props) => {
               uid: post.slug,
               startDate: post.createdAt,
             }))}
-            lang={typedLang}
             title={dictionary.firstLevelPages.blog}
           />
         </Suspense>
@@ -46,14 +37,13 @@ const BlogLayout = async (props: Props) => {
   );
 };
 
-const getBlogPosts = async (lang: TypedLocale) => {
+const getBlogPosts = async () => {
   const payload = await getPayload({
     config,
   });
 
   return payload.find({
     collection: "blogPosts",
-    locale: lang,
   });
 };
 

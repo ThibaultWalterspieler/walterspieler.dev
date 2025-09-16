@@ -3,31 +3,26 @@
 import { FC, use, useEffect } from "react";
 
 import { motion, useAnimation } from "motion/react";
-import { TypedLocale } from "payload";
 
 import NavigationLink from "@/components/NavigationLink";
 import { MenuContext } from "@/contexts/MenuContext";
-import { I18N_CONFIG } from "@/lib/i18n/config";
 import { cn } from "@/lib/utils";
 import { MainMenu } from "@payload-types";
 
 type Props = {
   items: MainMenu["menuItems"];
-  lang: TypedLocale;
 };
 
-const getPath = (slug: string, lang: TypedLocale) => {
+const getPath = (slug: string) => {
   if (slug === "home") {
     return "/";
   }
 
-  return I18N_CONFIG.defaultLocale === lang
-    ? `/${slug || ""}`
-    : `/${lang}/${slug || ""}`;
+  return `/${slug || ""}`;
 };
 
 const MainMenuItems: FC<Props> = (props) => {
-  const { items, lang } = props;
+  const { items } = props;
 
   const { isMainMenuOpen: isMenuOpen } = use(MenuContext) ?? {};
   const controls = useAnimation();
@@ -64,10 +59,9 @@ const MainMenuItems: FC<Props> = (props) => {
                 <NavigationLink
                   external={item.external || false}
                   label={item.label || ""}
-                  lang={lang}
                   path={
                     !item.external
-                      ? getPath(item.page?.slug || "", lang)
+                      ? getPath(item.page?.slug || "")
                       : item.path || ""
                   }
                   type={item.type || ""}
@@ -87,10 +81,9 @@ const MainMenuItems: FC<Props> = (props) => {
                 external={item.external || false}
                 key={item.id}
                 label={item.label || ""}
-                lang={lang}
                 path={
                   !item.external
-                    ? getPath(item.page?.slug || "", lang)
+                    ? getPath(item.page?.slug || "")
                     : item.path || ""
                 }
                 type={item.type || ""}

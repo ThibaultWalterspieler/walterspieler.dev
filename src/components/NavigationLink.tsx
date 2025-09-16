@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { TypedLocale } from "payload";
 
 import Stud99 from "@/components/Icons/Company/Stud99";
 import { MenuContext } from "@/contexts/MenuContext";
@@ -28,12 +27,11 @@ type Props = {
     | "contact"
     | "99Stud"
     | "other";
-  lang: TypedLocale;
   external?: boolean;
 };
 
 const NavigationLink: FC<Props> = (props) => {
-  const { label, path, lang, type, external } = props;
+  const { label, path, type, external } = props;
 
   const pathname = usePathname();
   const { closeMainMenu = () => {} } = use(MenuContext) ?? {};
@@ -45,9 +43,6 @@ const NavigationLink: FC<Props> = (props) => {
       const splittedUrl = path.split("/").filter(Boolean);
       if (splittedUrl.length === 0) {
         isActive = splittedPathname.length === 0;
-      } else if (splittedUrl.length === 1 && splittedUrl[0] === lang) {
-        isActive =
-          splittedPathname.length === 1 && splittedPathname[0] === lang;
       } else {
         isActive = splittedUrl.every(
           (part, index) => splittedPathname[index] === part,
@@ -60,7 +55,7 @@ const NavigationLink: FC<Props> = (props) => {
     }
 
     return isActive;
-  }, [path, external, pathname, lang]);
+  }, [path, external, pathname]);
 
   return (
     <Link

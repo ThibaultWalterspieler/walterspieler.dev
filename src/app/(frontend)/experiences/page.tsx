@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPayload, TypedLocale } from "payload";
+import { getPayload } from "payload";
 
 import EmptyLayout from "@/components/Common/EmptyLayout";
 import MenuInitializer from "@/contexts/MenuContext/MenuInitializer";
@@ -10,25 +10,15 @@ import { getDictionary } from "@/lib/i18n/utils";
 import getMetadata from "@/lib/seo/metadata";
 import config from "@payload-config";
 
-type Params = Promise<{
-  lang: TypedLocale;
-  uid: string;
-}>;
-
-type Props = {
-  params: Params;
-};
-
 export const revalidate = 3600;
 
-const getExperiencePage = async (lang: TypedLocale) => {
+const getExperiencePage = async () => {
   const payload = await getPayload({
     config,
   });
 
   const pages = await payload.find({
     collection: "pages",
-    locale: lang,
     where: {
       slug: {
         equals: "experiences",
@@ -43,11 +33,8 @@ const getExperiencePage = async (lang: TypedLocale) => {
   return pages.docs[0];
 };
 
-const Experiences: FC<Props> = async (props) => {
-  const { params } = props;
-  const { lang } = await params;
-
-  const dictionary = await getDictionary(lang);
+const Experiences: FC = async () => {
+  const dictionary = await getDictionary();
 
   return (
     <>
@@ -57,13 +44,10 @@ const Experiences: FC<Props> = async (props) => {
   );
 };
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { params } = props;
-  const { lang } = await params;
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getExperiencePage();
 
-  const page = await getExperiencePage(lang);
-
-  return getMetadata(page.meta, lang);
+  return getMetadata(page.meta);
 }
 
 export default Experiences;
