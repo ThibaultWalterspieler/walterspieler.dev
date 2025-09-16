@@ -54,6 +54,7 @@ export type SupportedTimezones =
   | 'Asia/Singapore'
   | 'Asia/Tokyo'
   | 'Asia/Seoul'
+  | 'Australia/Brisbane'
   | 'Australia/Sydney'
   | 'Pacific/Guam'
   | 'Pacific/Noumea'
@@ -151,6 +152,13 @@ export interface User {
   hash?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
   password?: string | null;
 }
 /**
@@ -302,6 +310,7 @@ export interface Page {
                   | 'lean'
                   | 'less'
                   | 'liquid'
+                  | 'llvm'
                   | 'log'
                   | 'logo'
                   | 'lua'
@@ -330,6 +339,7 @@ export interface Page {
                   | 'php'
                   | 'plsql'
                   | 'po'
+                  | 'polar'
                   | 'postcss'
                   | 'powerquery'
                   | 'powershell'
@@ -399,11 +409,13 @@ export interface Page {
                   | 'viml'
                   | 'vue'
                   | 'vue-html'
+                  | 'vue-vine'
                   | 'vyper'
                   | 'wasm'
                   | 'wenyan'
                   | 'wgsl'
                   | 'wikitext'
+                  | 'wit'
                   | 'wolfram'
                   | 'xml'
                   | 'xsl'
@@ -760,6 +772,7 @@ export interface ExperiencePost {
                   | 'lean'
                   | 'less'
                   | 'liquid'
+                  | 'llvm'
                   | 'log'
                   | 'logo'
                   | 'lua'
@@ -788,6 +801,7 @@ export interface ExperiencePost {
                   | 'php'
                   | 'plsql'
                   | 'po'
+                  | 'polar'
                   | 'postcss'
                   | 'powerquery'
                   | 'powershell'
@@ -857,11 +871,13 @@ export interface ExperiencePost {
                   | 'viml'
                   | 'vue'
                   | 'vue-html'
+                  | 'vue-vine'
                   | 'vyper'
                   | 'wasm'
                   | 'wenyan'
                   | 'wgsl'
                   | 'wikitext'
+                  | 'wit'
                   | 'wolfram'
                   | 'xml'
                   | 'xsl'
@@ -1210,6 +1226,7 @@ export interface BlogPost {
                   | 'lean'
                   | 'less'
                   | 'liquid'
+                  | 'llvm'
                   | 'log'
                   | 'logo'
                   | 'lua'
@@ -1238,6 +1255,7 @@ export interface BlogPost {
                   | 'php'
                   | 'plsql'
                   | 'po'
+                  | 'polar'
                   | 'postcss'
                   | 'powerquery'
                   | 'powershell'
@@ -1307,11 +1325,13 @@ export interface BlogPost {
                   | 'viml'
                   | 'vue'
                   | 'vue-html'
+                  | 'vue-vine'
                   | 'vyper'
                   | 'wasm'
                   | 'wenyan'
                   | 'wgsl'
                   | 'wikitext'
+                  | 'wit'
                   | 'wolfram'
                   | 'xml'
                   | 'xsl'
@@ -1560,6 +1580,13 @@ export interface UsersSelect<T extends boolean = true> {
   hash?: T;
   loginAttempts?: T;
   lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
