@@ -1,12 +1,36 @@
-import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
+import { MigrateDownArgs, MigrateUpArgs, sql } from "@payloadcms/db-postgres";
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   CREATE TYPE "public"."enum_pages_blocks_script_copy_btn_code_language" AS ENUM('shell', 'typescript', 'javascript', 'python');
-  CREATE TYPE "public"."enum_blog_posts_blocks_script_copy_btn_code_language" AS ENUM('shell', 'typescript', 'javascript', 'python');
-  CREATE TYPE "public"."enum__blog_posts_v_blocks_script_copy_btn_code_language" AS ENUM('shell', 'typescript', 'javascript', 'python');
-  CREATE TYPE "public"."enum_experience_posts_blocks_script_copy_btn_code_language" AS ENUM('shell', 'typescript', 'javascript', 'python');
-  CREATE TYPE "public"."enum__experience_posts_v_blocks_script_copy_btn_code_language" AS ENUM('shell', 'typescript', 'javascript', 'python');
+   DO $$ BEGIN
+    CREATE TYPE "public"."enum_pages_blocks_script_copy_btn_code_language" AS ENUM('shell', 'typescript', 'javascript', 'python');
+   EXCEPTION
+    WHEN duplicate_object THEN null;
+   END $$;
+   
+   DO $$ BEGIN
+    CREATE TYPE "public"."enum_blog_posts_blocks_script_copy_btn_code_language" AS ENUM('shell', 'typescript', 'javascript', 'python');
+   EXCEPTION
+    WHEN duplicate_object THEN null;
+   END $$;
+   
+   DO $$ BEGIN
+    CREATE TYPE "public"."enum__blog_posts_v_blocks_script_copy_btn_code_language" AS ENUM('shell', 'typescript', 'javascript', 'python');
+   EXCEPTION
+    WHEN duplicate_object THEN null;
+   END $$;
+   
+   DO $$ BEGIN
+    CREATE TYPE "public"."enum_experience_posts_blocks_script_copy_btn_code_language" AS ENUM('shell', 'typescript', 'javascript', 'python');
+   EXCEPTION
+    WHEN duplicate_object THEN null;
+   END $$;
+   
+   DO $$ BEGIN
+    CREATE TYPE "public"."enum__experience_posts_v_blocks_script_copy_btn_code_language" AS ENUM('shell', 'typescript', 'javascript', 'python');
+   EXCEPTION
+    WHEN duplicate_object THEN null;
+   END $$;
   CREATE TABLE IF NOT EXISTS "pages_blocks_script_copy_btn" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -118,10 +142,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   CREATE INDEX IF NOT EXISTS "_experience_posts_v_blocks_script_copy_btn_order_idx" ON "_experience_posts_v_blocks_script_copy_btn" USING btree ("_order");
   CREATE INDEX IF NOT EXISTS "_experience_posts_v_blocks_script_copy_btn_parent_id_idx" ON "_experience_posts_v_blocks_script_copy_btn" USING btree ("_parent_id");
   CREATE INDEX IF NOT EXISTS "_experience_posts_v_blocks_script_copy_btn_path_idx" ON "_experience_posts_v_blocks_script_copy_btn" USING btree ("_path");
-  CREATE INDEX IF NOT EXISTS "_experience_posts_v_blocks_script_copy_btn_locale_idx" ON "_experience_posts_v_blocks_script_copy_btn" USING btree ("_locale");`)
+  CREATE INDEX IF NOT EXISTS "_experience_posts_v_blocks_script_copy_btn_locale_idx" ON "_experience_posts_v_blocks_script_copy_btn" USING btree ("_locale");`);
 }
 
-export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
+export async function down({
+  db,
+  payload,
+  req,
+}: MigrateDownArgs): Promise<void> {
   await db.execute(sql`
    DROP TABLE "pages_blocks_script_copy_btn" CASCADE;
   DROP TABLE "blog_posts_blocks_script_copy_btn" CASCADE;
@@ -132,5 +160,5 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_blog_posts_blocks_script_copy_btn_code_language";
   DROP TYPE "public"."enum__blog_posts_v_blocks_script_copy_btn_code_language";
   DROP TYPE "public"."enum_experience_posts_blocks_script_copy_btn_code_language";
-  DROP TYPE "public"."enum__experience_posts_v_blocks_script_copy_btn_code_language";`)
+  DROP TYPE "public"."enum__experience_posts_v_blocks_script_copy_btn_code_language";`);
 }

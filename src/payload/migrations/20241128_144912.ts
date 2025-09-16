@@ -2,8 +2,17 @@ import { MigrateDownArgs, MigrateUpArgs, sql } from "@payloadcms/db-postgres";
 
 export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   await payload.db.drizzle.execute(sql`
-   CREATE TYPE "public"."_locales" AS ENUM('en', 'fr');
-  CREATE TYPE "public"."enum_main_menu_menu_items_type" AS ENUM('home', 'blog', 'lab', 'experiences', 'contact', 'weAreStudio99', 'other');
+   DO $$ BEGIN
+    CREATE TYPE "public"."_locales" AS ENUM('en', 'fr');
+   EXCEPTION
+    WHEN duplicate_object THEN null;
+   END $$;
+   
+   DO $$ BEGIN
+    CREATE TYPE "public"."enum_main_menu_menu_items_type" AS ENUM('home', 'blog', 'lab', 'experiences', 'contact', 'weAreStudio99', 'other');
+   EXCEPTION
+    WHEN duplicate_object THEN null;
+   END $$;
   CREATE TABLE IF NOT EXISTS "users" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"full_name" varchar DEFAULT 'Peter Griffin' NOT NULL,
