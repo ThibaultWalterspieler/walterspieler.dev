@@ -1,6 +1,6 @@
 import { PropsWithChildren, Suspense } from "react";
 
-import { getPayload, TypedLocale } from "payload";
+import { getPayload } from "payload";
 
 import LoadingSpinner from "@/components/Common/LoadingSpinner";
 import SideMenu from "@/components/Common/SideMenu";
@@ -8,42 +8,28 @@ import SideMenuContent from "@/components/Common/SideMenuContent";
 import { getDictionary } from "@/lib/i18n/utils";
 import config from "@payload-config";
 
-type Params = Promise<{
-  lang: string;
-}>;
+type Props = PropsWithChildren;
 
-type Props = PropsWithChildren<{
-  params: Params;
-}>;
-
-const getExperiencePosts = async (lang: TypedLocale) => {
+const getExperiencePosts = async () => {
   const payload = await getPayload({
     config,
   });
 
   return payload.find({
     collection: "experiencePosts",
-    locale: lang,
   });
 };
 
 const ExperiencesLayout = async (props: Props) => {
-  const { children, params } = props;
-  const { lang } = await params;
-  const typedLang = lang as TypedLocale;
+  const { children } = props;
 
-  const dictionary = await getDictionary(typedLang);
+  const dictionary = await getDictionary();
 
-  const experiencePosts = await getExperiencePosts(typedLang);
+  const experiencePosts = await getExperiencePosts();
 
   return (
     <>
-      <SideMenu
-        collection="experiences"
-        displayReturnButton
-        isInner
-        lang={typedLang}
-      >
+      <SideMenu collection="experiences" displayReturnButton isInner>
         <Suspense fallback={<LoadingSpinner />}>
           <SideMenuContent
             collection="experiences"
@@ -61,7 +47,6 @@ const ExperiencesLayout = async (props: Props) => {
               .filter(
                 (item): item is NonNullable<typeof item> => item !== undefined,
               )}
-            lang={typedLang}
             title={dictionary.firstLevelPages.experiences}
           />
         </Suspense>

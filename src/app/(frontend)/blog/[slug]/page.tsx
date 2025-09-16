@@ -2,7 +2,7 @@ import { cache, FC } from "react";
 
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPayload, TypedLocale } from "payload";
+import { getPayload } from "payload";
 
 import Article from "@/components/Articles/Article";
 import ArticleBreadcrumb from "@/components/Articles/ArticleBreadcrumb";
@@ -12,7 +12,6 @@ import getMetadata from "@/lib/seo/metadata";
 import config from "@payload-config";
 
 type Params = Promise<{
-  lang: TypedLocale;
   slug: string;
 }>;
 
@@ -37,9 +36,9 @@ export async function generateStaticParams() {
 
 const BlogPostPage: FC<Props> = async (props) => {
   const { params } = props;
-  const { lang, slug } = await params;
+  const { slug } = await params;
 
-  const blogPost = await getBlogPost(slug, lang);
+  const blogPost = await getBlogPost(slug);
 
   const jsonLd = getSchemaNewsArticle(
     blogPost.meta?.title || blogPost.title,
@@ -56,17 +55,8 @@ const BlogPostPage: FC<Props> = async (props) => {
       <ScrollArea className="z-0 flex flex-col lg:pl-72">
         <div className="content-wrapper mt-14 lg:mt-0">
           <div className="content">
-            <ArticleBreadcrumb
-              collection="blog"
-              lang={lang}
-              title={blogPost.title}
-            />
-            <Article
-              collection="blog"
-              content={blogPost}
-              lang={lang}
-              slug={slug}
-            />
+            <ArticleBreadcrumb collection="blog" title={blogPost.title} />
+            <Article collection="blog" content={blogPost} slug={slug} />
           </div>
         </div>
       </ScrollArea>
@@ -74,14 +64,13 @@ const BlogPostPage: FC<Props> = async (props) => {
   );
 };
 
-const getBlogPost = cache(async (slug: string, lang: TypedLocale) => {
+const getBlogPost = cache(async (slug: string) => {
   const payload = await getPayload({
     config,
   });
 
   const blogPosts = await payload.find({
     collection: "blogPosts",
-    locale: lang,
     where: {
       slug: {
         equals: slug,
@@ -98,11 +87,11 @@ const getBlogPost = cache(async (slug: string, lang: TypedLocale) => {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { params } = props;
-  const { lang, slug } = await params;
+  const { slug } = await params;
 
-  const page = await getBlogPost(slug, lang);
+  const page = await getBlogPost(slug);
 
-  return getMetadata(page.meta, lang);
+  return getMetadata(page.meta);
 }
 
 export default BlogPostPage;

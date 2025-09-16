@@ -4,8 +4,7 @@ import {
   differenceInWeeks,
   format,
 } from "date-fns";
-import { enGB, fr } from "date-fns/locale";
-import { TypedLocale } from "payload";
+import { enGB } from "date-fns/locale";
 
 import { Dictionary } from "@/lib/i18n/types";
 import { getDictionary } from "@/lib/i18n/utils";
@@ -30,15 +29,13 @@ const getPluralization = (
  * Calculates and formats the difference between two dates in a localized format
  * @param date1 - The start date
  * @param date2 - The end date
- * @param locale - The locale to use for formatting ('en' or 'fr')
  * @returns A formatted string representing the time difference (e.g. "2 years and 3 months", "6 months", "3 weeks")
  */
 const formatDateDiff = async (
   date1: Date | string,
   date2: Date | string,
-  locale: TypedLocale,
 ): Promise<string> => {
-  const dictionary = await getDictionary(locale);
+  const dictionary = await getDictionary();
 
   const yearsDiff = differenceInCalendarYears(date2, date1);
   if (yearsDiff >= 1) {
@@ -48,7 +45,7 @@ const formatDateDiff = async (
       monthsDiff >= 1
         ? ` ${getPluralization(monthsDiff, dictionary, "month")}`
         : "";
-    return `${yearStr} ${locale === "fr" ? "et " : "and "}${monthStr}`;
+    return `${yearStr} and ${monthStr}`;
   }
 
   const monthsDiff = differenceInCalendarMonths(date2, date1);
@@ -63,21 +60,14 @@ const formatDateDiff = async (
 /**
  * Formats a date into a localized month and year string (e.g. "Jan 2024")
  * @param date - The date to format, can be a Date object or date string
- * @param locale - The locale to use for formatting ('en' or 'fr')
  * @returns A formatted string with the month and year in the specified locale
  */
-const formatDateToMonthYear = (date: Date | string, locale: TypedLocale) => {
-  const locales = { en: enGB, fr: fr };
-  const selectedLocale = locales[locale];
-
-  return format(date, "MMM yyyy", { locale: selectedLocale });
+const formatDateToMonthYear = (date: Date | string) => {
+  return format(date, "MMM yyyy", { locale: enGB });
 };
 
-const formatDateToDayMonthYear = (date: Date | string, locale: TypedLocale) => {
-  const locales = { en: enGB, fr: fr };
-  const selectedLocale = locales[locale];
-
-  return format(date, "PPP", { locale: selectedLocale });
+const formatDateToDayMonthYear = (date: Date | string) => {
+  return format(date, "PPP", { locale: enGB });
 };
 
 export { formatDateDiff, formatDateToDayMonthYear, formatDateToMonthYear };

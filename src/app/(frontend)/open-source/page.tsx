@@ -2,7 +2,7 @@ import { cache, FC } from "react";
 
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPayload, TypedLocale } from "payload";
+import { getPayload } from "payload";
 
 import Content from "@/components/Common/Content";
 import ScrollArea from "@/components/Common/ScrollArea";
@@ -11,21 +11,10 @@ import { Separator } from "@/components/ui/separator";
 import getMetadata from "@/lib/seo/metadata";
 import config from "@payload-config";
 
-type Params = Promise<{
-  lang: TypedLocale;
-}>;
-
-type Props = {
-  params: Params;
-};
-
 export const revalidate = 3600;
 
-const NoticePage: FC<Props> = async (props) => {
-  const { params } = props;
-  const { lang } = await params;
-
-  const page = await getPage(lang);
+const OpenSourcePage: FC = async () => {
+  const page = await getPage();
 
   return (
     <ScrollArea className="flex flex-col">
@@ -35,21 +24,20 @@ const NoticePage: FC<Props> = async (props) => {
             {page.title}
           </H1>
           <Separator className="my-6" />
-          <Content content={page.content} lang={lang} />
+          <Content content={page.content} />
         </div>
       </div>
     </ScrollArea>
   );
 };
 
-const getPage = cache(async (lang: TypedLocale) => {
+const getPage = cache(async () => {
   const payload = await getPayload({
     config,
   });
   const pages = await payload.find({
     collection: "pages",
-    where: { slug: { equals: "notice" } },
-    locale: lang,
+    where: { slug: { equals: "open-source" } },
   });
 
   if (!pages.docs[0]) {
@@ -59,13 +47,10 @@ const getPage = cache(async (lang: TypedLocale) => {
   return pages.docs[0];
 });
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { params } = props;
-  const { lang } = await params;
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPage();
 
-  const page = await getPage(lang);
-
-  return getMetadata(page.meta, lang);
+  return getMetadata(page.meta);
 }
 
-export default NoticePage;
+export default OpenSourcePage;

@@ -6,13 +6,11 @@ import { CalendarIcon } from "lucide-react";
 import { motion, useMotionTemplate, useMotionValue } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { TypedLocale } from "payload";
 
 import { A, H3 } from "@/components/Common/Typography";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatDateToMonthYear } from "@/lib/date";
-import { I18N_CONFIG } from "@/lib/i18n/config";
 import { cn } from "@/lib/utils";
 
 type Props = {
@@ -26,7 +24,6 @@ type Props = {
     difference?: string | null;
   };
   relatedWorkPostSlug: string;
-  lang: TypedLocale;
   buttonLabel: string;
   tags: {
     name: string;
@@ -40,7 +37,6 @@ const ExperienceCard: FC<Props> = (props) => {
     // logo,
     duration,
     link,
-    lang,
     relatedWorkPostSlug,
     buttonLabel,
     tags,
@@ -56,11 +52,7 @@ const ExperienceCard: FC<Props> = (props) => {
       className="group bg-metal relative my-8 w-full cursor-pointer overflow-hidden rounded-xl"
       onClick={() => {
         if (relatedWorkPostSlug) {
-          router.push(
-            lang !== I18N_CONFIG.defaultLocale
-              ? `/${lang}/experiences/${relatedWorkPostSlug}`
-              : `/experiences/${relatedWorkPostSlug}`,
-          );
+          router.push(`/experiences/${relatedWorkPostSlug}`);
         }
       }}
       onMouseMove={(e) => {
@@ -97,11 +89,11 @@ const ExperienceCard: FC<Props> = (props) => {
                 <>
                   <CalendarIcon className="mr-1 size-4 text-stone-400" />
                   {!duration.end && <span>Since</span>}
-                  <span>{formatDateToMonthYear(duration.start, lang)}</span>
+                  <span>{formatDateToMonthYear(duration.start)}</span>
                   {duration.end && (
                     <>
                       <span> - </span>
-                      <span>{formatDateToMonthYear(duration.end, lang)}</span>
+                      <span>{formatDateToMonthYear(duration.end)}</span>
                       <Separator
                         className="mx-2 hidden h-4 md:block"
                         orientation="vertical"
@@ -148,11 +140,7 @@ const ExperienceCard: FC<Props> = (props) => {
               <Button asChild variant="outline">
                 <Link
                   aria-label={`Read more about ${title}`}
-                  href={
-                    lang !== I18N_CONFIG.defaultLocale
-                      ? `/${lang}/experiences/${relatedWorkPostSlug}`
-                      : `/experiences/${relatedWorkPostSlug}`
-                  }
+                  href={`/experiences/${relatedWorkPostSlug}`}
                 >
                   {buttonLabel} {title}
                 </Link>

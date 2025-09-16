@@ -4,7 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import dynamic from "next/dynamic";
 import { Space_Grotesk } from "next/font/google";
 import Script from "next/script";
-import { getPayload, TypedLocale } from "payload";
+import { getPayload } from "payload";
 
 import PostHogProvider from "@/app/(frontend)/ph-provider";
 import MainMenuContent from "@/components/Common/MainMenuContent";
@@ -13,16 +13,10 @@ import { MenuContextProvider } from "@/contexts/MenuContext";
 import { cn } from "@/lib/utils";
 import config from "@payload-config";
 
-type Params = Promise<{
-  lang: string;
-}>;
-
-type Props = PropsWithChildren<{
-  params: Params;
-}>;
+type Props = PropsWithChildren;
 
 const PostHogPageView = dynamic(
-  () => import("../../../components/PostHogPageView"),
+  () => import("../../components/PostHogPageView"),
 );
 
 const spaceGrotesk = Space_Grotesk({
@@ -30,32 +24,30 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
 });
 
-const getMe = async (lang: TypedLocale) => {
+const getMe = async () => {
   const payload = await getPayload({
     config,
   });
-  return payload.findGlobal({ slug: "me", locale: lang });
+  return payload.findGlobal({ slug: "me" });
 };
 
-const getMainMenu = async (lang: TypedLocale) => {
+const getMainMenu = async () => {
   const payload = await getPayload({
     config,
   });
-  return payload.findGlobal({ slug: "mainMenu", locale: lang });
+  return payload.findGlobal({ slug: "mainMenu" });
 };
 
-const LangRootLayout: FC<Props> = async (props) => {
-  const { children, params } = props;
-  const { lang } = await params;
-  const typedLang = lang as TypedLocale;
+const RootLayout: FC<Props> = async (props) => {
+  const { children } = props;
 
-  const meData = await getMe(typedLang);
-  const mainMenuData = await getMainMenu(typedLang);
+  const meData = await getMe();
+  const mainMenuData = await getMainMenu();
 
   const [me, mainMenu] = await Promise.all([meData, mainMenuData]);
 
   return (
-    <html lang={typedLang}>
+    <html lang="en">
       {process.env.NODE_ENV === "production" && (
         <Script
           async
@@ -83,8 +75,8 @@ const LangRootLayout: FC<Props> = async (props) => {
           </Suspense>
           <MenuContextProvider>
             <div className="lg:flex">
-              <SideMenu lang={typedLang}>
-                <MainMenuContent lang={typedLang} mainMenu={mainMenu} me={me} />
+              <SideMenu>
+                <MainMenuContent mainMenu={mainMenu} me={me} />
               </SideMenu>
               <div className="blueprint-layout flex flex-1">{children}</div>
             </div>
@@ -95,4 +87,4 @@ const LangRootLayout: FC<Props> = async (props) => {
   );
 };
 
-export default LangRootLayout;
+export default RootLayout;

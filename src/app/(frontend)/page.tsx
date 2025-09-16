@@ -1,7 +1,7 @@
 import { cache, FC } from "react";
 
 import { Metadata } from "next";
-import { getPayload, TypedLocale } from "payload";
+import { getPayload } from "payload";
 
 import Content from "@/components/Common/Content";
 import ScrollArea from "@/components/Common/ScrollArea";
@@ -12,22 +12,11 @@ import getMetadata from "@/lib/seo/metadata";
 import { cn } from "@/lib/utils";
 import config from "@payload-config";
 
-type Params = Promise<{
-  lang: TypedLocale;
-}>;
-
-type Props = {
-  params: Params;
-};
-
 export const revalidate = 3600;
 
-const HomeLang: FC<Props> = async (props) => {
-  const { params } = props;
-  const { lang } = await params;
-
-  const meData = getMe(lang);
-  const homePageData = getHomePage(lang);
+const Home: FC = async () => {
+  const meData = getMe();
+  const homePageData = getHomePage();
 
   const [me, homePage] = await Promise.all([meData, homePageData]);
 
@@ -64,7 +53,7 @@ const HomeLang: FC<Props> = async (props) => {
               </span>
             </H1>
             <Separator className={cn("my-6")} />
-            <Content content={homePage.content} lang={lang} />
+            <Content content={homePage.content} />
           </div>
         </div>
       </ScrollArea>
@@ -72,33 +61,29 @@ const HomeLang: FC<Props> = async (props) => {
   );
 };
 
-const getHomePage = cache(async (lang: TypedLocale) => {
+const getHomePage = cache(async () => {
   const payload = await getPayload({
     config,
   });
   const pages = await payload.find({
     collection: "pages",
     where: { slug: { equals: "home" } },
-    locale: lang,
   });
 
   return pages.docs[0];
 });
 
-const getMe = async (lang: TypedLocale) => {
+const getMe = async () => {
   const payload = await getPayload({
     config,
   });
-  return payload.findGlobal({ slug: "me", locale: lang });
+  return payload.findGlobal({ slug: "me" });
 };
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-  const { params } = props;
-  const { lang } = await params;
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getHomePage();
 
-  const page = await getHomePage(lang);
-
-  return getMetadata(page.meta, lang);
+  return getMetadata(page.meta);
 }
 
-export default HomeLang;
+export default Home;

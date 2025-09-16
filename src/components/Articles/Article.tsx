@@ -1,7 +1,6 @@
 import { FC } from "react";
 
 import Image from "next/image";
-import { TypedLocale } from "payload";
 
 import Content from "@/components/Common/Content";
 import { H1, P } from "@/components/Common/Typography";
@@ -11,7 +10,6 @@ import { formatDateToDayMonthYear } from "@/lib/date";
 import { BlogPost, ExperiencePost } from "@payload-types";
 
 type CommonProps = {
-  lang: TypedLocale;
   slug: string;
 };
 
@@ -34,7 +32,7 @@ const variants = {
 };
 
 const Article: FC<Props> = (props) => {
-  const { content, lang } = props;
+  const { content } = props;
 
   if (typeof content === "number") return null;
 
@@ -51,7 +49,7 @@ const Article: FC<Props> = (props) => {
           className="mb-5 text-sm text-stone-400"
           dateTime={content.createdAt}
         >
-          {formatDateToDayMonthYear(content.createdAt, lang)}
+          {formatDateToDayMonthYear(content.createdAt)}
         </time>
         <Separator />
         <span className="mt-5 mb-5 text-stone-400">
@@ -71,7 +69,7 @@ const Article: FC<Props> = (props) => {
             />
           )}
       </div>
-      <Content content={content.content} lang={lang} />
+      <Content content={content.content} />
     </MotionArticle>
   );
 };

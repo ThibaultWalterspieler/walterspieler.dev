@@ -1,18 +1,15 @@
 import { FC } from "react";
 
-import { TypedLocale } from "payload";
-
 import ExperienceCard from "@/components/Experiences/ExperienceCard";
 import { formatDateDiff } from "@/lib/date";
 import { ExperiencePost } from "@payload-types";
 
 type Props = {
   experiencePosts: (number | ExperiencePost)[] | null | undefined;
-  lang: TypedLocale;
 };
 
 const ExperiencesBlock: FC<Props> = async (props) => {
-  const { experiencePosts, lang } = props;
+  const { experiencePosts } = props;
 
   return (
     <>
@@ -27,7 +24,6 @@ const ExperiencesBlock: FC<Props> = async (props) => {
             (await formatDateDiff(
               experiencePost.experience.startDate,
               experiencePost.experience.endDate,
-              lang,
             ));
 
           return (
@@ -40,7 +36,6 @@ const ExperiencesBlock: FC<Props> = async (props) => {
                 difference,
               }}
               key={experiencePost.id}
-              lang={lang}
               link={experiencePost.experience.companyWebsite || ""}
               logo={""}
               relatedWorkPostSlug={experiencePost.slug}

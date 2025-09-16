@@ -1,24 +1,22 @@
 import { Metadata } from "next";
-import { getPayload, TypedLocale } from "payload";
+import { getPayload } from "payload";
 
-import { I18N_CONFIG } from "@/lib/i18n/config";
 import config from "@payload-config";
 import { BlogPost, ExperiencePost, Page } from "@payload-types";
 
 import { BASE_URL } from "../../../next.constants.mjs";
 
-const getMe = async (lang: TypedLocale) => {
+const getMe = async () => {
   const payload = await getPayload({
     config,
   });
-  return payload.findGlobal({ slug: "me", locale: lang });
+  return payload.findGlobal({ slug: "me" });
 };
 
 const getMetadata = async (
   pageMeta: Page["meta"] | ExperiencePost["meta"] | BlogPost["meta"],
-  lang: TypedLocale,
 ): Promise<Metadata> => {
-  const me = await getMe(lang);
+  const me = await getMe();
 
   let image;
 
@@ -44,7 +42,7 @@ const getMetadata = async (
       title: pageMeta?.title || "",
       description: pageMeta?.description || "",
       images: {
-        url: image?.url || `/images/og/main_${lang}.png`,
+        url: image?.url || `/images/og/main_en-gb.png`,
         alt: image?.alt || "",
         type: image?.mimeType || "image/png",
       },
@@ -54,10 +52,10 @@ const getMetadata = async (
       title: pageMeta?.title || "",
       siteName: "Portfolio of Thibault Walterspieler",
       description: pageMeta?.description || "",
-      locale: lang,
-      url: lang === I18N_CONFIG.defaultLocale ? "/" : `/${lang}`,
+      locale: "en",
+      url: "/",
       images: {
-        url: image?.url || `/images/og/main_${lang}.png`,
+        url: image?.url || `/images/og/main_en-gb.png`,
         alt: image?.alt || "",
         type: image?.mimeType || "image/png",
       },

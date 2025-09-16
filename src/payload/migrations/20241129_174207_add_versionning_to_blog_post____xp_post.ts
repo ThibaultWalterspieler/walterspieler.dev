@@ -2,12 +2,41 @@ import { MigrateDownArgs, MigrateUpArgs, sql } from "@payloadcms/db-postgres";
 
 export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   await payload.db.drizzle.execute(sql`
-   CREATE TYPE "public"."enum_blog_posts_status" AS ENUM('draft', 'published');
-  CREATE TYPE "public"."enum__blog_posts_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "public"."enum__blog_posts_v_published_locale" AS ENUM('en', 'fr');
-  CREATE TYPE "public"."enum_experience_posts_status" AS ENUM('draft', 'published');
-  CREATE TYPE "public"."enum__experience_posts_v_version_status" AS ENUM('draft', 'published');
-  CREATE TYPE "public"."enum__experience_posts_v_published_locale" AS ENUM('en', 'fr');
+   DO $$ BEGIN
+    CREATE TYPE "public"."enum_blog_posts_status" AS ENUM('draft', 'published');
+   EXCEPTION
+    WHEN duplicate_object THEN null;
+   END $$;
+   
+   DO $$ BEGIN
+    CREATE TYPE "public"."enum__blog_posts_v_version_status" AS ENUM('draft', 'published');
+   EXCEPTION
+    WHEN duplicate_object THEN null;
+   END $$;
+   
+   DO $$ BEGIN
+    CREATE TYPE "public"."enum__blog_posts_v_published_locale" AS ENUM('en', 'fr');
+   EXCEPTION
+    WHEN duplicate_object THEN null;
+   END $$;
+   
+   DO $$ BEGIN
+    CREATE TYPE "public"."enum_experience_posts_status" AS ENUM('draft', 'published');
+   EXCEPTION
+    WHEN duplicate_object THEN null;
+   END $$;
+   
+   DO $$ BEGIN
+    CREATE TYPE "public"."enum__experience_posts_v_version_status" AS ENUM('draft', 'published');
+   EXCEPTION
+    WHEN duplicate_object THEN null;
+   END $$;
+   
+   DO $$ BEGIN
+    CREATE TYPE "public"."enum__experience_posts_v_published_locale" AS ENUM('en', 'fr');
+   EXCEPTION
+    WHEN duplicate_object THEN null;
+   END $$;
   CREATE TABLE IF NOT EXISTS "_blog_posts_v_blocks_paragraph" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
@@ -190,8 +219,17 @@ export async function up({ payload, req }: MigrateUpArgs): Promise<void> {
   ALTER TABLE "experience_posts" ALTER COLUMN "slug" DROP NOT NULL;
   ALTER TABLE "experience_posts" ALTER COLUMN "title" DROP NOT NULL;
   ALTER TABLE "experience_posts" ALTER COLUMN "experience_id" DROP NOT NULL;
-  ALTER TABLE "blog_posts" ADD COLUMN "_status" "enum_blog_posts_status" DEFAULT 'draft';
-  ALTER TABLE "experience_posts" ADD COLUMN "_status" "enum_experience_posts_status" DEFAULT 'draft';
+  DO $$ BEGIN
+   ALTER TABLE "blog_posts" ADD COLUMN "_status" "enum_blog_posts_status" DEFAULT 'draft';
+  EXCEPTION
+   WHEN duplicate_column THEN null;
+  END $$;
+  
+  DO $$ BEGIN
+   ALTER TABLE "experience_posts" ADD COLUMN "_status" "enum_experience_posts_status" DEFAULT 'draft';
+  EXCEPTION
+   WHEN duplicate_column THEN null;
+  END $$;
   DO $$ BEGIN
    ALTER TABLE "_blog_posts_v_blocks_paragraph" ADD CONSTRAINT "_blog_posts_v_blocks_paragraph_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."_blog_posts_v"("id") ON DELETE cascade ON UPDATE no action;
   EXCEPTION

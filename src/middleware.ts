@@ -1,34 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { PUBLIC_PATHS } from "./lib/routing/constants";
-
 export async function middleware(request: NextRequest) {
-  const locales = ["en", "fr"];
-  const defaultLocale = locales[0];
-
   const { pathname } = request.nextUrl;
 
-  const pathnameIsPublicPath: boolean = PUBLIC_PATHS.reduce(
-    (pathnameIsPublicPath, publicPath) => {
-      if (pathname.startsWith(publicPath)) {
-        pathnameIsPublicPath = true;
-      }
-
-      return pathnameIsPublicPath;
-    },
-    false,
-  );
-
-  const pathnameIsMissingLocale = locales.every(
-    (locale) =>
-      !pathname.startsWith(`/${locale}/`) && pathname !== `/${locale}`,
-  );
-
-  if (pathnameIsMissingLocale && !pathnameIsPublicPath) {
-    return NextResponse.rewrite(
-      new URL(`/${defaultLocale}${pathname}`, request.url),
-    );
+  if (pathname.startsWith("/fr/") || pathname === "/fr") {
+    const newPath = pathname.replace("/fr", "");
+    return NextResponse.redirect(new URL(newPath || "/", request.url), {
+      status: 301,
+    });
   }
+
+  return NextResponse.next();
 }
 
 export const config = {

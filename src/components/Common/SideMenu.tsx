@@ -5,15 +5,12 @@ import { FC, PropsWithChildren, use } from "react";
 import { ChevronLeft, Command, X } from "lucide-react";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import Link from "next/link";
-import { TypedLocale } from "payload";
 
 import ScrollArea from "@/components/Common/ScrollArea";
 import { MenuContext } from "@/contexts/MenuContext";
-import { I18N_CONFIG } from "@/lib/i18n/config";
 import { cn } from "@/lib/utils";
 
 type Props = {
-  lang: TypedLocale;
   isInner?: boolean;
   collection?: "blog" | "experiences";
   displayReturnButton?: boolean;
@@ -36,7 +33,7 @@ const iconVariants: Variants = {
 };
 
 const SideMenu: FC<Props> = (props) => {
-  const { children, isInner, lang, displayReturnButton, collection } = props;
+  const { children, isInner, displayReturnButton, collection } = props;
 
   const {
     isMainMenuOpen,
@@ -80,11 +77,7 @@ const SideMenu: FC<Props> = (props) => {
               className={cn("block", {
                 hidden: isMainMenuOpen || isInnerMenuOpen,
               })}
-              href={
-                lang === I18N_CONFIG.defaultLocale
-                  ? `/${collection}`
-                  : `/${lang}/${collection}`
-              }
+              href={`/${collection}`}
               onClick={openInnerMenu}
             >
               <div className="border-grey bg-metal/5 fixed top-8 left-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
@@ -129,6 +122,11 @@ const SideMenu: FC<Props> = (props) => {
         </motion.div>
       ) : (
         <>
+          <ScrollArea
+            className={cn(scrollAreaClasses, "bg-eerie-dark hidden md:block")}
+          >
+            {children}
+          </ScrollArea>
           <AnimatePresence>
             {isMainMenuOpen && (
               <>
@@ -149,11 +147,6 @@ const SideMenu: FC<Props> = (props) => {
               </>
             )}
           </AnimatePresence>
-          <ScrollArea
-            className={cn(scrollAreaClasses, "bg-eerie-dark hidden md:block")}
-          >
-            {children}
-          </ScrollArea>
         </>
       )}
     </>

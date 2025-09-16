@@ -7,13 +7,12 @@ type Props = PropsWithChildren<{
 }>;
 
 const ScrollArea: FC<Props> = (props) => {
-  const { className, ...rest } = props;
+  const { className, children, ...rest } = props;
 
   return (
-    <div
-      className={cn("scrollable-area relative w-full", className)}
-      {...rest}
-    />
+    <div className={cn("scrollable-area relative w-full", className)} {...rest}>
+      {children}
+    </div>
   );
 };
 
