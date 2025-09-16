@@ -10,15 +10,15 @@ import { uploadthingStorage } from "@payloadcms/storage-uploadthing";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 
-import { BlogPosts } from "@/payload/collections/blog-posts";
-import { ExperiencePosts } from "@/payload/collections/experience-posts";
-import { Experiences } from "@/payload/collections/experiences";
-import { Media } from "@/payload/collections/media";
-import { Pages } from "@/payload/collections/pages";
-import { Socials } from "@/payload/collections/socials";
-import { Users } from "@/payload/collections/users";
-import { MainMenu } from "@/payload/globals/main-menu";
-import { Me } from "@/payload/globals/me";
+import { BlogPosts } from "./payload/collections/blog-posts";
+import { ExperiencePosts } from "./payload/collections/experience-posts";
+import { Experiences } from "./payload/collections/experiences";
+import { Media } from "./payload/collections/media";
+import { Pages } from "./payload/collections/pages";
+import { Socials } from "./payload/collections/socials";
+import { Users } from "./payload/collections/users";
+import { MainMenu } from "./payload/globals/main-menu";
+import { Me } from "./payload/globals/me";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
