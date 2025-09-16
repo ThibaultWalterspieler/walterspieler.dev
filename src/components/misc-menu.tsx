@@ -14,7 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MenuContext } from "@/contexts/MenuContext";
+import { MenuContext } from "@/contexts/menu-context";
 
 type Props = {
   title: string;

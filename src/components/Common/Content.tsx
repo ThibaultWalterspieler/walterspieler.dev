@@ -3,8 +3,8 @@ import { FC } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 
-import ExperiencesBlock from "@/components/Blocks/ExperiencesBlock";
-import SocialsBlock from "@/components/Blocks/SocialsBlock";
+import ExperiencesBlock from "@/components/blocks/experiences-block";
+import SocialsBlock from "@/components/blocks/social-block";
 import { Button } from "@/components/ui/button";
 import ScriptCopyBtn from "@/components/ui/script-copy-btn";
 import { TweetCard } from "@/components/ui/tweet-card";

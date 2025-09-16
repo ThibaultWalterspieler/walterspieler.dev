@@ -2,9 +2,9 @@ import { PropsWithChildren, Suspense } from "react";
 
 import { getPayload } from "payload";
 
-import LoadingSpinner from "@/components/Common/LoadingSpinner";
-import SideMenu from "@/components/Common/SideMenu";
-import SideMenuContent from "@/components/Common/SideMenuContent";
+import LoadingSpinner from "@/components/common/loading-spinner";
+import SideMenu from "@/components/common/side-menu";
+import SideMenuContent from "@/components/common/side-menu-content";
 import { getDictionary } from "@/lib/i18n/utils";
 import config from "@payload-config";
 

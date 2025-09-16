@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import ExperienceCard from "@/components/Experiences/ExperienceCard";
+import ExperienceCard from "@/components/experiences/experience-card";
 import { formatDateDiff } from "@/lib/date";
 import { ExperiencePost } from "@payload-types";
 

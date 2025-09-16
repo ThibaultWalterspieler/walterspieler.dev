@@ -6,7 +6,7 @@ import {
   StackIcon,
 } from "@radix-ui/react-icons";
 
-import Malt from "@/components/Icons/Company/Malt";
+import Malt from "@/components/icons/company/malt";
 import { Button } from "@/components/ui/button";
 import { Social } from "@payload-types";
 

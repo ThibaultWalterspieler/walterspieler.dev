@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import MainMenuItems from "@/components/Common/MainMenuItems";
-import MiscMenu from "@/components/MiscMenu";
+import MainMenuItems from "@/components/common/main-menu-items";
+import MiscMenu from "@/components/misc-menu";
 import { MainMenu, Me } from "@payload-types";
 
 type Props = {

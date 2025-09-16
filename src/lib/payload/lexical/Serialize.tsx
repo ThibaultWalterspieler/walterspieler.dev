@@ -2,7 +2,7 @@ import { JSX } from "react";
 
 import Image from "next/image";
 
-import { A, H1, H2, H3, H4, LI, P, UL } from "@/components/Common/Typography";
+import { A, H1, H2, H3, H4, LI, P, UL } from "@/components/common/typography";
 import { getImage } from "@/lib/plaiceholder";
 import { Media } from "@payload-types";
 

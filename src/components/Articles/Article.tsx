@@ -2,9 +2,9 @@ import { FC } from "react";
 
 import Image from "next/image";
 
-import Content from "@/components/Common/Content";
-import { H1, P } from "@/components/Common/Typography";
-import MotionArticle from "@/components/Motion/MotionArticle";
+import Content from "@/components/common/content";
+import { H1, P } from "@/components/common/typography";
+import MotionArticle from "@/components/motion/motion-article";
 import { Separator } from "@/components/ui/separator";
 import { formatDateToDayMonthYear } from "@/lib/date";
 import { BlogPost, ExperiencePost } from "@payload-types";

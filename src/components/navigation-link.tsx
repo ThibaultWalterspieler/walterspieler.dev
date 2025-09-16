@@ -12,8 +12,8 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import Stud99 from "@/components/Icons/Company/Stud99";
-import { MenuContext } from "@/contexts/MenuContext";
+import Stud99 from "@/components/icons/company/stud-99";
+import { MenuContext } from "@/contexts/menu-context";
 import { cn } from "@/lib/utils";
 
 type Props = {

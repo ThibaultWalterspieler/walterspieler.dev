@@ -6,7 +6,7 @@ import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { MenuContext } from "@/contexts/MenuContext";
+import { MenuContext } from "@/contexts/menu-context";
 import { formatDateToMonthYear } from "@/lib/date";
 import { cn } from "@/lib/utils";
 

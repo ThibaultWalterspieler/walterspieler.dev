@@ -2,7 +2,7 @@
 
 import { FC, use, useEffect } from "react";
 
-import { MenuContext } from "@/contexts/MenuContext";
+import { MenuContext } from "@/contexts/menu-context";
 
 type Props = {
   isInnerMenuOpen?: boolean;

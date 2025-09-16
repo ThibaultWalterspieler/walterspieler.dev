@@ -4,9 +4,9 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
-import Article from "@/components/Articles/Article";
-import ArticleBreadcrumb from "@/components/Articles/ArticleBreadcrumb";
-import ScrollArea from "@/components/Common/ScrollArea";
+import Article from "@/components/articles/article";
+import ArticleBreadcrumb from "@/components/articles/article-breadcrumb";
+import ScrollArea from "@/components/common/scroll-area";
 import getSchemaNewsArticle from "@/lib/schema-dts/news-article";
 import getMetadata from "@/lib/seo/metadata";
 import config from "@payload-config";

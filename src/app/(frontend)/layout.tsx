@@ -7,16 +7,16 @@ import Script from "next/script";
 import { getPayload } from "payload";
 
 import PostHogProvider from "@/app/(frontend)/ph-provider";
-import MainMenuContent from "@/components/Common/MainMenuContent";
-import SideMenu from "@/components/Common/SideMenu";
-import { MenuContextProvider } from "@/contexts/MenuContext";
+import MainMenuContent from "@/components/common/main-menu-content";
+import SideMenu from "@/components/common/side-menu";
+import { MenuContextProvider } from "@/contexts/menu-context";
 import { cn } from "@/lib/utils";
 import config from "@payload-config";
 
 type Props = PropsWithChildren;
 
 const PostHogPageView = dynamic(
-  () => import("../../components/PostHogPageView"),
+  () => import("../../components/post-hog-page-view"),
 );
 
 const spaceGrotesk = Space_Grotesk({

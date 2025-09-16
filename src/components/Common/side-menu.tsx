@@ -6,8 +6,8 @@ import { ChevronLeft, Command, X } from "lucide-react";
 import { AnimatePresence, motion, Variants } from "motion/react";
 import Link from "next/link";
 
-import ScrollArea from "@/components/Common/ScrollArea";
-import { MenuContext } from "@/contexts/MenuContext";
+import ScrollArea from "@/components/common/scroll-area";
+import { MenuContext } from "@/contexts/menu-context";
 import { cn } from "@/lib/utils";
 
 type Props = {

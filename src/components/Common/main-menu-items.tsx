@@ -4,8 +4,8 @@ import { FC, use, useEffect } from "react";
 
 import { motion, useAnimation } from "motion/react";
 
-import NavigationLink from "@/components/NavigationLink";
-import { MenuContext } from "@/contexts/MenuContext";
+import NavigationLink from "@/components/navigation-link";
+import { MenuContext } from "@/contexts/menu-context";
 import { cn } from "@/lib/utils";
 import { MainMenu } from "@payload-types";
 

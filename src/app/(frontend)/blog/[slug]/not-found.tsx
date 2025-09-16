@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import Error404 from "@/components/Common/Error404";
+import Error404 from "@/components/common/error-404";
 
 const NotFoundPage: FC = () => {
   return (

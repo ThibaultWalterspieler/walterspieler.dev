@@ -7,7 +7,7 @@ import { motion, useMotionTemplate, useMotionValue } from "motion/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { A, H3 } from "@/components/Common/Typography";
+import { A, H3 } from "@/components/common/typography";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatDateToMonthYear } from "@/lib/date";

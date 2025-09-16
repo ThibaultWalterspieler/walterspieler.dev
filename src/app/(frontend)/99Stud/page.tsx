@@ -4,9 +4,9 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
 
-import Content from "@/components/Common/Content";
-import ScrollArea from "@/components/Common/ScrollArea";
-import { H1 } from "@/components/Common/Typography";
+import Content from "@/components/common/content";
+import ScrollArea from "@/components/common/scroll-area";
+import { H1 } from "@/components/common/typography";
 import { Separator } from "@/components/ui/separator";
 import getSchemaOrganization from "@/lib/schema-dts/organization";
 import getMetadata from "@/lib/seo/metadata";
