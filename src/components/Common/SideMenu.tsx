@@ -129,6 +129,11 @@ const SideMenu: FC<Props> = (props) => {
         </motion.div>
       ) : (
         <>
+          <ScrollArea
+            className={cn(scrollAreaClasses, "bg-eerie-dark hidden md:block")}
+          >
+            {children}
+          </ScrollArea>
           <AnimatePresence>
             {isMainMenuOpen && (
               <>
@@ -149,11 +154,6 @@ const SideMenu: FC<Props> = (props) => {
               </>
             )}
           </AnimatePresence>
-          <ScrollArea
-            className={cn(scrollAreaClasses, "bg-eerie-dark hidden md:block")}
-          >
-            {children}
-          </ScrollArea>
         </>
       )}
     </>
