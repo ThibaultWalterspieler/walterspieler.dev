@@ -124,6 +124,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
     sql`DELETE FROM "main_menu_menu_items_locales" WHERE "_locale" = 'fr';`,
   );
 
+  // Delete French posts entirely
+  await db.execute(
+    sql`DELETE FROM "_blog_posts_v" WHERE "published_locale" = 'fr';`,
+  );
+  await db.execute(
+    sql`DELETE FROM "_experience_posts_v" WHERE "published_locale" = 'fr';`,
+  );
+
   // Step 2: Convert columns to text first
   await db.execute(sql`
   ALTER TABLE "users_locales" ALTER COLUMN "_locale" SET DATA TYPE text;
