@@ -14,7 +14,8 @@
     "lint": "next lint",
     "format": "prettier ./src --write",
     "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload",
-    "ci": "payload migrate && pnpm build"
+    "ci": "payload migrate && pnpm build",
+    "seed": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload run ./src/scripts/seed.ts"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "0.5.4",

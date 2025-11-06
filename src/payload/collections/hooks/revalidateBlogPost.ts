@@ -14,7 +14,11 @@ export const revalidateBlogPost: CollectionAfterChangeHook<BlogPost> = ({
 
     payload.logger.info(`Revalidating blog post at path: ${path}`);
 
-    revalidatePath(path);
+    try {
+      revalidatePath(path);
+    } catch (error) {
+      payload.logger.warn(`Could not revalidate path ${path}: ${error.message}`);
+    }
   }
 
   if (previousDoc?._status === "published" && doc._status !== "published") {
@@ -22,7 +26,11 @@ export const revalidateBlogPost: CollectionAfterChangeHook<BlogPost> = ({
 
     payload.logger.info(`Revalidating old blog post at path: ${oldPath}`);
 
-    revalidatePath(oldPath);
+    try {
+      revalidatePath(oldPath);
+    } catch (error) {
+      payload.logger.warn(`Could not revalidate path ${oldPath}: ${error.message}`);
+    }
   }
 
   return doc;

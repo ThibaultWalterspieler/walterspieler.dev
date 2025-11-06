@@ -11,7 +11,12 @@ export const revalidatePage: CollectionAfterChangeHook<Page> = ({
   const path = doc.slug === "home" ? "/" : `/${doc.slug}`;
   payload.logger.info(`Revalidating blog post at path: ${path}`);
 
-  revalidatePath(path);
+  try {
+    revalidatePath(path);
+  } catch (error) {
+    // Ignore revalidation errors during seeding or when not in Next.js context
+    payload.logger.warn(`Could not revalidate path ${path}: ${error.message}`);
+  }
 
   return doc;
 };
