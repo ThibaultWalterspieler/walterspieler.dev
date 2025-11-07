@@ -261,6 +261,34 @@ async function seed() {
       }
     }
 
+    console.log("\n🔗 Seeding socials...");
+    for (const social of data.socials) {
+      try {
+        const existingSocial = await payload.find({
+          collection: "socials",
+          where: {
+            name: {
+              equals: social.name,
+            },
+          },
+        });
+
+        if (existingSocial.docs.length > 0) {
+          console.log(`  ⏭️  Social link already exists: ${social.label}`);
+          continue;
+        }
+
+        await payload.create({
+          collection: "socials",
+          data: social,
+        });
+        console.log(`  ✅ Created social: ${social.label}`);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        console.error(`  ❌ Error creating social ${social.label}:`, message);
+      }
+    }
+
     console.log("\n📄 Seeding pages...");
     const allSocials = await payload.find({
       collection: "socials",
@@ -350,34 +378,6 @@ async function seed() {
             JSON.stringify((error as Error & { data: unknown }).data, null, 2),
           );
         }
-      }
-    }
-
-    console.log("\n🔗 Seeding socials...");
-    for (const social of data.socials) {
-      try {
-        const existingSocial = await payload.find({
-          collection: "socials",
-          where: {
-            name: {
-              equals: social.name,
-            },
-          },
-        });
-
-        if (existingSocial.docs.length > 0) {
-          console.log(`  ⏭️  Social link already exists: ${social.label}`);
-          continue;
-        }
-
-        await payload.create({
-          collection: "socials",
-          data: social,
-        });
-        console.log(`  ✅ Created social: ${social.label}`);
-      } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        console.error(`  ❌ Error creating social ${social.label}:`, message);
       }
     }
 
