@@ -8,20 +8,23 @@ import SideMenuContent from "@/components/common/side-menu-content";
 import { getDictionary } from "@/lib/i18n/utils";
 import config from "@payload-config";
 
-type Props = PropsWithChildren;
+type Props = PropsWithChildren<{ params: { slug?: string | string[] } }>;
 
 const BlogLayout = async (props: Props) => {
-  const { children } = props;
+  const { children, params } = props;
 
   const dictionary = await getDictionary();
 
   const blogPosts = await getBlogPosts();
+
+  const activeUid = Array.isArray(params?.slug) ? params.slug[0] : params?.slug;
 
   return (
     <>
       <SideMenu collection="blog" displayReturnButton isInner>
         <Suspense fallback={<LoadingSpinner />}>
           <SideMenuContent
+            activeUid={activeUid}
             collection="blog"
             data={blogPosts.docs.map((post) => ({
               title: post.title,
