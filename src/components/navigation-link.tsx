@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, use, useMemo } from "react";
+import { FC, use, useCallback } from "react";
 
 import {
   BoltIcon,
@@ -16,46 +16,51 @@ import Stud99 from "@/components/icons/company/stud-99";
 import { MenuContext } from "@/contexts/menu-context";
 import { cn } from "@/lib/utils";
 
-type Props = {
+export type NavigationLinkType =
+  | "home"
+  | "blog"
+  | "lab"
+  | "experiences"
+  | "contact"
+  | "99Stud"
+  | "other";
+
+const iconMap = {
+  home: BoltIcon,
+  blog: Sparkle,
+  experiences: DraftingCompass,
+  contact: Nfc,
+  "99Stud": Stud99,
+} as const;
+
+const NavigationLink: FC<{
   label: string;
   path: string;
-  type:
-    | "home"
-    | "blog"
-    | "lab"
-    | "experiences"
-    | "contact"
-    | "99Stud"
-    | "other";
+  type: NavigationLinkType;
   external?: boolean;
-};
-
-const NavigationLink: FC<Props> = (props) => {
+}> = (props) => {
   const { label, path, type, external } = props;
 
   const pathname = usePathname();
-  const { closeMainMenu = () => {} } = use(MenuContext) ?? {};
+  const menuContext = use(MenuContext);
+  const closeMainMenu = menuContext?.closeMainMenu;
 
-  const isActive = useMemo(() => {
-    let isActive = false;
-    if (path) {
-      const splittedPathname = pathname.split("/").filter(Boolean);
-      const splittedUrl = path.split("/").filter(Boolean);
-      if (splittedUrl.length === 0) {
-        isActive = splittedPathname.length === 0;
-      } else {
-        isActive = splittedUrl.every(
-          (part, index) => splittedPathname[index] === part,
-        );
-      }
-    }
+  const segmentedPathname = pathname.split("/").filter(Boolean);
+  const segmentedPath = path.split("/").filter(Boolean);
 
-    if (external) {
-      return false;
-    }
+  const isActive =
+    !external &&
+    (segmentedPath.length === 0
+      ? segmentedPathname.length === 0
+      : segmentedPath.every(
+          (part, index) => segmentedPathname[index] === part,
+        ));
 
-    return isActive;
-  }, [path, external, pathname]);
+  const handleClick = useCallback(() => {
+    closeMainMenu?.();
+  }, [closeMainMenu]);
+
+  const Icon = iconMap[type as keyof typeof iconMap];
 
   return (
     <Link
@@ -67,18 +72,12 @@ const NavigationLink: FC<Props> = (props) => {
         },
       )}
       href={path}
-      onClick={() => {
-        closeMainMenu();
-      }}
+      onClick={handleClick}
       rel={external ? "noreferrer nofollow" : undefined}
       target={external ? "_blank" : undefined}
     >
       <div className={cn("flex items-center gap-2 text-xl md:text-base")}>
-        {type === "home" && <BoltIcon className="w-4" />}
-        {type === "blog" && <Sparkle className="w-4" />}
-        {type === "experiences" && <DraftingCompass className="w-4" />}
-        {type === "99Stud" && <Stud99 className="w-4" />}
-        {type === "contact" && <Nfc className="w-4" />}
+        {Icon && <Icon className="w-4" />}
         <span className={cn("overflow-hidden text-ellipsis")}>{label}</span>
       </div>
       {type === "contact" && (

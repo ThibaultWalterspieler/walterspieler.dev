@@ -4,28 +4,22 @@ import { FC, use, useEffect } from "react";
 
 import { motion, useAnimation } from "motion/react";
 
+import {
+  PreparedNavigationLink,
+  prepareMainMenuItems,
+} from "@/components/common/prepare-main-menu-items";
 import NavigationLink from "@/components/navigation-link";
 import { MenuContext } from "@/contexts/menu-context";
 import { cn } from "@/lib/utils";
 import { MainMenu } from "@payload-types";
 
-type Props = {
-  items: MainMenu["menuItems"];
-};
-
-const getPath = (slug: string) => {
-  if (slug === "home") {
-    return "/";
-  }
-
-  return `/${slug || ""}`;
-};
-
-const MainMenuItems: FC<Props> = (props) => {
+const MainMenuItems: FC<{ items: MainMenu["menuItems"] }> = (props) => {
   const { items } = props;
 
   const { isMainMenuOpen: isMenuOpen } = use(MenuContext) ?? {};
   const controls = useAnimation();
+
+  const preparedItems: PreparedNavigationLink[] = prepareMainMenuItems(items);
 
   useEffect(() => {
     if (isMenuOpen) {
@@ -44,7 +38,7 @@ const MainMenuItems: FC<Props> = (props) => {
     }
   }, [controls, isMenuOpen]);
 
-  if (!items) return null;
+  if (preparedItems.length === 0) return null;
 
   return (
     <div
@@ -52,45 +46,29 @@ const MainMenuItems: FC<Props> = (props) => {
     >
       {/* Mobile */}
       <nav className={cn("flex h-full flex-col gap-3 pt-20 md:hidden md:pt-0")}>
-        {items.map((item, i) => {
-          if (typeof item.page !== "number") {
-            return (
-              <motion.div animate={controls} custom={i} key={item.label}>
-                <NavigationLink
-                  external={item.external || false}
-                  label={item.label || ""}
-                  path={
-                    !item.external
-                      ? getPath(item.page?.slug || "")
-                      : item.path || ""
-                  }
-                  type={item.type || ""}
-                />
-              </motion.div>
-            );
-          }
-        })}
+        {preparedItems.map((item, index) => (
+          <motion.div animate={controls} custom={index} key={item.id}>
+            <NavigationLink
+              external={item.external}
+              label={item.label}
+              path={item.path}
+              type={item.type}
+            />
+          </motion.div>
+        ))}
       </nav>
 
       {/* Desktop */}
       <nav className={cn("hidden h-full flex-col gap-3 pt-20 md:flex md:pt-0")}>
-        {items.map((item) => {
-          if (typeof item.page !== "number") {
-            return (
-              <NavigationLink
-                external={item.external || false}
-                key={item.id}
-                label={item.label || ""}
-                path={
-                  !item.external
-                    ? getPath(item.page?.slug || "")
-                    : item.path || ""
-                }
-                type={item.type || ""}
-              />
-            );
-          }
-        })}
+        {preparedItems.map((item) => (
+          <NavigationLink
+            external={item.external}
+            key={item.id}
+            label={item.label}
+            path={item.path}
+            type={item.type}
+          />
+        ))}
       </nav>
     </div>
   );
