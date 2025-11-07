@@ -8,7 +8,9 @@ import SideMenuContent from "@/components/common/side-menu-content";
 import { getDictionary } from "@/lib/i18n/utils";
 import config from "@payload-config";
 
-type Props = PropsWithChildren<{ params: { slug?: string | string[] } }>;
+type Props = PropsWithChildren<{
+  params: Promise<{ slug?: string | string[] }>;
+}>;
 
 const getExperiencePosts = async () => {
   const payload = await getPayload({
@@ -23,11 +25,13 @@ const getExperiencePosts = async () => {
 const ExperiencesLayout = async (props: Props) => {
   const { children, params } = props;
 
+  const { slug } = await params;
+
   const dictionary = await getDictionary();
 
   const experiencePosts = await getExperiencePosts();
 
-  const activeUid = Array.isArray(params?.slug) ? params.slug[0] : params?.slug;
+  const activeUid = Array.isArray(slug) ? slug[0] : slug;
 
   return (
     <>
