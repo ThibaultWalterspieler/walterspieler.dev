@@ -203,6 +203,7 @@ async function seed() {
 
         const postData = {
           ...post,
+          _status: "published" as const,
           meta: post.meta ? { ...post.meta, image: null } : undefined,
           mainImage: null,
           experience: experienceId,
@@ -245,6 +246,7 @@ async function seed() {
 
         const postData = {
           ...post,
+          _status: "published" as const,
           meta: post.meta ? { ...post.meta, image: null } : undefined,
           mainImage: null,
           authors: createdUsers.length > 0 ? [createdUsers[0].id] : [],
