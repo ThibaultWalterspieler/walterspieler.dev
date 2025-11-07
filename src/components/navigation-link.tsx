@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, use, useCallback } from "react";
+import { FC, use } from "react";
 
 import {
   BoltIcon,
@@ -43,9 +43,9 @@ const NavigationLink: FC<{
   const menuContext = use(MenuContext);
   const closeMainMenu = menuContext?.closeMainMenu;
 
-  const handleClick = useCallback(() => {
+  const handleClick = () => {
     closeMainMenu?.();
-  }, [closeMainMenu]);
+  };
 
   const Icon = iconMap[type as keyof typeof iconMap];
 
