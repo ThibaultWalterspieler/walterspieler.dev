@@ -87,6 +87,15 @@ type SeedData = {
 };
 
 async function seed() {
+  const env = process.env.NODE_ENV;
+
+  if (env !== "development") {
+    console.error("❌ Seed script can only be run in development environment.");
+    console.error(`Current environment: ${env || "undefined"}`);
+    console.error("Set NODE_ENV=development to run this script.");
+    process.exit(1);
+  }
+
   try {
     console.log("🌱 Starting database seed...\n");
 
