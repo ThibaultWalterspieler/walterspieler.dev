@@ -12,11 +12,7 @@ export const revalidateExperiencePost: CollectionAfterChangeHook<
 
     payload.logger.info(`Revalidating experience post at path: ${path}`);
 
-    try {
-      revalidatePath(path);
-    } catch (error) {
-      payload.logger.warn(`Could not revalidate path ${path}: ${error.message}`);
-    }
+    revalidatePath(path);
   }
 
   if (previousDoc?._status === "published" && doc._status !== "published") {
@@ -24,11 +20,7 @@ export const revalidateExperiencePost: CollectionAfterChangeHook<
 
     payload.logger.info(`Revalidating old experience post at path: ${oldPath}`);
 
-    try {
-      revalidatePath(oldPath);
-    } catch (error) {
-      payload.logger.warn(`Could not revalidate path ${oldPath}: ${error.message}`);
-    }
+    revalidatePath(oldPath);
   }
 
   return doc;

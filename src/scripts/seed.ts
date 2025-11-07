@@ -6,16 +6,84 @@
  */
 
 import { getPayload } from "payload";
-import config from "../payload.config.js";
+
+import config from "../payload.config";
 import seedData from "./seed-data.json" assert { type: "json" };
 
+import type {
+  BlogPost,
+  Experience,
+  ExperiencePost,
+  MainMenu,
+  Page,
+  Social,
+  User,
+} from "../payload/payload-types";
+
+type SeedUser = Omit<
+  User,
+  | "id"
+  | "updatedAt"
+  | "createdAt"
+  | "salt"
+  | "hash"
+  | "loginAttempts"
+  | "lockUntil"
+>;
+
+type SeedExperience = Omit<
+  Experience,
+  "id" | "updatedAt" | "createdAt" | "relatedExperiencePosts" | "companyLogo"
+> & {
+  companyLogo?: number | null;
+};
+
+type SeedExperiencePost = Omit<
+  ExperiencePost,
+  "id" | "updatedAt" | "createdAt" | "experience" | "mainImage" | "meta"
+> & {
+  experience?: number | null;
+  mainImage?: number | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: number | null;
+    tags?: { tag?: string | null; id?: string | null }[] | null;
+  } | null;
+};
+
+type SeedBlogPost = Omit<
+  BlogPost,
+  "id" | "updatedAt" | "createdAt" | "authors" | "mainImage" | "meta"
+> & {
+  authors?: number[] | null;
+  mainImage?: number | null;
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: number | null;
+    tags?: { tag?: string | null; id?: string | null }[] | null;
+  } | null;
+};
+
+type SeedPage = Omit<Page, "id" | "updatedAt" | "createdAt" | "meta"> & {
+  meta?: {
+    title?: string | null;
+    description?: string | null;
+    image?: number | null;
+    tags?: { tag?: string | null; id?: string | null }[] | null;
+  } | null;
+};
+
+type SeedSocial = Omit<Social, "id" | "updatedAt" | "createdAt">;
+
 type SeedData = {
-  users: any[];
-  experiences: any[];
-  experiencePosts: any[];
-  blogPosts: any[];
-  pages: any[];
-  socials: any[];
+  users: SeedUser[];
+  experiences: SeedExperience[];
+  experiencePosts: SeedExperiencePost[];
+  blogPosts: SeedBlogPost[];
+  pages: SeedPage[];
+  socials: SeedSocial[];
 };
 
 async function seed() {
@@ -26,7 +94,7 @@ async function seed() {
     const data = seedData as SeedData;
 
     console.log("👤 Seeding users...");
-    const createdUsers = [];
+    const createdUsers: User[] = [];
     for (const user of data.users) {
       try {
         const existingUser = await payload.find({
@@ -57,7 +125,7 @@ async function seed() {
     }
 
     console.log("\n💼 Seeding experiences...");
-    const createdExperiences = [];
+    const createdExperiences: Experience[] = [];
     for (const experience of data.experiences) {
       try {
         const existingExperience = await payload.find({
@@ -104,7 +172,7 @@ async function seed() {
           },
         });
 
-        let experienceId = null;
+        let experienceId: number | undefined;
         if (post.slug.includes("studio-99")) {
           const exp = createdExperiences.find(
             (e) => e.companyName === "Studio 99",
@@ -117,9 +185,16 @@ async function seed() {
           experienceId = exp?.id;
         }
 
-        const postData: any = {
+        if (!experienceId) {
+          console.log(
+            `  ⏭️  Skipping experience post ${post.title} - no matching experience found`,
+          );
+          continue;
+        }
+
+        const postData = {
           ...post,
-          meta: post.meta ? { ...post.meta, image: null } : { image: null },
+          meta: post.meta ? { ...post.meta, image: null } : undefined,
           mainImage: null,
           experience: experienceId,
         };
@@ -159,9 +234,9 @@ async function seed() {
           },
         });
 
-        const postData: any = {
+        const postData = {
           ...post,
-          meta: post.meta ? { ...post.meta, image: null } : { image: null },
+          meta: post.meta ? { ...post.meta, image: null } : undefined,
           mainImage: null,
           authors: createdUsers.length > 0 ? [createdUsers[0].id] : [],
         };
@@ -211,9 +286,9 @@ async function seed() {
         });
 
         if (existingPage.docs.length > 0) {
-          const pageData: any = { ...page };
+          const pageData = { ...page };
           if (pageData.content) {
-            pageData.content = pageData.content.map((block: any) => {
+            pageData.content = pageData.content.map((block) => {
               if (block.blockType === "MySocials") {
                 return { ...block, socials: socialIds };
               }
@@ -224,11 +299,9 @@ async function seed() {
             });
           }
 
-          const updateData: any = {
+          const updateData = {
             ...pageData,
-            meta: pageData.meta
-              ? { ...pageData.meta, image: null }
-              : { image: null },
+            meta: pageData.meta ? { ...pageData.meta, image: null } : undefined,
           };
 
           await payload.update({
@@ -239,9 +312,9 @@ async function seed() {
 
           console.log(`  🔄 Updated page: ${page.title}`);
         } else {
-          const pageData: any = { ...page };
+          const pageData = { ...page };
           if (pageData.content) {
-            pageData.content = pageData.content.map((block: any) => {
+            pageData.content = pageData.content.map((block) => {
               if (block.blockType === "MySocials") {
                 return { ...block, socials: socialIds };
               }
@@ -252,11 +325,9 @@ async function seed() {
             });
           }
 
-          const createData: any = {
+          const createData = {
             ...pageData,
-            meta: pageData.meta
-              ? { ...pageData.meta, image: null }
-              : { image: null },
+            meta: pageData.meta ? { ...pageData.meta, image: null } : undefined,
           };
 
           await payload.create({
@@ -269,10 +340,14 @@ async function seed() {
       } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
         console.error(`  ❌ Error seeding page ${page.title}:`, message);
-        if (error instanceof Error && "data" in error) {
+        if (
+          error instanceof Error &&
+          "data" in error &&
+          error.data !== undefined
+        ) {
           console.error(
             "  Error details:",
-            JSON.stringify((error as any).data, null, 2),
+            JSON.stringify((error as Error & { data: unknown }).data, null, 2),
           );
         }
       }
@@ -329,37 +404,37 @@ async function seed() {
         where: { slug: { equals: "about" } },
       });
 
-      const menuData: any = {
+      const menuData: Partial<MainMenu> = {
         menuItems: [
           {
             label: "Home",
             type: "home" as const,
             external: false,
-            page: homePage.docs[0]?.id || null,
+            page: homePage.docs[0]?.id ?? null,
           },
           {
             label: "Blog",
             type: "blog" as const,
             external: false,
-            page: blogPage.docs[0]?.id || null,
+            page: blogPage.docs[0]?.id ?? null,
           },
           {
             label: "Experiences",
             type: "experiences" as const,
             external: false,
-            page: experiencesPage.docs[0]?.id || null,
+            page: experiencesPage.docs[0]?.id ?? null,
           },
           {
             label: "Open Source",
             type: "lab" as const,
             external: false,
-            page: openSourcePage.docs[0]?.id || null,
+            page: openSourcePage.docs[0]?.id ?? null,
           },
           {
             label: "About",
             type: "other" as const,
             external: false,
-            page: aboutPage.docs[0]?.id || null,
+            page: aboutPage.docs[0]?.id ?? null,
           },
         ],
       };
