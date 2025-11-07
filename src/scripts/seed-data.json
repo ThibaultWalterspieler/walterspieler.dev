@@ -584,6 +584,7 @@
   ],
   "experiencePosts": [
     {
+      "companyName": "Studio 99",
       "slug": "tech-lead-studio-99",
       "title": "Tech Lead & Full Stack Developer",
       "description": "Leading development teams and architecting scalable web applications using modern technologies.",
@@ -655,6 +656,7 @@
       ]
     },
     {
+      "companyName": "Freelance",
       "slug": "freelance-developer",
       "title": "Freelance Full Stack Developer",
       "description": "Delivering custom web solutions for clients across various industries.",

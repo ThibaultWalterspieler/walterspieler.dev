@@ -42,6 +42,7 @@ type SeedExperiencePost = Omit<
   ExperiencePost,
   "id" | "updatedAt" | "createdAt" | "experience" | "mainImage" | "meta"
 > & {
+  companyName: string;
   experience?: number | null;
   mainImage?: number | null;
   meta?: {
@@ -181,32 +182,25 @@ async function seed() {
           },
         });
 
-        let experienceId: number | undefined;
-        if (post.slug.includes("studio-99")) {
-          const exp = createdExperiences.find(
-            (e) => e.companyName === "Studio 99",
-          );
-          experienceId = exp?.id;
-        } else if (post.slug.includes("freelance")) {
-          const exp = createdExperiences.find(
-            (e) => e.companyName === "Freelance",
-          );
-          experienceId = exp?.id;
-        }
+        const experience = createdExperiences.find(
+          (e) => e.companyName === post.companyName,
+        );
 
-        if (!experienceId) {
+        if (!experience) {
           console.log(
-            `  ⏭️  Skipping experience post ${post.title} - no matching experience found`,
+            `  ⏭️  Skipping experience post ${post.title} - no matching experience found for company: ${post.companyName}`,
           );
           continue;
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { companyName, ...postDataWithoutCompany } = post;
         const postData = {
-          ...post,
+          ...postDataWithoutCompany,
           _status: "published" as const,
           meta: post.meta ? { ...post.meta, image: null } : undefined,
           mainImage: null,
-          experience: experienceId,
+          experience: experience.id,
         };
 
         if (existingPost.docs.length > 0) {
