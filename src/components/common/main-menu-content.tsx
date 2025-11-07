@@ -4,12 +4,7 @@ import MainMenuItems from "@/components/common/main-menu-items";
 import MiscMenu from "@/components/misc-menu";
 import { MainMenu, Me } from "@payload-types";
 
-type Props = {
-  me: Me;
-  mainMenu: MainMenu;
-};
-
-const MainMenuContent: FC<Props> = async (props) => {
+const MainMenuContent: FC<{ me: Me; mainMenu: MainMenu }> = (props) => {
   const { me, mainMenu } = props;
 
   return (

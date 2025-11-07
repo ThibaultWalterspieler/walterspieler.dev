@@ -404,10 +404,6 @@ async function seed() {
         collection: "pages",
         where: { slug: { equals: "open-source" } },
       });
-      const aboutPage = await payload.find({
-        collection: "pages",
-        where: { slug: { equals: "about" } },
-      });
 
       const menuData: Partial<MainMenu> = {
         menuItems: [
@@ -434,12 +430,6 @@ async function seed() {
             type: "lab" as const,
             external: false,
             page: openSourcePage.docs[0]?.id ?? null,
-          },
-          {
-            label: "About",
-            type: "other" as const,
-            external: false,
-            page: aboutPage.docs[0]?.id ?? null,
           },
         ],
       };

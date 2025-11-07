@@ -532,54 +532,6 @@
           }
         }
       ]
-    },
-    {
-      "slug": "about",
-      "title": "About",
-      "meta": {
-        "title": "About - Thibault Walterspieler",
-        "description": "Learn more about Thibault Walterspieler, a software engineer passionate about building innovative web applications and contributing to open-source."
-      },
-      "content": [
-        {
-          "blockType": "Paragraph",
-          "paragraph": {
-            "root": {
-              "type": "root",
-              "children": [
-                {
-                  "type": "paragraph",
-                  "children": [
-                    {
-                      "type": "text",
-                      "text": "I'm a software engineer with a passion for building innovative web applications. My journey in tech started several years ago, and I've been continuously learning and growing ever since."
-                    }
-                  ]
-                }
-              ]
-            }
-          }
-        },
-        {
-          "blockType": "Paragraph",
-          "paragraph": {
-            "root": {
-              "type": "root",
-              "children": [
-                {
-                  "type": "paragraph",
-                  "children": [
-                    {
-                      "type": "text",
-                      "text": "When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing my knowledge through technical writing and mentoring."
-                    }
-                  ]
-                }
-              ]
-            }
-          }
-        }
-      ]
     }
   ],
   "experiencePosts": [
