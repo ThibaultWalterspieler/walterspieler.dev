@@ -24,4 +24,3 @@ export const menuLinkBaseClasses =
 
 export const menuLinkHighlightClasses =
   "before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-lg before:bg-chinese-black before:opacity-0 before:transition-opacity before:duration-500 before:content-['']";
-

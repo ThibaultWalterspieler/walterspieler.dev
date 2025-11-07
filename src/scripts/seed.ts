@@ -12,6 +12,7 @@ import seedData from "./seed-data.json" assert { type: "json" };
 
 import type {
   BlogPost,
+  Config,
   Experience,
   ExperiencePost,
   MainMenu,
@@ -87,6 +88,58 @@ type SeedData = {
   socials: SeedSocial[];
 };
 
+type CollectionSlug = keyof Config["collections"];
+type PayloadInstance = Awaited<ReturnType<typeof getPayload>>;
+
+const purgeOrder: Array<{ slug: CollectionSlug; label: string }> = [
+  { slug: "pages", label: "pages" },
+  { slug: "experiencePosts", label: "experience posts" },
+  { slug: "experiences", label: "experiences" },
+  { slug: "blogPosts", label: "blog posts" },
+  { slug: "socials", label: "socials" },
+];
+
+const purgeExistingData = async (payload: PayloadInstance) => {
+  console.log("\n🗑️ Purging existing data (except users)...");
+
+  for (const { slug, label } of purgeOrder) {
+    let totalDeleted = 0;
+
+    try {
+      while (true) {
+        const result = await payload.find({
+          collection: slug,
+          limit: 100,
+          depth: 0,
+        });
+
+        if (result.docs.length === 0) {
+          break;
+        }
+
+        for (const doc of result.docs) {
+          try {
+            await payload.delete({
+              collection: slug,
+              id: doc.id,
+            });
+            totalDeleted += 1;
+          } catch (error) {
+            const message =
+              error instanceof Error ? error.message : String(error);
+            console.error(`  ❌ Error deleting ${label} ${doc.id}:`, message);
+          }
+        }
+      }
+
+      console.log(`  🗑️  Deleted ${totalDeleted} ${label}`);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.error(`  ❌ Error purging ${label}:`, message);
+    }
+  }
+};
+
 async function seed() {
   const env = process.env.NODE_ENV;
 
@@ -101,6 +154,7 @@ async function seed() {
     console.log("🌱 Starting database seed...\n");
 
     const payload = await getPayload({ config });
+    await purgeExistingData(payload);
     const data = seedData as SeedData;
 
     console.log("👤 Seeding users...");
@@ -400,9 +454,9 @@ async function seed() {
         collection: "pages",
         where: { slug: { equals: "experiences" } },
       });
-      const openSourcePage = await payload.find({
+      const studPage = await payload.find({
         collection: "pages",
-        where: { slug: { equals: "open-source" } },
+        where: { slug: { equals: "99Stud" } },
       });
 
       const menuData: Partial<MainMenu> = {
@@ -426,10 +480,10 @@ async function seed() {
             page: experiencesPage.docs[0]?.id ?? null,
           },
           {
-            label: "Open Source",
-            type: "lab" as const,
+            label: "99Stud",
+            type: "99Stud" as const,
             external: false,
-            page: openSourcePage.docs[0]?.id ?? null,
+            page: studPage.docs[0]?.id ?? null,
           },
         ],
       };

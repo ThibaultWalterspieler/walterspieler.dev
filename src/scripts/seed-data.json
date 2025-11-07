@@ -486,11 +486,11 @@
       ]
     },
     {
-      "slug": "open-source",
-      "title": "Open Source",
+      "slug": "99Stud",
+      "title": "99Stud",
       "meta": {
-        "title": "Open Source - Thibault Walterspieler",
-        "description": "Explore my open-source contributions, projects, and packages. Discover tools and libraries I've built and contributed to the developer community."
+        "title": "99Stud Collective - Freelance Web Developers & Artists",
+        "description": "Explore 99Stud, the collective of freelance web developers and artists crafting digital experiences."
       },
       "content": [
         {
@@ -504,7 +504,7 @@
                   "children": [
                     {
                       "type": "text",
-                      "text": "Open source is at the heart of modern software development. I actively contribute to the community through various projects, libraries, and tools."
+                      "text": "We're a collective of freelance web developers && artists."
                     }
                   ]
                 }
@@ -523,7 +523,117 @@
                   "children": [
                     {
                       "type": "text",
-                      "text": "From creating utility packages to contributing to major frameworks, I believe in giving back to the community that has helped me grow as a developer. Check out my GitHub profile to explore my latest contributions and projects."
+                      "text": "Members:"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "- Alex Mongeot (Fullstack engineer)"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "- Romain Braccini aka Blansable (3D artist)"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "- Roman Verne aka Hervey (3D artist)"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "- Clément Hurier (Art director / 3d artist)"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "- Tanguy Drobniewski (sound designer / musician)"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "- Thibault Walterspieler"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Follow us on"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Linkedin"
+                    }
+                  ]
+                },
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Instagram"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Building things on 99stud.com..."
                     }
                   ]
                 }
@@ -712,11 +822,6 @@
       {
         "label": "Experiences",
         "type": "experiences",
-        "external": false
-      },
-      {
-        "label": "Open Source",
-        "type": "lab",
         "external": false
       },
       {
