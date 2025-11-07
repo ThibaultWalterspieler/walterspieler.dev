@@ -13,7 +13,6 @@ export const revalidateBlogPost: CollectionAfterChangeHook<BlogPost> = ({
     const path = `/blog/${doc.slug}`;
 
     payload.logger.info(`Revalidating blog post at path: ${path}`);
-
     revalidatePath(path);
   }
 

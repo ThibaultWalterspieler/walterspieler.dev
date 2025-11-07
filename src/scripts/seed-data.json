@@ -1,0 +1,777 @@
+{
+  "users": [
+    {
+      "email": "admin@walterspieler.dev",
+      "password": "admin123456",
+      "fullName": "Thibault Walterspieler",
+      "role": "Full Stack Developer & Tech Lead",
+      "website": "https://walterspieler.dev",
+      "owner": true
+    }
+  ],
+  "blogPosts": [
+    {
+      "slug": "getting-started-with-nextjs-15",
+      "title": "Getting Started with Next.js 15",
+      "description": "Learn how to build modern web applications with Next.js 15 and React Server Components.",
+      "content": [
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Next.js 15 brings exciting new features and improvements that make building web applications faster and more efficient than ever before."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Quote",
+          "quote": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "quote",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Next.js 15 represents a major leap forward in web development, making it easier than ever to build fast, modern applications."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Let's start by creating a new Next.js 15 project. You can use any package manager you prefer:"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "ScriptCopyBtn",
+          "showMultiplePackageOptions": true,
+          "codeLanguage": "shell",
+          "commandMap": {
+            "npm": "npx create-next-app@latest my-nextjs-app",
+            "pnpm": "pnpm create next-app my-nextjs-app",
+            "yarn": "yarn create next-app my-nextjs-app",
+            "bun": "bunx create-next-app my-nextjs-app"
+          }
+        },
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Once installed, you can start building with React Server Components. Here's a simple example:"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Code",
+          "code": {
+            "code": "// app/page.tsx\nexport default async function Home() {\n  // Fetch data directly in the component\n  const data = await fetch('https://api.example.com/data');\n  const json = await data.json();\n  \n  return (\n    <main>\n      <h1>Welcome to Next.js 15</h1>\n      <p>Data: {json.message}</p>\n    </main>\n  );\n}",
+            "language": "typescript"
+          }
+        },
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "This approach eliminates the need for useEffect hooks and loading states for data fetching at the page level."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "slug": "typescript-best-practices-2024",
+      "title": "TypeScript Best Practices for 2024",
+      "description": "Discover the best practices and patterns for writing maintainable TypeScript code in modern applications.",
+      "content": [
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "TypeScript has become the de facto standard for building scalable JavaScript applications. Here are the best practices you should follow in 2024."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Code",
+          "code": {
+            "code": "// ✅ Good: Use strict type definitions\ninterface User {\n  id: string;\n  name: string;\n  email: string;\n  role: 'admin' | 'user' | 'guest';\n}\n\n// ✅ Good: Use type guards\nfunction isAdmin(user: User): user is User & { role: 'admin' } {\n  return user.role === 'admin';\n}",
+            "language": "typescript"
+          }
+        },
+        {
+          "blockType": "Quote",
+          "quote": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "quote",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "The key to great TypeScript code is leveraging the type system to catch errors at compile time, not runtime."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "slug": "payload-cms-complete-guide",
+      "title": "Payload CMS: A Complete Guide",
+      "description": "Everything you need to know about building headless CMS solutions with Payload.",
+      "content": [
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Payload CMS is a powerful, flexible headless CMS that gives you complete control over your content and data structures."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "ScriptCopyBtn",
+          "showMultiplePackageOptions": true,
+          "codeLanguage": "shell",
+          "commandMap": {
+            "npm": "npx create-payload-app@latest",
+            "pnpm": "pnpm create payload-app",
+            "yarn": "yarn create payload-app"
+          }
+        },
+        {
+          "blockType": "Code",
+          "code": {
+            "code": "import { buildConfig } from 'payload';\n\nexport default buildConfig({\n  collections: [\n    // Your collections here\n  ],\n});",
+            "language": "typescript"
+          }
+        },
+        {
+          "blockType": "Quote",
+          "quote": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "quote",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Payload CMS provides the perfect balance between flexibility and developer experience."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "experiences": [
+    {
+      "companyName": "Studio 99",
+      "companyDescription": "Digital agency specializing in web and mobile development",
+      "companyWebsite": "https://wearestudio99.fr",
+      "startDate": "2020-01-01T00:00:00.000Z",
+      "usedTechnologies": [
+        { "technology": "Next.js" },
+        { "technology": "TypeScript" },
+        { "technology": "React" },
+        { "technology": "Node.js" }
+      ]
+    },
+    {
+      "companyName": "Freelance",
+      "companyDescription": "Independent consulting and development work",
+      "startDate": "2018-06-01T00:00:00.000Z",
+      "endDate": "2019-12-31T00:00:00.000Z",
+      "usedTechnologies": [
+        { "technology": "JavaScript" },
+        { "technology": "React" },
+        { "technology": "Vue.js" }
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "slug": "home",
+      "title": "Home",
+      "meta": {
+        "title": "Thibault Walterspieler - Full Stack Developer",
+        "description": "Portfolio of Thibault Walterspieler, a passionate full-stack developer specializing in Next.js, React, TypeScript, and modern web technologies."
+      },
+      "content": [
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Welcome to my portfolio! I'm a passionate full-stack developer specializing in modern web technologies. With expertise in Next.js, React, TypeScript, and Node.js, I build scalable and performant web applications."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Quote",
+          "quote": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "quote",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Code is like humor. When you have to explain it, it's bad."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "I have a strong focus on creating exceptional user experiences, writing clean and maintainable code, and staying up-to-date with the latest web development trends and best practices."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Code",
+          "code": {
+            "code": "const greeting = (name: string): string => {\n  return `Hello, ${name}! Welcome to my portfolio.`;\n};\n\nconsole.log(greeting('World'));",
+            "language": "typescript"
+          }
+        },
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Explore my blog for technical articles, check out my experience working with various companies, or browse through my open-source contributions."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "MySocials"
+        }
+      ]
+    },
+    {
+      "slug": "blog",
+      "title": "Blog",
+      "meta": {
+        "title": "Blog - Thibault Walterspieler",
+        "description": "Technical articles about web development, Next.js, React, TypeScript, and modern JavaScript. Learn from real-world experiences and best practices."
+      },
+      "content": [
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Welcome to my blog! Here you'll find technical articles covering modern web development practices, in-depth tutorials, and insights from real-world projects."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "I write about Next.js, React, TypeScript, performance optimization, and best practices I've learned throughout my career. Select an article from the sidebar to start reading!"
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Quote",
+          "quote": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "quote",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Learning is a continuous journey. Every article I write helps me solidify my understanding and share knowledge with the community."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "slug": "experiences",
+      "title": "Experiences",
+      "meta": {
+        "title": "Experiences - Thibault Walterspieler",
+        "description": "Explore my professional journey and the companies I've worked with. Discover projects, technologies, and insights from my career as a full-stack developer."
+      },
+      "content": [
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Throughout my career, I've had the opportunity to work with amazing companies and teams, building products that make a real impact."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "From leading development teams to architecting scalable solutions, each experience has shaped my approach to software development."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Experience"
+        }
+      ]
+    },
+    {
+      "slug": "open-source",
+      "title": "Open Source",
+      "meta": {
+        "title": "Open Source - Thibault Walterspieler",
+        "description": "Explore my open-source contributions, projects, and packages. Discover tools and libraries I've built and contributed to the developer community."
+      },
+      "content": [
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Open source is at the heart of modern software development. I actively contribute to the community through various projects, libraries, and tools."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "From creating utility packages to contributing to major frameworks, I believe in giving back to the community that has helped me grow as a developer. Check out my GitHub profile to explore my latest contributions and projects."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "slug": "about",
+      "title": "About",
+      "meta": {
+        "title": "About - Thibault Walterspieler",
+        "description": "Learn more about Thibault Walterspieler, a software engineer passionate about building innovative web applications and contributing to open-source."
+      },
+      "content": [
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "I'm a software engineer with a passion for building innovative web applications. My journey in tech started several years ago, and I've been continuously learning and growing ever since."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "When I'm not coding, you can find me exploring new technologies, contributing to open-source projects, or sharing my knowledge through technical writing and mentoring."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "experiencePosts": [
+    {
+      "companyName": "Studio 99",
+      "slug": "tech-lead-studio-99",
+      "title": "Tech Lead & Full Stack Developer",
+      "description": "Leading development teams and architecting scalable web applications using modern technologies.",
+      "content": [
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "At Studio 99, I lead development teams in creating innovative web and mobile applications. My role involves technical architecture, code reviews, and mentoring junior developers."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Key achievements include migrating legacy systems to modern stacks, implementing CI/CD pipelines, and improving application performance by 60%."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Code",
+          "code": {
+            "code": "// Example architecture pattern used at Studio 99\nimport { NextRequest, NextResponse } from 'next/server';\n\nexport async function middleware(request: NextRequest) {\n  const session = await getSession(request);\n  \n  if (!session) {\n    return NextResponse.redirect('/login');\n  }\n  \n  return NextResponse.next();\n}",
+            "language": "typescript"
+          }
+        },
+        {
+          "blockType": "Quote",
+          "quote": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "quote",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Leading a team taught me that great code is written by great teams, not just great individuals."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "companyName": "Freelance",
+      "slug": "freelance-developer",
+      "title": "Freelance Full Stack Developer",
+      "description": "Delivering custom web solutions for clients across various industries.",
+      "content": [
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "As a freelance developer, I worked with startups and established companies to build custom web applications tailored to their specific needs."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Paragraph",
+          "paragraph": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "paragraph",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Projects ranged from e-commerce platforms to SaaS applications, utilizing React, Vue.js, Node.js, and various cloud services."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        {
+          "blockType": "Code",
+          "code": {
+            "code": "// Reusable component pattern from freelance projects\nimport { useState, useCallback } from 'react';\n\nfunction useAsync<T>(asyncFn: () => Promise<T>) {\n  const [loading, setLoading] = useState(false);\n  const [error, setError] = useState<Error | null>(null);\n  const [data, setData] = useState<T | null>(null);\n\n  const execute = useCallback(async () => {\n    setLoading(true);\n    try {\n      const result = await asyncFn();\n      setData(result);\n    } catch (err) {\n      setError(err as Error);\n    } finally {\n      setLoading(false);\n    }\n  }, [asyncFn]);\n\n  return { data, loading, error, execute };\n}",
+            "language": "typescript"
+          }
+        },
+        {
+          "blockType": "Quote",
+          "quote": {
+            "root": {
+              "type": "root",
+              "children": [
+                {
+                  "type": "quote",
+                  "children": [
+                    {
+                      "type": "text",
+                      "text": "Freelancing taught me the importance of clear communication and delivering value beyond just code."
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "socials": [
+    {
+      "name": "github",
+      "label": "GitHub",
+      "link": "https://github.com/twalterspieler"
+    },
+    {
+      "name": "linkedin",
+      "label": "LinkedIn",
+      "link": "https://linkedin.com/in/twalterspieler"
+    },
+    {
+      "name": "twitter",
+      "label": "Twitter",
+      "link": "https://twitter.com/twalterspieler"
+    }
+  ],
+  "mainMenu": {
+    "menuItems": [
+      {
+        "label": "Home",
+        "type": "home",
+        "external": false
+      },
+      {
+        "label": "Blog",
+        "type": "blog",
+        "external": false
+      },
+      {
+        "label": "Experiences",
+        "type": "experiences",
+        "external": false
+      },
+      {
+        "label": "Open Source",
+        "type": "lab",
+        "external": false
+      },
+      {
+        "label": "99Stud",
+        "type": "99Stud",
+        "external": false
+      }
+    ]
+  }
+}

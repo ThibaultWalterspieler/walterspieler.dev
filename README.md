@@ -81,7 +81,44 @@ Edit `.env.local` and provide values for:
 
 ### Database Setup
 
-The application uses PostgreSQL with Payload CMS. Make sure you have a PostgreSQL database running and accessible via the `DATABASE_URI` in your `.env.local` file.
+The application uses PostgreSQL with Payload CMS. You can use Docker Compose to run PostgreSQL locally:
+
+```bash
+# Start PostgreSQL database
+docker compose up -d
+
+# Stop the database
+docker compose down
+
+# Stop and remove volumes (warning: this will delete all data)
+docker compose down -v
+```
+
+The Docker Compose configuration creates a PostgreSQL database with:
+
+- Database name: `payload`
+- Username: `payload`
+- Password: `payload`
+- Port: `5432`
+
+Add the following to your `.env` file:
+
+```bash
+DATABASE_URI=postgres://payload:payload@localhost:5432/payload
+PAYLOAD_SECRET=<generate-with-openssl-rand-base64-32>
+```
+
+Generate a secure `PAYLOAD_SECRET`:
+
+```bash
+openssl rand -base64 32
+```
+
+After setting up the database, run migrations:
+
+```bash
+pnpm payload migrate
+```
 
 ### Dependency Installation
 
@@ -104,6 +141,24 @@ Also, for easier dependency updating, you should use the pnpm interactive mode:
 ```bash
 pnpm up -i -L
 ```
+
+### Database Seeding (Optional)
+
+After running migrations, you can optionally seed the database with sample data:
+
+```bash
+pnpm seed
+```
+
+This will create:
+
+- A default admin user (email: `admin@walterspieler.dev`, password: `admin123456`)
+- Sample blog posts
+- Sample experiences
+- Sample pages
+- Sample social links
+
+**Note:** The seed script will skip any data that already exists (checked by slug/email), so it's safe to run multiple times.
 
 ## Running the Application
 

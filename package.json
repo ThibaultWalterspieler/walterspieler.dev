@@ -11,10 +11,11 @@
     "dev": "next dev -p 2499 --turbo",
     "build": "next build",
     "start": "next start -p 2499",
-    "lint": "next lint",
+    "lint": "eslint .",
     "format": "prettier ./src --write",
     "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload",
-    "ci": "payload migrate && pnpm build"
+    "ci": "payload migrate && pnpm build",
+    "seed": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=src/payload.config.ts payload run ./src/scripts/seed.ts"
   },
   "dependencies": {
     "@formatjs/intl-localematcher": "0.5.4",
@@ -63,12 +64,13 @@
     "@types/node": "22.14.0",
     "@types/react": "19.1.13",
     "@types/react-dom": "19.1.9",
-    "eslint": "9.35.0",
-    "eslint-config-next": "15.5.3",
+    "eslint": "9.39.1",
+    "eslint-config-next": "^16",
+    "eslint-config-prettier": "^10.1.8",
     "postcss": "8.5.6",
     "prettier": "3.6.2",
-    "prettier-plugin-tailwindcss": "0.6.14",
-    "typescript": "5.9.2"
+    "prettier-plugin-tailwindcss": "0.7.1",
+    "typescript": "5.9.3"
   },
   "packageManager": "pnpm@10.16.1",
   "type": "module"
