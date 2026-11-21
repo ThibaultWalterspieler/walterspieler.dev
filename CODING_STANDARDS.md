@@ -9,7 +9,7 @@ These were derived from the code as it stood in November 2026. A rule the owner 
 - **A route handler treats its body as untrusted**: it types every field `unknown` and keeps only the shapes it expects, answering 400 otherwise. See `RevalidatePayload` and `collectPaths` in `src/app/(frontend)/api/revalidate/route.ts`.
 - **An endpoint that changes server state checks a secret from the environment**, sent as `Authorization: Bearer`. See `/api/revalidate` and its caller `triggerRevalidation.ts`. (Today the route skips the check when `NEXT_REVALIDATE_SECRET` is unset.)
 - **Server code reads the CMS through the Local API, which skips access control**, so it filters what a visitor may see itself: published posts only (`_status: { equals: "published" }`), as `src/app/sitemap.ts` does. The blog and experience layouts and post pages don't yet, and show drafts.
-- **A collection opens public reads on purpose** with `access: { read: () => true }` (`blog-posts.ts`); without it the REST and GraphQL APIs stay admin-only (`pages.ts`, `socials.ts`, `users.ts`).
+- **A collection opens public reads on purpose** with `access: { read: () => true }` (`blog-posts.ts`); without it the REST and GraphQL APIs need a logged-in user, which here means an admin, since `users` is the only auth collection (`pages.ts`, `socials.ts`, `users.ts`).
 - **CMS text reaches `dangerouslySetInnerHTML` escaped.** See `escapeHtml` in `src/lib/payload/lexical/Serialize.tsx`. The JSON-LD scripts (`JSON.stringify` of Me fields) and the `ScriptCopyBtn` fallback `<pre>` don't escape yet.
 
 ## Public pages keep rendering

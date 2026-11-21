@@ -120,6 +120,15 @@ After setting up the database, run migrations:
 pnpm payload migrate
 ```
 
+### Changing the Schema
+
+After changing a collection, global or block, generate the migration and the types, and commit both with the change:
+
+```bash
+pnpm payload migrate:create <name>
+pnpm payload generate:types
+```
+
 ### Dependency Installation
 
 Install necessary project dependencies:

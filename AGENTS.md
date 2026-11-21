@@ -1,7 +1,7 @@
 ## Where things are
 
 - **Check your work**: `pnpm check`, then prove the behaviour in the running app with the `verify-walterspieler-dev` skill.
-- **Payload schema** (collections, globals, blocks): what ships with a change, and the commands that generate it, are in `CODING_STANDARDS.md`, "Payload and data". Setting up a local database is in the `verify-walterspieler-dev` skill, "Launch".
+- **Payload schema** (collections, globals, blocks): the migration and type commands are in `README.md`, "Changing the Schema". Setting up a local database is in the `verify-walterspieler-dev` skill, "Launch": the README's `pnpm payload migrate` fails on an empty database.
 - **Before touching caching or revalidation** (`revalidate`, `generateStaticParams`, the hooks in `src/payload/collections/hooks/`, `/api/revalidate`): read the "Revalidation" section of `.claude/skills/verify-walterspieler-dev/features.md`.
 - **Reviewing a diff**: `CODING_STANDARDS.md` holds the judgement calls; ESLint and Prettier hold the rest.
 - **Which skill for which step**: `docs/agents/workflow.md`.

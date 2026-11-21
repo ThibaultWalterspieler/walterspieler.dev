@@ -46,7 +46,7 @@ Type the review step in full, `/mattpocock-skills:code-review`: Claude Code also
 | `GLOSSARY.md`         | agents before exploring    | The project's words.                                           |
 | `docs/adr/`           | agents working in the area | Hard-to-reverse decisions and why. Created with the first one. |
 | `CODING_STANDARDS.md` | the reviewer               | Judgement calls tooling cannot enforce.                        |
-| `README.md`           | humans and agents          | Setup, database, migrations and seeding commands.              |
+| `README.md`           | humans and agents          | Setup and schema commands. Local database: the verify skill.   |
 | `.claude/skills/`     | agents, on demand          | Repo-specific procedures: verifying, harsh review.             |
 | `docs/agents/`        | the skills                 | Tracker, labels, domain-doc layout, and this map.              |
 
