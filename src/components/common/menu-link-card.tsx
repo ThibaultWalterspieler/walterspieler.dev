@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, PropsWithChildren, useEffect, useState } from "react";
+import { FC, PropsWithChildren, useSyncExternalStore } from "react";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,6 +20,8 @@ type Props = PropsWithChildren<{
   onClick?: () => void;
 }>;
 
+const subscribeNoop = () => () => {};
+
 export const MenuLinkCard: FC<Props> = (props) => {
   const {
     children,
@@ -31,16 +33,17 @@ export const MenuLinkCard: FC<Props> = (props) => {
   } = props;
 
   const pathname = usePathname();
-  const [clientPathname, setClientPathname] = useState<string | null>(null);
-
-  useEffect(() => {
-    setClientPathname(pathname);
-  }, [pathname]);
+  // Server render and hydration see no pathname, so active state only appears on the client.
+  const isHydrated = useSyncExternalStore(
+    subscribeNoop,
+    () => true,
+    () => false,
+  );
 
   const isActive =
     typeof isActiveProp === "boolean"
       ? isActiveProp
-      : isMenuPathActive(clientPathname ?? "", href, { external });
+      : isMenuPathActive(isHydrated ? pathname : "", href, { external });
 
   const handleClick = () => {
     onClick?.();
