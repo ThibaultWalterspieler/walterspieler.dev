@@ -11,6 +11,7 @@ import * as migration_20241231_093638_add_support_for_all_shiki_supported_langs 
 import * as migration_20241231_134733_add_tweet_card_block from './20241231_134733_add_tweet_card_block';
 import * as migration_20250916_132141_remove_fr from './20250916_132141_remove_fr';
 import * as migration_20261121_010248_payload_3_94 from './20261121_010248_payload_3_94';
+import * as migration_20261121_010452_shiki_4_languages from './20261121_010452_shiki_4_languages';
 
 export const migrations = [
   {
@@ -76,6 +77,11 @@ export const migrations = [
   {
     up: migration_20261121_010248_payload_3_94.up,
     down: migration_20261121_010248_payload_3_94.down,
-    name: '20261121_010248_payload_3_94'
+    name: '20261121_010248_payload_3_94',
+  },
+  {
+    up: migration_20261121_010452_shiki_4_languages.up,
+    down: migration_20261121_010452_shiki_4_languages.down,
+    name: '20261121_010452_shiki_4_languages'
   },
 ];
