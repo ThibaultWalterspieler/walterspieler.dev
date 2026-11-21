@@ -15,7 +15,7 @@ These were derived from the code as it stood in November 2026. A rule the owner 
 ## Public pages keep rendering
 
 - **A page that reads one CMS document calls `notFound()` when it is missing**, so the section's `not-found.tsx` renders. See `getExperiencePost` in `src/app/(frontend)/experiences/[slug]/page.tsx`.
-- **Optional CMS fields fall back to built-in values**, never to a crash: see `getMetadata` in `src/lib/seo/metadata.ts` (owner's name, default share image) and `getImage` in `src/lib/plaiceholder.ts`.
+- **Optional CMS fields fall back to built-in values**, never to a crash: see `getMetadata` in `src/lib/seo/metadata.ts` (owner's name, default share image) and the Lexical image, which renders without a blur placeholder when its media has none (`Serialize.tsx`).
 - **A side effect of a CMS save never fails the save.** It catches, logs through `payload.logger`, and returns. See `src/payload/hooks/revalidate-cms.ts`.
 
 ## Payload and data
