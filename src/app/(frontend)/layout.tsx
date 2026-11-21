@@ -4,14 +4,13 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import dynamic from "next/dynamic";
 import { Space_Grotesk } from "next/font/google";
 import Script from "next/script";
-import { getPayload } from "payload";
 
 import PostHogProvider from "@/app/(frontend)/ph-provider";
 import MainMenuContent from "@/components/common/main-menu-content";
 import SideMenu from "@/components/common/side-menu";
 import { MenuContextProvider } from "@/contexts/menu-context";
+import { getMainMenu, getMe } from "@/lib/payload/queries";
 import { cn } from "@/lib/utils";
-import config from "@payload-config";
 
 type Props = PropsWithChildren;
 
@@ -24,27 +23,10 @@ const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
 });
 
-const getMe = async () => {
-  const payload = await getPayload({
-    config,
-  });
-  return payload.findGlobal({ slug: "me" });
-};
-
-const getMainMenu = async () => {
-  const payload = await getPayload({
-    config,
-  });
-  return payload.findGlobal({ slug: "mainMenu" });
-};
-
 const RootLayout: FC<Props> = async (props) => {
   const { children } = props;
 
-  const meData = await getMe();
-  const mainMenuData = await getMainMenu();
-
-  const [me, mainMenu] = await Promise.all([meData, mainMenuData]);
+  const [me, mainMenu] = await Promise.all([getMe(), getMainMenu()]);
 
   return (
     <html lang="en">

@@ -1,15 +1,14 @@
-import { cache, FC } from "react";
+import { FC } from "react";
 
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPayload } from "payload";
 
 import Article from "@/components/articles/article";
 import ArticleBreadcrumb from "@/components/articles/article-breadcrumb";
 import ScrollArea from "@/components/common/scroll-area";
+import { getPublishedPost, getPublishedPosts } from "@/lib/payload/queries";
 import getSchemaNewsArticle from "@/lib/schema-dts/news-article";
 import getMetadata from "@/lib/seo/metadata";
-import config from "@payload-config";
 
 type Params = Promise<{
   slug: string;
@@ -20,18 +19,9 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  const payload = await getPayload({ config });
-  const blogPosts = await payload.find({
-    collection: "blogPosts",
-    limit: 1000,
-    select: {
-      slug: true,
-    },
-  });
+  const posts = await getPublishedPosts("blogPosts");
 
-  return blogPosts.docs.map((blogPost) => ({
-    slug: blogPost.slug,
-  }));
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
 const BlogPostPage: FC<Props> = async (props) => {
@@ -64,26 +54,15 @@ const BlogPostPage: FC<Props> = async (props) => {
   );
 };
 
-const getBlogPost = cache(async (slug: string) => {
-  const payload = await getPayload({
-    config,
-  });
+const getBlogPost = async (slug: string) => {
+  const post = await getPublishedPost("blogPosts", slug);
 
-  const blogPosts = await payload.find({
-    collection: "blogPosts",
-    where: {
-      slug: {
-        equals: slug,
-      },
-    },
-  });
-
-  if (!blogPosts.docs[0]) {
+  if (!post) {
     notFound();
   }
 
-  return blogPosts.docs[0];
-});
+  return post;
+};
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const { params } = props;

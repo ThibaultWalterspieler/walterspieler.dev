@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, use } from "react";
+import { FC, use, useSyncExternalStore } from "react";
 
 import Link from "next/link";
 
@@ -23,10 +23,19 @@ type Props = {
   };
 };
 
+const subscribeNoop = () => () => {};
+
 const MiscMenu: FC<Props> = (props) => {
   const { title, labels } = props;
 
   const { closeMainMenu } = use(MenuContext) ?? {};
+  // Read on the client only: the menu is prerendered once and cached until the
+  // next Revalidation, which may fall in another year.
+  const year = useSyncExternalStore(
+    subscribeNoop,
+    () => new Date().getFullYear(),
+    () => null,
+  );
 
   return (
     <DropdownMenu>
@@ -35,7 +44,7 @@ const MiscMenu: FC<Props> = (props) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="w-56">
         <DropdownMenuLabel>
-          Thibault Walterspieler - {new Date().getFullYear()}
+          Thibault Walterspieler{year && ` - ${year}`}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>

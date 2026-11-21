@@ -1,20 +1,17 @@
-import { cache, FC } from "react";
+import { FC } from "react";
 
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPayload } from "payload";
 
 import Content from "@/components/common/content";
 import ScrollArea from "@/components/common/scroll-area";
 import { H1 } from "@/components/common/typography";
 import { Separator } from "@/components/ui/separator";
+import { getPage } from "@/lib/payload/queries";
 import getMetadata from "@/lib/seo/metadata";
-import config from "@payload-config";
-
-export const revalidate = 3600;
 
 const NoticePage: FC = async () => {
-  const page = await getPage();
+  const page = await getFixedPage();
 
   return (
     <ScrollArea className="flex flex-col">
@@ -31,24 +28,18 @@ const NoticePage: FC = async () => {
   );
 };
 
-const getPage = cache(async () => {
-  const payload = await getPayload({
-    config,
-  });
-  const pages = await payload.find({
-    collection: "pages",
-    where: { slug: { equals: "notice" } },
-  });
+const getFixedPage = async () => {
+  const page = await getPage("notice");
 
-  if (!pages.docs[0]) {
+  if (!page) {
     notFound();
   }
 
-  return pages.docs[0];
-});
+  return page;
+};
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getPage();
+  const page = await getFixedPage();
 
   return getMetadata(page.meta);
 }
