@@ -30,7 +30,7 @@ These were derived from the code as it stood in November 2026. A rule the owner 
 
 - **A public page is cached, and refreshed on change.** Section pages export `revalidate = 3600`; post pages are pre-rendered by `generateStaticParams`. A save in the admin refreshes them through a revalidation hook (`revalidateBlogPost.ts`). A new CMS-backed route adds its path to a hook, or says in the PR why it can wait.
 - **A CMS read shared by a page and its `generateMetadata` goes through React `cache`**, so it runs once per request. See `getBlogPost` in `src/app/(frontend)/blog/[slug]/page.tsx`.
-- **Payload, `pg` and `sharp` run in the Node.js runtime only.** `src/middleware.ts` runs on the Edge and imports none of them.
+- **Payload, `pg` and `sharp` run in the Node.js runtime only.** Code on the Edge runtime imports none of them.
 - **A remote image host is listed in `images.remotePatterns`** in `next.config.ts` before a page renders it with `next/image`.
 
 ## Structure

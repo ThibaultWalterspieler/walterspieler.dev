@@ -1,14 +1,14 @@
 # walterspieler.dev
 
 <p align="center">
-  <a href="https://walterspieler.dev/">My portfolio</a> built using Next.js 15 with TypeScript, Tailwind CSS 4, and Payload CMS
+  <a href="https://walterspieler.dev/">My portfolio</a> built using Next.js 16 with TypeScript, Tailwind CSS 4, and Payload CMS
 </p>
 
 ## What is this repo?
 
 [walterspieler.dev](https://walterspieler.dev/) is my portfolio showcasing my projects, skills, and experiences. This repository is the source code for the website. It is built using:
 
-- [Next.js 15](https://nextjs.org) - React Framework with App Router
+- [Next.js 16](https://nextjs.org) - React Framework with App Router
 - [TypeScript](https://www.typescriptlang.org/) - Type-safe JavaScript
 - [Tailwind CSS 4](https://tailwindcss.com/) - Utility-first CSS framework
 - [Payload CMS](https://payloadcms.com/) - Headless CMS with PostgreSQL
@@ -27,7 +27,7 @@ nvm install
 
 ### Pnpm
 
-Pnpm is the package manager of choice for this project. Make sure you are using at least Node.js 22 _(lts/jod)_ and then activate it through `corepack`:
+Pnpm is the package manager of choice for this project. Make sure you are using at least Node.js 24 _(lts/krypton)_ and then activate it through `corepack`:
 
 ```bash
 corepack enable pnpm

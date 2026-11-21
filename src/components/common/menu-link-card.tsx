@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, PropsWithChildren, useEffect, useState } from "react";
+import { FC, PropsWithChildren, useSyncExternalStore } from "react";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,6 +20,8 @@ type Props = PropsWithChildren<{
   onClick?: () => void;
 }>;
 
+const subscribeNoop = () => () => {};
+
 export const MenuLinkCard: FC<Props> = (props) => {
   const {
     children,
@@ -31,16 +33,18 @@ export const MenuLinkCard: FC<Props> = (props) => {
   } = props;
 
   const pathname = usePathname();
-  const [clientPathname, setClientPathname] = useState<string | null>(null);
-
-  useEffect(() => {
-    setClientPathname(pathname);
-  }, [pathname]);
+  // useSyncExternalStore, not setState in an effect: React's set-state-in-effect rule
+  // forbids the latter. The server snapshot keeps the link inactive until hydration.
+  const isHydrated = useSyncExternalStore(
+    subscribeNoop,
+    () => true,
+    () => false,
+  );
 
   const isActive =
     typeof isActiveProp === "boolean"
       ? isActiveProp
-      : isMenuPathActive(clientPathname ?? "", href, { external });
+      : isMenuPathActive(isHydrated ? pathname : "", href, { external });
 
   const handleClick = () => {
     onClick?.();

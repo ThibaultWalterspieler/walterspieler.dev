@@ -31,6 +31,7 @@ type SeedUser = Omit<
   | "hash"
   | "loginAttempts"
   | "lockUntil"
+  | "collection"
 >;
 
 type SeedExperience = Omit<
