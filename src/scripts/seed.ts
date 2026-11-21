@@ -7,7 +7,8 @@
 
 import { getPayload } from "payload";
 
-import config from "../payload.config";
+import config from "@payload-config";
+
 import seedData from "./seed-data.json" assert { type: "json" };
 
 import type {
@@ -19,7 +20,7 @@ import type {
   Page,
   Social,
   User,
-} from "../payload/payload-types";
+} from "@payload-types";
 
 type SeedUser = Omit<
   User,

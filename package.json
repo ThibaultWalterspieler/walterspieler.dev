@@ -15,7 +15,11 @@
     "format": "prettier ./src --write",
     "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload",
     "ci": "payload migrate && pnpm build",
-    "seed": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=src/payload.config.ts payload run ./src/scripts/seed.ts"
+    "seed": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=src/payload.config.ts payload run ./src/scripts/seed.ts",
+    "typecheck": "tsc --noEmit --incremental false",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "pnpm run lint && pnpm run typecheck && pnpm run test"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.94.1",
@@ -70,7 +74,8 @@
     "postcss": "8.5.33",
     "prettier": "3.10.1",
     "prettier-plugin-tailwindcss": "0.8.1",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "vitest": "5.1.1"
   },
   "packageManager": "pnpm@10.16.1",
   "type": "module"

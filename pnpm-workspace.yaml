@@ -1,5 +1,9 @@
 packages:
   - ./
+
+# Dependencies are pinned: `pnpm add` writes the exact version
+saveExact: true
+
 onlyBuiltDependencies:
   - "@tailwindcss/oxide"
   - "@vercel/speed-insights"
