@@ -25,7 +25,6 @@
     "@payloadcms/db-postgres": "3.94.1",
     "@payloadcms/email-resend": "3.94.1",
     "@payloadcms/next": "3.94.1",
-    "@payloadcms/payload-cloud": "3.94.1",
     "@payloadcms/plugin-seo": "3.94.1",
     "@payloadcms/richtext-lexical": "3.94.1",
     "@payloadcms/storage-uploadthing": "3.94.1",
