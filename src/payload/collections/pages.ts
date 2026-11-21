@@ -1,14 +1,15 @@
 import { CollectionConfig } from "payload";
 
-import { ButtonBlock } from "../blocks/Button";
-import { CodeBlock } from "../blocks/Code";
-import { ExperienceBlock } from "../blocks/Experience";
-import { ImageBlock } from "../blocks/Image";
-import { MySocialsBlock } from "../blocks/MySocials";
-import { ParagraphBlock } from "../blocks/Paragraph";
-import { QuoteBlock } from "../blocks/Quote";
-import { ScriptCopyBtnBlock } from "../blocks/ScriptCopyBtn";
-import { TweetCardBlock } from "../blocks/TweetCard";
+import { ButtonBlock } from "@/payload/blocks/Button";
+import { CodeBlock } from "@/payload/blocks/Code";
+import { ExperienceBlock } from "@/payload/blocks/Experience";
+import { ImageBlock } from "@/payload/blocks/Image";
+import { MySocialsBlock } from "@/payload/blocks/MySocials";
+import { ParagraphBlock } from "@/payload/blocks/Paragraph";
+import { QuoteBlock } from "@/payload/blocks/Quote";
+import { ScriptCopyBtnBlock } from "@/payload/blocks/ScriptCopyBtn";
+import { TweetCardBlock } from "@/payload/blocks/TweetCard";
+
 import { revalidatePage } from "./hooks/revalidatePage";
 
 export const Pages: CollectionConfig = {

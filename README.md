@@ -120,6 +120,15 @@ After setting up the database, run migrations:
 pnpm payload migrate
 ```
 
+### Changing the Schema
+
+After changing a collection, global or block, generate the migration and the types, and commit both with the change:
+
+```bash
+pnpm payload migrate:create <name>
+pnpm payload generate:types
+```
+
 ### Dependency Installation
 
 Install necessary project dependencies:
@@ -196,6 +205,10 @@ $ pnpm payload
 - `src/contexts`: React contexts for state management
 - `src/styles`: Global CSS styles
 - `public`: Static assets
+
+## Working with coding agents
+
+`pnpm check` runs lint, typecheck and the tests (`pnpm test`, Vitest); CI runs it on every pull request and on `main`. The flow we follow with agents (which skill at which step, and where each kind of project knowledge lives) is in [docs/agents/workflow.md](docs/agents/workflow.md).
 
 ## Deployment
 
