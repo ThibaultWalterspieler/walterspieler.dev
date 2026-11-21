@@ -16,7 +16,7 @@ import config from "@payload-config";
 type Props = PropsWithChildren;
 
 const PostHogPageView = dynamic(
-  () => import("../../components/post-hog-page-view"),
+  () => import("@/components/post-hog-page-view"),
 );
 
 const spaceGrotesk = Space_Grotesk({

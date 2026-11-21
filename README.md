@@ -197,6 +197,10 @@ $ pnpm payload
 - `src/styles`: Global CSS styles
 - `public`: Static assets
 
+## Working with coding agents
+
+`pnpm check` runs lint, typecheck and the tests (`pnpm test`, Vitest); CI runs it on every pull request and on `main`. The flow we follow with agents (which skill at which step, and where each kind of project knowledge lives) is in [docs/agents/workflow.md](docs/agents/workflow.md).
+
 ## Deployment
 
 The application is configured for deployment on various platforms:

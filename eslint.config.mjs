@@ -19,6 +19,19 @@ const eslintConfig = defineConfig([
   ]),
   {
     rules: {
+      // Reach other folders through the tsconfig.json aliases
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              regex: "^\\.\\./(?!.*next\\.constants\\.mjs$)",
+              message:
+                "Use a path alias (@/…, @payload-config, @payload-types). Only next.constants.mjs, outside src/, is imported relatively.",
+            },
+          ],
+        },
+      ],
       "react/jsx-sort-props": "warn",
       "prefer-const": "error",
       "import/order": [
