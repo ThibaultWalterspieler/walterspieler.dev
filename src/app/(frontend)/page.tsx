@@ -4,7 +4,6 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import Content from "@/components/common/content";
-import ScrollArea from "@/components/common/scroll-area";
 import { H1 } from "@/components/common/typography";
 import { Separator } from "@/components/ui/separator";
 import { getMe, getPage } from "@/lib/payload/queries";
@@ -31,11 +30,9 @@ const Home: FC = async () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
       />
-      <ScrollArea className={cn("flex flex-col")}>
-        <div
-          className={cn("content-wrapper", "animate-in fade-in duration-700")}
-        >
-          <div className={cn("content animate-in fade-in duration-700")}>
+      <div className={cn("flex w-full min-w-0 flex-col")}>
+        <div className={cn("content-wrapper")}>
+          <div className={cn("content animate-enter")}>
             <H1
               className={cn(
                 "text-spotlight mb-4 max-w-[60vw] md:mb-4 md:max-w-full",
@@ -54,7 +51,7 @@ const Home: FC = async () => {
             <Content content={homePage.content} />
           </div>
         </div>
-      </ScrollArea>
+      </div>
     </>
   );
 };

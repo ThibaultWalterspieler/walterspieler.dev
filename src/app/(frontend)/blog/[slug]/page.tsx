@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 
 import Article from "@/components/articles/article";
 import ArticleBreadcrumb from "@/components/articles/article-breadcrumb";
-import ScrollArea from "@/components/common/scroll-area";
 import { getPublishedPost, getPublishedPosts } from "@/lib/payload/queries";
 import getSchemaNewsArticle from "@/lib/schema-dts/news-article";
 import getMetadata from "@/lib/seo/metadata";
@@ -42,14 +41,14 @@ const BlogPostPage: FC<Props> = async (props) => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
       />
-      <ScrollArea className="z-0 flex flex-col lg:pl-72">
+      <div className="z-0 flex w-full min-w-0 flex-col lg:pl-72">
         <div className="content-wrapper mt-14 lg:mt-0">
           <div className="content">
             <ArticleBreadcrumb collection="blog" title={blogPost.title} />
             <Article collection="blog" content={blogPost} slug={slug} />
           </div>
         </div>
-      </ScrollArea>
+      </div>
     </>
   );
 };
