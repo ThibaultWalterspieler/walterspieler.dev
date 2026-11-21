@@ -74,7 +74,6 @@ Edit `.env.local` and provide values for:
 - `NEXT_PUBLIC_BASE_URL`: Your site's base URL (e.g., http://localhost:2499)
 - `NEXT_PUBLIC_POSTHOG_KEY`: PostHog API key (for analytics)
 - `NEXT_PUBLIC_POSTHOG_HOST`: PostHog host URL
-- `NEXT_PUBLIC_UMAMI_ID`: Umami analytics ID (if used)
 - `DATABASE_URI`: PostgreSQL database connection string
 - `UPLOADTHING_TOKEN`: UploadThing token for file uploads
 - `RESEND_API_KEY`: Resend API key for email functionality
