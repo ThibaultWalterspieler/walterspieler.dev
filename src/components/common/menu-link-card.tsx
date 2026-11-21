@@ -33,7 +33,8 @@ export const MenuLinkCard: FC<Props> = (props) => {
   } = props;
 
   const pathname = usePathname();
-  // Server render and hydration see no pathname, so active state only appears on the client.
+  // useSyncExternalStore, not setState in an effect: React's set-state-in-effect rule
+  // forbids the latter. The server snapshot keeps the link inactive until hydration.
   const isHydrated = useSyncExternalStore(
     subscribeNoop,
     () => true,

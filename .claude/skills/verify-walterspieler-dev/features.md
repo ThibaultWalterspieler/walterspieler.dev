@@ -151,13 +151,13 @@ One section per feature area. Each answers the same four questions: what exists,
 
 ## Redirects
 
-**What exists**: permanent redirects for old URLs. `/works` → `/experiences`. Any `/fr/…` path → the same path without the prefix. A fixed list of `/en/…` paths (home, blog, experiences, works, 99Stud, open-source, legal notice) → the same without the prefix; any other `/en/…` path is not redirected.
+**What exists**: permanent redirects for old URLs. `/works` → `/experiences`. A fixed list of `/fr/…` and `/en/…` paths (home, blog, experiences, works, 99Stud, open-source, legal notice) → the same without the prefix; any other `/fr/…` or `/en/…` path is not redirected.
 
 **How to get to it**: request the old URL.
 
-**Driving it**: `curl -sI localhost:2499/fr/blog` shows a 308 (or 301 from the middleware for other `/fr/` paths) to `/blog`.
+**Driving it**: `curl -sI localhost:2499/fr/blog` shows a 308 to `/blog`.
 
-**Gotchas**: redirects live in both `next.config.ts` and `src/middleware.ts`.
+**Gotchas**: redirects live only in `next.config.ts`; there is no middleware or proxy.
 
 ## Admin (Payload)
 
