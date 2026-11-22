@@ -24,17 +24,12 @@ export default async function ScriptCopyBtn({
   "use cache";
   cacheLife("max");
 
-  const highlightedCommandMap = await highlightCommands(
-    commandMap,
-    codeLanguage,
-    darkTheme,
-  );
+  const commands = await highlightCommands(commandMap, codeLanguage, darkTheme);
 
   return (
     <ScriptCopyBtnClient
       className={className}
-      commandMap={commandMap}
-      highlightedCommandMap={highlightedCommandMap}
+      commands={commands}
       showMultiplePackageOptions={showMultiplePackageOptions}
     />
   );

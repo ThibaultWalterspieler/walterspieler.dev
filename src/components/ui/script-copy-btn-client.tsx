@@ -8,25 +8,24 @@ import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
+import type { HighlightedCommand } from "@/components/ui/highlight-commands";
+
 interface ScriptCopyBtnClientProps {
   showMultiplePackageOptions: boolean;
-  commandMap: Record<string, string>;
-  /** Shiki HTML per package manager, `null` where highlighting failed. */
-  highlightedCommandMap: Record<string, string | null>;
+  /** One highlighted command per package manager. */
+  commands: Record<string, HighlightedCommand>;
   className?: string;
 }
 
 export default function ScriptCopyBtnClient({
   showMultiplePackageOptions,
-  commandMap,
-  highlightedCommandMap,
+  commands,
   className,
 }: ScriptCopyBtnClientProps) {
-  const packageManagers = Object.keys(commandMap);
+  const packageManagers = Object.keys(commands);
   const [packageManager, setPackageManager] = useState(packageManagers[0]);
   const [copied, setCopied] = useState(false);
-  const command = commandMap[packageManager];
-  const highlightedCode = highlightedCommandMap[packageManager];
+  const { command, html: highlightedCode } = commands[packageManager];
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(command);

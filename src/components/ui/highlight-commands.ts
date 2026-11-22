@@ -1,14 +1,17 @@
 import { codeToHtml } from "shiki";
 
-/**
- * Highlights each command of a ScriptCopyBtn, keyed like `commandMap`.
- * A command shiki cannot highlight maps to `null`: the button shows it as plain text.
- */
+export interface HighlightedCommand {
+  command: string;
+  /** Shiki's HTML, or `null` when it could not highlight: the button shows the command as plain text. */
+  html: string | null;
+}
+
+/** Highlights each command of a ScriptCopyBtn, keyed like `commandMap`. */
 export async function highlightCommands(
   commandMap: Record<string, string>,
   codeLanguage: string,
   darkTheme: string,
-): Promise<Record<string, string | null>> {
+): Promise<Record<string, HighlightedCommand>> {
   const entries = await Promise.all(
     Object.entries(commandMap).map(async ([packageManager, command]) => {
       try {
@@ -17,10 +20,10 @@ export async function highlightCommands(
           themes: { dark: darkTheme },
           defaultColor: "dark",
         });
-        return [packageManager, html] as const;
+        return [packageManager, { command, html }] as const;
       } catch (error) {
         console.error("Error highlighting code:", error);
-        return [packageManager, null] as const;
+        return [packageManager, { command, html: null }] as const;
       }
     }),
   );
