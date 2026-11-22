@@ -14,27 +14,30 @@
     Ayu Dark, from the IDE palette in ayu-colors v9.1.0
     (https://github.com/ayu-theme/ayu-colors/blob/master/themes/dark.yaml):
     sidebar = ui.bg, background = editor.bg, surface = ui.panel.bg,
-    border = ui.line, foreground = editor.fg, muted = ui.fg at 65% alpha
-    (both flattened onto background), accent = syntax.regexp.
+    surface-hover = ui.line, heading = editor.fg without its alpha,
+    foreground = editor.fg, muted = ui.fg at 65% alpha (both flattened onto
+    background), accent = syntax.regexp, danger = syntax.markup.
+    `border` is lighter than ui.line (1.4:1 on surface instead of 1.08:1) so
+    cards and buttons keep a visible edge.
     Text colors keep at least 5.5:1 contrast on `surface`.
-    `background` is repeated as `themeColor` in src/app/layout.tsx.
+    `background` is repeated as `themeColor` in src/app/(frontend)/layout.tsx.
   */
   --color-background: #10141c;
   --color-sidebar: #0d1017;
   --color-surface: #141821;
   --color-surface-hover: #1b1f29;
-  --color-border: #1b1f29;
+  --color-border: #2d3340;
   --color-selection: #3388ff40;
 
   --color-foreground: #bfbdb6;
-  --color-heading: #e6e1cf;
+  --color-heading: #fcf8ec;
   --color-muted: #8592af;
 
   --color-accent: #95e6cb;
   --color-accent-muted: #6cbfa5;
   --color-danger: #f07178;
 
-  --shadow-glow: 0 0 20px var(--color-border);
+  --shadow-glow: 0 0 20px color-mix(in srgb, var(--color-muted) 40%, transparent);
 
   @keyframes accordion-down {
     from {
@@ -88,14 +91,6 @@
   ::file-selector-button {
     border-color: var(--color-border);
   }
-
-  html {
-    color-scheme: dark;
-  }
-
-  ::selection {
-    background-color: var(--color-selection);
-  }
 }
 
 .scrollable-area {
@@ -123,9 +118,10 @@
   mask: linear-gradient(-15deg, transparent 30%, white);
 }
 
+/* #ff8f40 is Ayu's syntax.keyword orange, used only by this glow. */
 .text-spotlight {
   text-shadow:
-    0 5px 20px rgba(0, 87, 255, 0.2),
-    0 -5px 15px rgba(255, 90, 0, 0.15),
-    0 0 8px rgba(255, 255, 255, 0.3);
+    0 5px 20px color-mix(in srgb, var(--color-accent) 20%, transparent),
+    0 -5px 15px rgb(255 143 64 / 0.15),
+    0 0 8px color-mix(in srgb, var(--color-heading) 30%, transparent);
 }

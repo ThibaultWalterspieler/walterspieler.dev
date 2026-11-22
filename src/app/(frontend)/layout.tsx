@@ -13,7 +13,15 @@ import { MenuContextProvider } from "@/contexts/menu-context";
 import { cn } from "@/lib/utils";
 import config from "@payload-config";
 
+import type { Viewport } from "next";
+
 type Props = PropsWithChildren;
+
+export const viewport: Viewport = {
+  // `--color-background` in src/styles/globals.css
+  themeColor: "#10141c",
+  colorScheme: "dark",
+};
 
 const PostHogPageView = dynamic(
   () => import("@/components/post-hog-page-view"),
@@ -62,7 +70,7 @@ const RootLayout: FC<Props> = async (props) => {
           className={cn(
             "overflow-hidden",
             "relative",
-            "bg-background text-foreground min-h-dvh font-sans antialiased",
+            "bg-background text-foreground selection:bg-selection min-h-dvh font-sans antialiased",
             spaceGrotesk.variable,
           )}
         >

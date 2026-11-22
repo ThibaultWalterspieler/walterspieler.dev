@@ -110,7 +110,7 @@ export default function ScriptCopyBtn({
           <div className="min-w-[300px] grow font-mono">
             {highlightedCode ? (
               <div
-                className={`[&>pre]:overflow-x-auto [&>pre]:rounded-md [&>pre]:p-2 [&>pre]:px-4 [&>pre]:font-mono`}
+                className={`[&>pre]:border-border [&>pre]:bg-surface! [&>pre]:overflow-x-auto [&>pre]:rounded-md [&>pre]:border [&>pre]:p-2 [&>pre]:px-4 [&>pre]:font-mono`}
                 dangerouslySetInnerHTML={{ __html: highlightedCode }}
               />
             ) : (

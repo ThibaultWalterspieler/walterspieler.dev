@@ -71,7 +71,7 @@ const ExperienceCard: FC<Props> = (props) => {
         className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
         style={{
           background: useMotionTemplate`
-						radial-gradient(200px circle at ${mouseX}px ${mouseY}px, rgba(16, 20, 28, 0.4), transparent 80%)
+						radial-gradient(200px circle at ${mouseX}px ${mouseY}px, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 80%)
 					`,
         }}
       />

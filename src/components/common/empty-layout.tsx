@@ -35,7 +35,7 @@ const EmptyLayout: FC<Props> = (props) => {
       <motion.span
         animate="animate"
         className={cn(
-          "animate-text-gradient via-surface inline-flex bg-linear-to-r from-muted to-muted bg-[200%_auto] bg-clip-text pl-72 text-center text-3xl font-bold text-transparent",
+          "animate-text-gradient via-surface inline-flex bg-gradient-to-r from-muted to-muted bg-[200%_auto] bg-clip-text pl-72 text-center text-3xl font-bold text-transparent",
         )}
         exit="exit"
         initial="initial"

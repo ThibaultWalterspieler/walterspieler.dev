@@ -16,6 +16,7 @@ export default function NotFoundPage() {
           "h-screen w-screen",
           "bg-background",
           "text-foreground",
+          "selection:bg-selection",
           "font-sans",
           spaceGrotesk.variable,
         )}
