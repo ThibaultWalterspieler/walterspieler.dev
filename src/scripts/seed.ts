@@ -122,6 +122,7 @@ const purgeExistingData = async (payload: PayloadInstance) => {
         for (const doc of result.docs) {
           try {
             await payload.delete({
+              context: { disableRevalidate: true },
               collection: slug,
               id: doc.id,
             });
@@ -179,6 +180,7 @@ async function seed() {
         }
 
         const createdUser = await payload.create({
+          context: { disableRevalidate: true },
           collection: "users",
           data: user,
         });
@@ -212,6 +214,7 @@ async function seed() {
         }
 
         const createdExperience = await payload.create({
+          context: { disableRevalidate: true },
           collection: "experiences",
           data: experience,
         });
@@ -261,6 +264,7 @@ async function seed() {
 
         if (existingPost.docs.length > 0) {
           await payload.update({
+            context: { disableRevalidate: true },
             collection: "experiencePosts",
             id: existingPost.docs[0].id,
             data: postData,
@@ -268,6 +272,7 @@ async function seed() {
           console.log(`  🔄 Updated experience post: ${post.title}`);
         } else {
           await payload.create({
+            context: { disableRevalidate: true },
             collection: "experiencePosts",
             data: postData,
           });
@@ -304,6 +309,7 @@ async function seed() {
 
         if (existingPost.docs.length > 0) {
           await payload.update({
+            context: { disableRevalidate: true },
             collection: "blogPosts",
             id: existingPost.docs[0].id,
             data: postData,
@@ -311,6 +317,7 @@ async function seed() {
           console.log(`  🔄 Updated blog post: ${post.title}`);
         } else {
           await payload.create({
+            context: { disableRevalidate: true },
             collection: "blogPosts",
             data: postData,
           });
@@ -340,6 +347,7 @@ async function seed() {
         }
 
         await payload.create({
+          context: { disableRevalidate: true },
           collection: "socials",
           data: social,
         });
@@ -394,6 +402,7 @@ async function seed() {
           };
 
           await payload.update({
+            context: { disableRevalidate: true },
             collection: "pages",
             id: existingPage.docs[0].id,
             data: updateData,
@@ -420,6 +429,7 @@ async function seed() {
           };
 
           await payload.create({
+            context: { disableRevalidate: true },
             collection: "pages",
             data: createData,
           });
@@ -491,6 +501,7 @@ async function seed() {
       };
 
       await payload.updateGlobal({
+        context: { disableRevalidate: true },
         slug: "mainMenu",
         data: menuData,
       });

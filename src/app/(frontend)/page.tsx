@@ -1,18 +1,16 @@
-import { cache, FC } from "react";
+import { FC } from "react";
 
 import { Metadata } from "next";
-import { getPayload } from "payload";
+import { notFound } from "next/navigation";
 
 import Content from "@/components/common/content";
 import ScrollArea from "@/components/common/scroll-area";
 import { H1 } from "@/components/common/typography";
 import { Separator } from "@/components/ui/separator";
+import { getMe, getPage } from "@/lib/payload/queries";
 import getSchemaProfilePage from "@/lib/schema-dts/profile-page";
 import getMetadata from "@/lib/seo/metadata";
 import { cn } from "@/lib/utils";
-import config from "@payload-config";
-
-export const revalidate = 3600;
 
 const Home: FC = async () => {
   const meData = getMe();
@@ -61,23 +59,14 @@ const Home: FC = async () => {
   );
 };
 
-const getHomePage = cache(async () => {
-  const payload = await getPayload({
-    config,
-  });
-  const pages = await payload.find({
-    collection: "pages",
-    where: { slug: { equals: "home" } },
-  });
+const getHomePage = async () => {
+  const page = await getPage("home");
 
-  return pages.docs[0];
-});
+  if (!page) {
+    notFound();
+  }
 
-const getMe = async () => {
-  const payload = await getPayload({
-    config,
-  });
-  return payload.findGlobal({ slug: "me" });
+  return page;
 };
 
 export async function generateMetadata(): Promise<Metadata> {

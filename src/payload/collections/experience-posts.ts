@@ -4,8 +4,10 @@ import { ParagraphBlock } from "@/payload/blocks/Paragraph";
 import { QuoteBlock } from "@/payload/blocks/Quote";
 import { ScriptCopyBtnBlock } from "@/payload/blocks/ScriptCopyBtn";
 import { TweetCardBlock } from "@/payload/blocks/TweetCard";
-
-import { revalidateExperiencePost } from "./hooks/revalidateExperiencePost";
+import {
+  revalidateCmsAfterChange,
+  revalidateCmsAfterDelete,
+} from "@/payload/hooks/revalidate-cms";
 
 import type { CollectionConfig } from "payload";
 
@@ -65,5 +67,8 @@ export const ExperiencePosts: CollectionConfig = {
       localized: true,
     },
   ],
-  hooks: { afterChange: [revalidateExperiencePost] },
+  hooks: {
+    afterChange: [revalidateCmsAfterChange],
+    afterDelete: [revalidateCmsAfterDelete],
+  },
 };

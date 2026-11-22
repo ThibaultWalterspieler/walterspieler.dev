@@ -1,15 +1,13 @@
 import { FC } from "react";
 
 import { Metadata } from "next";
-import { getPayload } from "payload";
+import { notFound } from "next/navigation";
 
 import EmptyLayout from "@/components/common/empty-layout";
 import MenuInitializer from "@/contexts/menu-context/menu-initializer";
 import { getDictionary } from "@/lib/i18n/utils";
+import { getPage } from "@/lib/payload/queries";
 import getMetadata from "@/lib/seo/metadata";
-import config from "@payload-config";
-
-export const revalidate = 3600;
 
 const Blog: FC = async () => {
   const dictionary = await getDictionary();
@@ -23,20 +21,13 @@ const Blog: FC = async () => {
 };
 
 const getBlogPage = async () => {
-  const payload = await getPayload({
-    config,
-  });
+  const page = await getPage("blog");
 
-  const pages = await payload.find({
-    collection: "pages",
-    where: {
-      slug: {
-        equals: "blog",
-      },
-    },
-  });
+  if (!page) {
+    notFound();
+  }
 
-  return pages.docs[0];
+  return page;
 };
 
 export async function generateMetadata(): Promise<Metadata> {

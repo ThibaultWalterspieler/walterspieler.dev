@@ -1,3 +1,4 @@
+import { cacheLife } from "next/cache";
 import { getPlaiceholder } from "plaiceholder";
 
 import { BASE_URL } from "../../next.constants.mjs";
@@ -9,6 +10,10 @@ import { BASE_URL } from "../../next.constants.mjs";
  * @throws Will return a fallback object with base64 placeholder if fetch/processing fails
  */
 const getImage = async (src: string) => {
+  // Media files get a new name on every upload, so a URL's placeholder never changes.
+  "use cache";
+  cacheLife("max");
+
   try {
     const buffer = await fetch(`${BASE_URL}/${src}`).then(async (res) =>
       Buffer.from(await res.arrayBuffer()),

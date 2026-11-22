@@ -9,8 +9,10 @@ import { ParagraphBlock } from "@/payload/blocks/Paragraph";
 import { QuoteBlock } from "@/payload/blocks/Quote";
 import { ScriptCopyBtnBlock } from "@/payload/blocks/ScriptCopyBtn";
 import { TweetCardBlock } from "@/payload/blocks/TweetCard";
-
-import { revalidatePage } from "./hooks/revalidatePage";
+import {
+  revalidateCmsAfterChange,
+  revalidateCmsAfterDelete,
+} from "@/payload/hooks/revalidate-cms";
 
 export const Pages: CollectionConfig = {
   slug: "pages",
@@ -49,6 +51,7 @@ export const Pages: CollectionConfig = {
     },
   ],
   hooks: {
-    afterChange: [revalidatePage],
+    afterChange: [revalidateCmsAfterChange],
+    afterDelete: [revalidateCmsAfterDelete],
   },
 };

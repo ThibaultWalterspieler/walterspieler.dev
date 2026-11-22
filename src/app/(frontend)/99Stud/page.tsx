@@ -1,21 +1,18 @@
-import { cache, FC } from "react";
+import { FC } from "react";
 
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPayload } from "payload";
 
 import Content from "@/components/common/content";
 import ScrollArea from "@/components/common/scroll-area";
 import { H1 } from "@/components/common/typography";
 import { Separator } from "@/components/ui/separator";
+import { getPage } from "@/lib/payload/queries";
 import getSchemaOrganization from "@/lib/schema-dts/organization";
 import getMetadata from "@/lib/seo/metadata";
-import config from "@payload-config";
-
-export const revalidate = 3600;
 
 const Stud99Page: FC = async () => {
-  const page = await getPage();
+  const page = await getFixedPage();
   const jsonLd = getSchemaOrganization();
 
   return (
@@ -39,24 +36,18 @@ const Stud99Page: FC = async () => {
   );
 };
 
-const getPage = cache(async () => {
-  const payload = await getPayload({
-    config,
-  });
-  const pages = await payload.find({
-    collection: "pages",
-    where: { slug: { equals: "99Stud" } },
-  });
+const getFixedPage = async () => {
+  const page = await getPage("99Stud");
 
-  if (!pages.docs[0]) {
+  if (!page) {
     notFound();
   }
 
-  return pages.docs[0];
-});
+  return page;
+};
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getPage();
+  const page = await getFixedPage();
 
   return getMetadata(page.meta);
 }
