@@ -458,7 +458,7 @@ async function seed() {
       });
       const studPage = await payload.find({
         collection: "pages",
-        where: { slug: { equals: "99Stud" } },
+        where: { slug: { equals: "99stud" } },
       });
 
       const menuData: Partial<MainMenu> = {

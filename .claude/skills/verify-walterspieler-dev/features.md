@@ -78,7 +78,7 @@ One section per feature area. Each answers the same four questions: what exists,
 
 ## Fixed pages: 99Stud, Open source, Legal notice
 
-**What exists**: three routes that each render one CMS page by slug: `/99Stud` (slug `99Stud`, with an `Organization` JSON-LD script), `/open-source` (slug `open-source`), `/legal/notice` (slug `notice`).
+**What exists**: three routes that each render one CMS page by slug: `/99stud` (slug `99stud`, with an `Organization` JSON-LD script), `/open-source` (slug `open-source`), `/legal/notice` (slug `notice`).
 
 **How to get to it**: the "99Stud" menu card; "Open source" and "Legal Notice" in the "Other" menu.
 
@@ -86,7 +86,7 @@ One section per feature area. Each answers the same four questions: what exists,
 
 **Gotchas**
 
-- The seed creates `home`, `blog`, `experiences` and `99Stud` only: locally, `/open-source` and `/legal/notice` show the 404 view until you create those pages.
+- The seed creates `home`, `blog`, `experiences` and `99stud` only: locally, `/open-source` and `/legal/notice` show the 404 view until you create those pages.
 - Renaming one of these slugs in the admin breaks its route.
 
 ## Content blocks
@@ -151,13 +151,13 @@ One section per feature area. Each answers the same four questions: what exists,
 
 ## Redirects
 
-**What exists**: permanent redirects for old URLs. `/works` → `/experiences`. A fixed list of `/fr/…` and `/en/…` paths (home, blog, experiences, works, 99Stud, open-source, legal notice) → the same without the prefix; any other `/fr/…` or `/en/…` path is not redirected.
+**What exists**: permanent redirects for old URLs. `/works` → `/experiences`, `/99Stud` → `/99stud`. A fixed list of `/fr/…` and `/en/…` paths (home, blog, experiences, works, 99Stud, open-source, legal notice) → the same without the prefix; any other `/fr/…` or `/en/…` path is not redirected.
 
 **How to get to it**: request the old URL.
 
 **Driving it**: `curl -sI localhost:2499/fr/blog` shows a 308 to `/blog`.
 
-**Gotchas**: redirects live only in `next.config.ts`; there is no middleware or proxy.
+**Gotchas**: redirects live in `next.config.ts`, except `/99Stud` → `/99stud`, which lives in `src/proxy.ts`: `next.config.ts` matches paths case-insensitively, so that rule would also catch `/99stud` and loop.
 
 ## Admin (Payload)
 

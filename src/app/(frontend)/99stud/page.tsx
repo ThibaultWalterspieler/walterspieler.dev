@@ -45,7 +45,7 @@ const getPage = cache(async () => {
   });
   const pages = await payload.find({
     collection: "pages",
-    where: { slug: { equals: "99Stud" } },
+    where: { slug: { equals: "99stud" } },
   });
 
   if (!pages.docs[0]) {
