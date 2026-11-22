@@ -1,11 +1,9 @@
-import { FC, PropsWithChildren, Suspense } from "react";
+import { FC, PropsWithChildren } from "react";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import dynamic from "next/dynamic";
 import { Space_Grotesk } from "next/font/google";
-import Script from "next/script";
 
-import PostHogProvider from "@/app/(frontend)/ph-provider";
+import Analytics from "@/components/analytics";
 import MainMenuContent from "@/components/common/main-menu-content";
 import SideMenu from "@/components/common/side-menu";
 import { MenuContextProvider } from "@/contexts/menu-context";
@@ -13,10 +11,6 @@ import { getMainMenu, getMe } from "@/lib/payload/queries";
 import { cn } from "@/lib/utils";
 
 type Props = PropsWithChildren;
-
-const PostHogPageView = dynamic(
-  () => import("@/components/post-hog-page-view"),
-);
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -30,41 +24,28 @@ const RootLayout: FC<Props> = async (props) => {
 
   return (
     <html lang="en">
-      {process.env.NODE_ENV === "production" && (
-        <Script
-          async
-          data-website-id={process.env.NEXT_PUBLIC_UMAMI_ID}
-          rel="preconnect"
-          src="https://eu.umami.is/script.js"
-          strategy="afterInteractive"
-        />
-      )}
-      <PostHogProvider>
-        <body
-          className={cn(
-            "dark",
-            "overflow-hidden",
-            "relative",
-            "bg-background min-h-dvh font-sans antialiased",
-            "bg-eerie-light",
-            "text-white",
-            spaceGrotesk.variable,
-          )}
-        >
-          <SpeedInsights />
-          <Suspense>
-            <PostHogPageView />
-          </Suspense>
-          <MenuContextProvider>
-            <div className="lg:flex">
-              <SideMenu>
-                <MainMenuContent mainMenu={mainMenu} me={me} />
-              </SideMenu>
-              <div className="blueprint-layout flex flex-1">{children}</div>
-            </div>
-          </MenuContextProvider>
-        </body>
-      </PostHogProvider>
+      <body
+        className={cn(
+          "dark",
+          "overflow-hidden",
+          "relative",
+          "bg-background min-h-dvh font-sans antialiased",
+          "bg-eerie-light",
+          "text-white",
+          spaceGrotesk.variable,
+        )}
+      >
+        <SpeedInsights />
+        <Analytics />
+        <MenuContextProvider>
+          <div className="lg:flex">
+            <SideMenu>
+              <MainMenuContent mainMenu={mainMenu} me={me} />
+            </SideMenu>
+            <div className="blueprint-layout flex flex-1">{children}</div>
+          </div>
+        </MenuContextProvider>
+      </body>
     </html>
   );
 };
