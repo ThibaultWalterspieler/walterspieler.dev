@@ -1,3 +1,8 @@
+import {
+  revalidateCmsAfterChange,
+  revalidateCmsAfterDelete,
+} from "@/payload/hooks/revalidate-cms";
+
 import type { CollectionConfig } from "payload";
 
 export const Media: CollectionConfig = {
@@ -16,6 +21,8 @@ export const Media: CollectionConfig = {
   ],
   upload: true,
   hooks: {
+    afterChange: [revalidateCmsAfterChange],
+    afterDelete: [revalidateCmsAfterDelete],
     beforeOperation: [
       ({ req, operation }) => {
         if ((operation === "create" || operation === "update") && req.file) {

@@ -1,8 +1,4 @@
-"use client";
-
 import { FC } from "react";
-
-import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
 
@@ -10,41 +6,24 @@ type Props = {
   label: string;
 };
 
-const variants = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-};
-
-const textVariants = {
-  initial: { opacity: 0, y: 25 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -50 },
-};
-
 const EmptyLayout: FC<Props> = (props) => {
   const { label } = props;
 
   return (
-    <motion.div
-      animate="animate"
-      className={cn("hidden h-full w-full items-center justify-center lg:flex")}
-      initial="initial"
-      transition={{ duration: 0.5 }}
-      variants={variants}
+    <div
+      className={cn(
+        "animate-enter hidden h-full w-full items-center justify-center [animation-delay:0.3s] lg:flex",
+      )}
     >
-      <motion.span
-        animate="animate"
+      <span
         className={cn(
-          "animate-text-gradient via-surface inline-flex bg-gradient-to-r from-muted to-muted bg-[200%_auto] bg-clip-text pl-72 text-center text-3xl font-bold text-transparent",
+          // bg-linear-to-r: tailwind-merge drops v3's bg-gradient-to-r next to bg-[200%_auto].
+          "animate-text-gradient via-surface inline-flex bg-linear-to-r from-muted to-muted bg-[200%_auto] bg-clip-text pl-72 text-center text-3xl font-bold text-transparent",
         )}
-        exit="exit"
-        initial="initial"
-        transition={{ delay: 0.5, duration: 0.7 }}
-        variants={textVariants}
       >
         {label}
-      </motion.span>
-    </motion.div>
+      </span>
+    </div>
   );
 };
 

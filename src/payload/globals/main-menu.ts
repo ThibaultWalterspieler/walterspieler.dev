@@ -1,5 +1,7 @@
 import { GlobalConfig } from "payload";
 
+import { revalidateCmsAfterGlobalChange } from "@/payload/hooks/revalidate-cms";
+
 export const MainMenu: GlobalConfig = {
   slug: "mainMenu",
   fields: [
@@ -69,4 +71,7 @@ export const MainMenu: GlobalConfig = {
       ],
     },
   ],
+  hooks: {
+    afterChange: [revalidateCmsAfterGlobalChange],
+  },
 };

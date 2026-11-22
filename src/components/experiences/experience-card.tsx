@@ -3,9 +3,7 @@
 import { FC } from "react";
 
 import { CalendarIcon } from "lucide-react";
-import { motion, useMotionTemplate, useMotionValue } from "motion/react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 import { A, H3 } from "@/components/common/typography";
 import { Button } from "@/components/ui/button";
@@ -42,24 +40,15 @@ const ExperienceCard: FC<Props> = (props) => {
     tags,
   } = props;
 
-  const router = useRouter();
-
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
   return (
     <div
-      className="group bg-surface relative my-8 w-full cursor-pointer overflow-hidden rounded-xl"
-      onClick={() => {
-        if (relatedWorkPostSlug) {
-          router.push(`/experiences/${relatedWorkPostSlug}`);
-        }
-      }}
-      onMouseMove={(e) => {
+      className="group bg-surface relative my-8 w-full overflow-hidden rounded-xl"
+      // CSS variables, not React state: the glow follows the pointer without re-rendering.
+      onPointerMove={(e) => {
         const { left, top } = e.currentTarget.getBoundingClientRect();
 
-        mouseX.set(e.clientX - left);
-        mouseY.set(e.clientY - top);
+        e.currentTarget.style.setProperty("--glow-x", `${e.clientX - left}px`);
+        e.currentTarget.style.setProperty("--glow-y", `${e.clientY - top}px`);
       }}
     >
       <div
@@ -67,14 +56,7 @@ const ExperienceCard: FC<Props> = (props) => {
           "absolute right-5 bottom-0 left-0 h-px w-80 bg-linear-to-l from-transparent via-white/30 via-10% to-transparent",
         )}
       />
-      <motion.div
-        className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
-        style={{
-          background: useMotionTemplate`
-						radial-gradient(200px circle at ${mouseX}px ${mouseY}px, color-mix(in srgb, var(--color-accent) 8%, transparent), transparent 80%)
-					`,
-        }}
-      />
+      <div className="pointer-events-none absolute -inset-px rounded-xl bg-[radial-gradient(200px_circle_at_var(--glow-x)_var(--glow-y),color-mix(in_srgb,var(--color-accent)_8%,transparent),transparent_80%)] opacity-0 transition duration-300 group-hover:opacity-100" />
       <div className="relative flex flex-col rounded-xl border border-border">
         <div className="flex flex-row items-center gap-4 space-y-2 p-6">
           {/* <PrismicNextImage
@@ -109,7 +91,8 @@ const ExperienceCard: FC<Props> = (props) => {
             {link && (
               <A
                 aria-label={`${title} website`}
-                className="text-sm"
+                // Above the card-wide link below, so it stays clickable.
+                className="relative z-10 text-sm"
                 href={link}
                 rel={"noopener nofollow"}
               >
@@ -140,6 +123,8 @@ const ExperienceCard: FC<Props> = (props) => {
               <Button asChild variant="outline">
                 <Link
                   aria-label={`Read more about ${title}`}
+                  // Stretched over the whole card, which used to navigate with router.push.
+                  className="after:absolute after:inset-0 after:content-['']"
                   href={`/experiences/${relatedWorkPostSlug}`}
                 >
                   {buttonLabel} {title}

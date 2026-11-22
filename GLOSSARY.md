@@ -93,7 +93,7 @@ The JSON-LD script a page carries for search engines: `ProfilePage` on home, `Ne
 _Avoid_: rich snippets, microdata
 
 **Revalidation**:
-Refreshing a cached public page after a CMS save: a collection hook POSTs the changed paths to `/api/revalidate`, which calls Next's `revalidatePath`.
+Refreshing the cached public pages after a CMS save, so the next visit shows the change. Between saves, public pages never change.
 _Avoid_: cache bust, redeploy, rebuild
 
 **Admin**:

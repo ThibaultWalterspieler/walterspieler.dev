@@ -1,26 +1,14 @@
 import { PropsWithChildren, Suspense } from "react";
 
-import { getPayload } from "payload";
-
 import LoadingSpinner from "@/components/common/loading-spinner";
 import SideMenu from "@/components/common/side-menu";
 import SideMenuContent from "@/components/common/side-menu-content";
 import { getDictionary } from "@/lib/i18n/utils";
-import config from "@payload-config";
+import { getPublishedPosts } from "@/lib/payload/queries";
 
 type Props = PropsWithChildren<{
   params: Promise<{ slug?: string | string[] }>;
 }>;
-
-const getExperiencePosts = async () => {
-  const payload = await getPayload({
-    config,
-  });
-
-  return payload.find({
-    collection: "experiencePosts",
-  });
-};
 
 const ExperiencesLayout = async (props: Props) => {
   const { children, params } = props;
@@ -29,7 +17,7 @@ const ExperiencesLayout = async (props: Props) => {
 
   const dictionary = await getDictionary();
 
-  const experiencePosts = await getExperiencePosts();
+  const experiencePosts = await getPublishedPosts("experiencePosts");
 
   const activeUid = Array.isArray(slug) ? slug[0] : slug;
 
@@ -40,7 +28,7 @@ const ExperiencesLayout = async (props: Props) => {
           <SideMenuContent
             activeUid={activeUid}
             collection="experiences"
-            data={experiencePosts.docs
+            data={experiencePosts
               .map((post) => {
                 if (typeof post.experience !== "number") {
                   return {
@@ -58,7 +46,7 @@ const ExperiencesLayout = async (props: Props) => {
           />
         </Suspense>
       </SideMenu>
-      <div className="relative flex-1">{children}</div>
+      <div className="relative min-w-0 flex-1">{children}</div>
     </>
   );
 };

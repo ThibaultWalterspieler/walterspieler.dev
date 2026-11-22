@@ -1,17 +1,14 @@
-import { FC, PropsWithChildren, Suspense } from "react";
+import { FC, PropsWithChildren } from "react";
 
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import dynamic from "next/dynamic";
 import { Space_Grotesk } from "next/font/google";
-import Script from "next/script";
-import { getPayload } from "payload";
 
-import PostHogProvider from "@/app/(frontend)/ph-provider";
+import Analytics from "@/components/analytics";
 import MainMenuContent from "@/components/common/main-menu-content";
 import SideMenu from "@/components/common/side-menu";
 import { MenuContextProvider } from "@/contexts/menu-context";
+import { getMainMenu, getMe } from "@/lib/payload/queries";
 import { cn } from "@/lib/utils";
-import config from "@payload-config";
 
 import type { Viewport } from "next";
 
@@ -23,71 +20,36 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
-const PostHogPageView = dynamic(
-  () => import("@/components/post-hog-page-view"),
-);
-
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-const getMe = async () => {
-  const payload = await getPayload({
-    config,
-  });
-  return payload.findGlobal({ slug: "me" });
-};
-
-const getMainMenu = async () => {
-  const payload = await getPayload({
-    config,
-  });
-  return payload.findGlobal({ slug: "mainMenu" });
-};
-
 const RootLayout: FC<Props> = async (props) => {
   const { children } = props;
 
-  const meData = await getMe();
-  const mainMenuData = await getMainMenu();
-
-  const [me, mainMenu] = await Promise.all([meData, mainMenuData]);
+  const [me, mainMenu] = await Promise.all([getMe(), getMainMenu()]);
 
   return (
     <html lang="en">
-      {process.env.NODE_ENV === "production" && (
-        <Script
-          async
-          data-website-id={process.env.NEXT_PUBLIC_UMAMI_ID}
-          rel="preconnect"
-          src="https://eu.umami.is/script.js"
-          strategy="afterInteractive"
-        />
-      )}
-      <PostHogProvider>
-        <body
-          className={cn(
-            "overflow-hidden",
-            "relative",
-            "bg-background text-foreground selection:bg-selection min-h-dvh font-sans antialiased",
-            spaceGrotesk.variable,
-          )}
-        >
-          <SpeedInsights />
-          <Suspense>
-            <PostHogPageView />
-          </Suspense>
-          <MenuContextProvider>
-            <div className="lg:flex">
-              <SideMenu>
-                <MainMenuContent mainMenu={mainMenu} me={me} />
-              </SideMenu>
-              <div className="blueprint-layout flex flex-1">{children}</div>
-            </div>
-          </MenuContextProvider>
-        </body>
-      </PostHogProvider>
+      <body
+        className={cn(
+          "relative",
+          "bg-background text-foreground selection:bg-selection min-h-dvh font-sans antialiased",
+          spaceGrotesk.variable,
+        )}
+      >
+        <SpeedInsights />
+        <Analytics />
+        <MenuContextProvider>
+          <div className="lg:flex">
+            <SideMenu>
+              <MainMenuContent mainMenu={mainMenu} me={me} />
+            </SideMenu>
+            <div className="blueprint-layout flex flex-1">{children}</div>
+          </div>
+        </MenuContextProvider>
+      </body>
     </html>
   );
 };

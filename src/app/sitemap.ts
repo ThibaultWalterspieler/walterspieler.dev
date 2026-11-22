@@ -1,10 +1,14 @@
 import { MetadataRoute } from "next";
-import { getPayload } from "payload";
+import { cacheLife, cacheTag } from "next/cache";
 
-import config from "@payload-config";
+import { CMS_CACHE_TAG } from "@/lib/payload/cms-cache-tag";
+import { getPublishedPosts } from "@/lib/payload/queries";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const payload = await getPayload({ config });
+  // Cached with the pages: `new Date()` is the time of the last Revalidation.
+  "use cache";
+  cacheLife("max");
+  cacheTag(CMS_CACHE_TAG);
 
   // Static pages
   const staticPages = [
@@ -47,17 +51,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // Dynamic blog posts
-  const blogPosts = await payload.find({
-    collection: "blogPosts",
-    limit: 1000,
-    where: {
-      _status: {
-        equals: "published",
-      },
-    },
-  });
+  const blogPosts = await getPublishedPosts("blogPosts");
 
-  const blogPages = blogPosts.docs.map((post) => ({
+  const blogPages = blogPosts.map((post) => ({
     url: `https://walterspieler.dev/blog/${post.slug}`,
     lastModified: new Date(post.updatedAt),
     changeFrequency: "monthly" as const,
@@ -65,17 +61,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   // Dynamic experience posts
-  const experiencePosts = await payload.find({
-    collection: "experiencePosts",
-    limit: 1000,
-    where: {
-      _status: {
-        equals: "published",
-      },
-    },
-  });
+  const experiencePosts = await getPublishedPosts("experiencePosts");
 
-  const experiencePages = experiencePosts.docs.map((post) => ({
+  const experiencePages = experiencePosts.map((post) => ({
     url: `https://walterspieler.dev/experiences/${post.slug}`,
     lastModified: new Date(post.updatedAt),
     changeFrequency: "monthly" as const,

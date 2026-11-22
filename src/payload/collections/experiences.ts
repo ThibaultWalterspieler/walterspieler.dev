@@ -1,3 +1,8 @@
+import {
+  revalidateCmsAfterChange,
+  revalidateCmsAfterDelete,
+} from "@/payload/hooks/revalidate-cms";
+
 import type { CollectionConfig } from "payload";
 
 export const Experiences: CollectionConfig = {
@@ -81,4 +86,8 @@ export const Experiences: CollectionConfig = {
       on: "experience",
     },
   ],
+  hooks: {
+    afterChange: [revalidateCmsAfterChange],
+    afterDelete: [revalidateCmsAfterDelete],
+  },
 };

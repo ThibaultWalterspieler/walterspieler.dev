@@ -1,12 +1,10 @@
 import { PropsWithChildren, Suspense } from "react";
 
-import { getPayload } from "payload";
-
 import LoadingSpinner from "@/components/common/loading-spinner";
 import SideMenu from "@/components/common/side-menu";
 import SideMenuContent from "@/components/common/side-menu-content";
 import { getDictionary } from "@/lib/i18n/utils";
-import config from "@payload-config";
+import { getPublishedPosts } from "@/lib/payload/queries";
 
 type Props = PropsWithChildren<{
   params: Promise<{ slug?: string | string[] }>;
@@ -19,7 +17,7 @@ const BlogLayout = async (props: Props) => {
 
   const dictionary = await getDictionary();
 
-  const blogPosts = await getBlogPosts();
+  const blogPosts = await getPublishedPosts("blogPosts");
 
   const activeUid = Array.isArray(slug) ? slug[0] : slug;
 
@@ -30,7 +28,7 @@ const BlogLayout = async (props: Props) => {
           <SideMenuContent
             activeUid={activeUid}
             collection="blog"
-            data={blogPosts.docs.map((post) => ({
+            data={blogPosts.map((post) => ({
               title: post.title,
               uid: post.slug,
               startDate: post.createdAt,
@@ -39,19 +37,9 @@ const BlogLayout = async (props: Props) => {
           />
         </Suspense>
       </SideMenu>
-      <div className="relative flex-1">{children}</div>
+      <div className="relative min-w-0 flex-1">{children}</div>
     </>
   );
-};
-
-const getBlogPosts = async () => {
-  const payload = await getPayload({
-    config,
-  });
-
-  return payload.find({
-    collection: "blogPosts",
-  });
 };
 
 export default BlogLayout;
