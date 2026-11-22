@@ -640,6 +640,7 @@ export interface Page {
 export interface Media {
   id: number;
   alt: string;
+  blurDataUrl?: string | null;
   _key?: string | null;
   prefix?: string | null;
   _objectKey?: string | null;
@@ -2007,6 +2008,7 @@ export interface SocialsSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  blurDataUrl?: T;
   _key?: T;
   prefix?: T;
   _objectKey?: T;

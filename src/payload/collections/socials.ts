@@ -1,3 +1,8 @@
+import {
+  revalidateCmsAfterChange,
+  revalidateCmsAfterDelete,
+} from "@/payload/hooks/revalidate-cms";
+
 import type { CollectionConfig } from "payload";
 
 export const Socials: CollectionConfig = {
@@ -24,4 +29,8 @@ export const Socials: CollectionConfig = {
       required: true,
     },
   ],
+  hooks: {
+    afterChange: [revalidateCmsAfterChange],
+    afterDelete: [revalidateCmsAfterDelete],
+  },
 };

@@ -1,17 +1,9 @@
 import { Metadata } from "next";
-import { getPayload } from "payload";
 
-import config from "@payload-config";
+import { getMe } from "@/lib/payload/queries";
 import { BlogPost, ExperiencePost, Page } from "@payload-types";
 
 import { BASE_URL } from "../../../next.constants.mjs";
-
-const getMe = async () => {
-  const payload = await getPayload({
-    config,
-  });
-  return payload.findGlobal({ slug: "me" });
-};
 
 const getMetadata = async (
   pageMeta: Page["meta"] | ExperiencePost["meta"] | BlogPost["meta"],

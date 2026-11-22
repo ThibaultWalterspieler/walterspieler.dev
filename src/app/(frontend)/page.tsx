@@ -1,18 +1,15 @@
-import { cache, FC } from "react";
+import { FC } from "react";
 
 import { Metadata } from "next";
-import { getPayload } from "payload";
+import { notFound } from "next/navigation";
 
 import Content from "@/components/common/content";
-import ScrollArea from "@/components/common/scroll-area";
 import { H1 } from "@/components/common/typography";
 import { Separator } from "@/components/ui/separator";
+import { getMe, getPage } from "@/lib/payload/queries";
 import getSchemaProfilePage from "@/lib/schema-dts/profile-page";
 import getMetadata from "@/lib/seo/metadata";
 import { cn } from "@/lib/utils";
-import config from "@payload-config";
-
-export const revalidate = 3600;
 
 const Home: FC = async () => {
   const meData = getMe();
@@ -33,11 +30,9 @@ const Home: FC = async () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
       />
-      <ScrollArea className={cn("flex flex-col")}>
-        <div
-          className={cn("content-wrapper", "animate-in fade-in duration-700")}
-        >
-          <div className={cn("content animate-in fade-in duration-700")}>
+      <div className={cn("flex w-full min-w-0 flex-col")}>
+        <div className={cn("content-wrapper")}>
+          <div className={cn("content animate-enter")}>
             <H1
               className={cn(
                 "text-spotlight mb-4 max-w-[60vw] md:mb-4 md:max-w-full",
@@ -56,28 +51,19 @@ const Home: FC = async () => {
             <Content content={homePage.content} />
           </div>
         </div>
-      </ScrollArea>
+      </div>
     </>
   );
 };
 
-const getHomePage = cache(async () => {
-  const payload = await getPayload({
-    config,
-  });
-  const pages = await payload.find({
-    collection: "pages",
-    where: { slug: { equals: "home" } },
-  });
+const getHomePage = async () => {
+  const page = await getPage("home");
 
-  return pages.docs[0];
-});
+  if (!page) {
+    notFound();
+  }
 
-const getMe = async () => {
-  const payload = await getPayload({
-    config,
-  });
-  return payload.findGlobal({ slug: "me" });
+  return page;
 };
 
 export async function generateMetadata(): Promise<Metadata> {

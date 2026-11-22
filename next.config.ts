@@ -4,6 +4,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactCompiler: true,
+  cacheComponents: true,
   turbopack: {
     resolveAlias: {
       underscore: "lodash",
@@ -11,8 +12,8 @@ const nextConfig: NextConfig = {
     resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".json"],
   },
   images: {
-    // 1 day in seconds
-    minimumCacheTTL: 60 * 60 * 24,
+    // One year: media files get a new name on every upload, so a URL's bytes never change.
+    minimumCacheTTL: 60 * 60 * 24 * 365,
     remotePatterns: [
       {
         hostname: "pbs.twimg.com",

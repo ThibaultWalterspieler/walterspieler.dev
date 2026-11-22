@@ -1,10 +1,12 @@
 # Public pages change only through Revalidation
 
-Public pages are cached indefinitely (`'use cache'` + `cacheLife('max')` under Next's Cache Components) and are refreshed only when Revalidation, triggered by a CMS save, invalidates their cache tags. There is deliberately no time-based revalidation: content only changes through the CMS, so a timer would only add DB traffic and cold starts. Neon scales to zero, and the database lives in Frankfurt.
+Every CMS read behind a public page is a `'use cache'` function in `src/lib/payload/queries.ts`, with `cacheLife("max")` and one tag, `CMS_CACHE_TAG`, under Next's Cache Components. A CMS save expires that tag in-process (`revalidateTag(tag, { expire: 0 })`) from Payload hooks on every public collection and global, so the next request re-renders. Content only changes through the CMS, so time-based revalidation would only add database traffic and cold starts. Neon scales to zero, and the database lives in Frankfurt.
 
-Every Payload read is tagged per document, per collection (for list pages) and per Global. Globals render in the root layout, so saving one refreshes every page. Payload's `afterChange` hooks call `revalidateTag` in-process, because Payload runs inside the same Next app. An earlier HTTP self-call to `/api/revalidate` guarded by a shared secret was removed: it added a network hop, a secret to manage, and an endpoint that was open whenever the secret was unset. Code that runs outside Next, such as the seed script, passes `context.disableRevalidate`.
+There is one tag rather than one per document or collection. Blocks populate experiences, social links and media into pages and posts, and every post page lists its whole section in the inner menu. Finer tags would rebuild nearly the same pages while adding a way to forget one and leave a page stale for good. Revalidation is lazy, so expiring the whole site only re-renders the pages visitors open.
+
+The hooks call `revalidateTag` directly because Payload runs inside the same Next.js app. An earlier HTTP self-call to `/api/revalidate`, guarded by a shared secret, was removed. It added a network hop and a secret to manage, and the endpoint was open whenever the secret was unset. Scripts that run outside Next, such as the seed, pass `context.disableRevalidate`.
 
 ## Consequences
 
-- A hook that forgets a tag leaves a page stale with no timer to rescue it. When adding a collection, Global or new read, check its tags.
-- Unpublishing and renaming a slug must invalidate the old document's tag as well as the new one.
+- A new collection or global that public pages show needs the `revalidate-cms` hooks, and a new read needs the shared tag. Either omission leaves pages stale until the 30-day background refresh of `cacheLife("max")`, the only timer left.
+- A draft saved over a draft expires nothing, because visitors see published posts only.

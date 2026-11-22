@@ -74,7 +74,6 @@ Edit `.env.local` and provide values for:
 - `NEXT_PUBLIC_BASE_URL`: Your site's base URL (e.g., http://localhost:2499)
 - `NEXT_PUBLIC_POSTHOG_KEY`: PostHog API key (for analytics)
 - `NEXT_PUBLIC_POSTHOG_HOST`: PostHog host URL
-- `NEXT_PUBLIC_UMAMI_ID`: Umami analytics ID (if used)
 - `DATABASE_URI`: PostgreSQL database connection string
 - `UPLOADTHING_TOKEN`: UploadThing token for file uploads
 - `RESEND_API_KEY`: Resend API key for email functionality
@@ -128,6 +127,16 @@ After changing a collection, global or block, generate the migration and the typ
 pnpm payload migrate:create <name>
 pnpm payload generate:types
 ```
+
+### Blur Placeholders
+
+Images get their blur placeholder when they are uploaded (`docs/adr/0002`). Images uploaded before that have none; fill them once, against the database in `.env.local`:
+
+```bash
+pnpm backfill:blur
+```
+
+It only touches images without a placeholder, so it is safe to rerun. Pages show the placeholders after their next Revalidation (any save in the admin).
 
 ### Dependency Installation
 

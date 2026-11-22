@@ -97,7 +97,7 @@ One section per feature area. Each answers the same four questions: what exists,
 - **Button**: a link to a page, or to an external URL in a new tab.
 - **MySocials**: one button per picked social link, with an icon for LinkedIn, Stack Overflow, Instagram and Malt.
 - **Experience**: experience cards (see Experiences).
-- **ScriptCopyBtn**: a command with one tab per package manager and a copy button.
+- **ScriptCopyBtn**: a command with one tab per package manager and a copy button. Shiki highlights the commands on the server; a command it cannot highlight shows as plain text.
 - **TweetCard**: an embedded tweet.
 
 **How to get to it**: any page or post that uses the block. `/ui/script-copy-btn` and `/ui/tweet-card` render the last two with fixed data.
@@ -133,20 +133,20 @@ One section per feature area. Each answers the same four questions: what exists,
 
 ## Revalidation
 
-**What exists**: saving a blog post, experience post or page in the admin POSTs its path to `/api/revalidate`, which refreshes the cached page. Unpublishing a post refreshes its old path. Pages map to `/<slug>`, with `home` to `/`.
+**What exists**: every public page reads the CMS through `src/lib/payload/queries.ts`, cached under one tag (`CMS_CACHE_TAG`) until a save expires it. Saving or deleting any page, post, experience, social link or media, or saving Me or the Main menu, expires the tag in-process (`src/payload/hooks/revalidate-cms.ts`), so the next request re-renders. A draft saved over a draft (autosave) expires nothing. Visitors see published posts only.
 
-**How to get to it**: save a document in the admin and watch the dev server log ("Revalidating …").
+**How to get to it**: save a document in the admin and watch the server log ("Revalidation: expired the CMS cache").
 
 **Driving it**
 
 - Needs a production build (see SKILL.md, step 5): `next dev` renders every request, so a stale page can't be seen.
-- `curl -X POST localhost:2499/api/revalidate -H 'Content-Type: application/json' -d '{"paths":["/blog"]}'`: 401 when `NEXT_REVALIDATE_SECRET` is set and missing from the request, 400 for a bad body.
+- Load a post page twice (`x-nextjs-cache: HIT`), publish an edit through the admin or `PATCH /api/blogPosts/<id>`, reload: the edit shows, and the inner menu on `/blog` too.
+- Save a draft of that post (`?draft=true`): the public page keeps the published text.
 
 **Gotchas**
 
-- Without `NEXT_REVALIDATE_SECRET`, the endpoint accepts any caller.
-- The legal notice page revalidates `/notice`, not `/legal/notice`.
-- Globals (Me, Main menu), experiences and social links have no hook: their changes show once a page's `revalidate` window (1 hour) passes. Post pages have no window and keep the old layout until the post is saved again or the site is rebuilt.
+- `pnpm seed` passes `context.disableRevalidate`: outside Next.js there is no cache to expire.
+- `cacheLife("max")` also refreshes a page in the background after 30 days; nothing else does.
 - A failed revalidation is logged and never blocks the save.
 
 ## Redirects

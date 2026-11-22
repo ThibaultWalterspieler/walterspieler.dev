@@ -6,17 +6,17 @@ These were derived from the code as it stood in November 2026. A rule the owner 
 
 ## Trust boundaries
 
-- **A route handler treats its body as untrusted**: it types every field `unknown` and keeps only the shapes it expects, answering 400 otherwise. See `RevalidatePayload` and `collectPaths` in `src/app/(frontend)/api/revalidate/route.ts`.
-- **An endpoint that changes server state checks a secret from the environment**, sent as `Authorization: Bearer`. See `/api/revalidate` and its caller `triggerRevalidation.ts`. (Today the route skips the check when `NEXT_REVALIDATE_SECRET` is unset.)
-- **Server code reads the CMS through the Local API, which skips access control**, so it filters what a visitor may see itself: published posts only (`_status: { equals: "published" }`), as `src/app/sitemap.ts` does. The blog and experience layouts and post pages don't yet, and show drafts.
+- **A route handler treats its body as untrusted**: it types every field `unknown` and keeps only the shapes it expects, answering 400 otherwise.
+- **An endpoint that changes server state checks a secret from the environment**, sent as `Authorization: Bearer`, and refuses every call when the secret is unset.
+- **Server code reads the CMS through the Local API, which skips access control**, so it filters what a visitor may see itself: published posts only (`_status: { equals: "published" }`), as `getPublishedPosts` in `src/lib/payload/queries.ts` does.
 - **A collection opens public reads on purpose** with `access: { read: () => true }` (`blog-posts.ts`); without it the REST and GraphQL APIs need a logged-in user, which here means an admin, since `users` is the only auth collection (`pages.ts`, `socials.ts`, `users.ts`).
-- **CMS text reaches `dangerouslySetInnerHTML` escaped.** See `escapeHtml` in `src/lib/payload/lexical/Serialize.tsx`. The JSON-LD scripts (`JSON.stringify` of Me fields) and the `ScriptCopyBtn` fallback `<pre>` don't escape yet.
+- **CMS text reaches `dangerouslySetInnerHTML` escaped.** See `escapeHtml` in `src/lib/payload/lexical/Serialize.tsx`; shiki escapes the code it highlights (`src/components/ui/highlight-commands.test.ts`). The JSON-LD scripts (`JSON.stringify` of Me fields) don't escape yet.
 
 ## Public pages keep rendering
 
-- **A page that reads one CMS document calls `notFound()` when it is missing**, so the section's `not-found.tsx` renders. See `getExperiencePost` in `src/app/(frontend)/experiences/[slug]/page.tsx`. The home page and `blog/page.tsx` don't, and throw.
-- **Optional CMS fields fall back to built-in values**, never to a crash: see `getMetadata` in `src/lib/seo/metadata.ts` (owner's name, default share image) and `getImage` in `src/lib/plaiceholder.ts`.
-- **A side effect of a CMS save never fails the save.** It catches, logs through `payload.logger`, and returns. See `triggerRevalidation.ts`.
+- **A page that reads one CMS document calls `notFound()` when it is missing**, so the section's `not-found.tsx` renders. See `getExperiencePost` in `src/app/(frontend)/experiences/[slug]/page.tsx`.
+- **Optional CMS fields fall back to built-in values**, never to a crash: see `getMetadata` in `src/lib/seo/metadata.ts` (owner's name, default share image) and the Lexical image, which renders without a blur placeholder when its media has none (`Serialize.tsx`).
+- **A side effect of a CMS save never fails the save.** It catches, logs through `payload.logger`, and returns. See `src/payload/hooks/revalidate-cms.ts`.
 
 ## Payload and data
 
@@ -24,12 +24,12 @@ These were derived from the code as it stood in November 2026. A rule the owner 
 - **Generated files are regenerated, never hand-edited**: `src/payload/payload-types.ts`, `src/payload/migrations/**`, `src/app/(payload)/**`.
 - **A migration moves data with SQL** (``db.execute(sql`…`)``), as `20250916_132141_remove_fr.ts` does. The Local API speaks today's schema: `20241129_174207` calls `payload.update` and can no longer run on an empty database.
 - **A script that deletes or overwrites data refuses to run outside development.** See the `NODE_ENV` check in `src/scripts/seed.ts`.
-- **A route that reads a page by slug owns that slug.** Renaming it in the admin breaks the route; changing it in code needs the seed and the revalidation path updated too (`revalidatePage.ts` maps a slug to `/<slug>`).
+- **A route that reads a page by slug owns that slug.** Renaming it in the admin breaks the route; changing it in code needs the seed updated too.
 
 ## Next.js runtime and caching
 
-- **A public page is cached, and refreshed on change.** Section pages export `revalidate = 3600`; post pages are pre-rendered by `generateStaticParams`. A save in the admin refreshes them through a revalidation hook (`revalidateBlogPost.ts`). A new CMS-backed route adds its path to a hook, or says in the PR why it can wait.
-- **A CMS read shared by a page and its `generateMetadata` goes through React `cache`**, so it runs once per request. See `getBlogPost` in `src/app/(frontend)/blog/[slug]/page.tsx`.
+- **A public page reads the CMS through `src/lib/payload/queries.ts`**, whose functions are `'use cache'`, kept until a save expires `CMS_CACHE_TAG` (ADR 0001). A new read joins that module with the same tag; a new collection or global that pages show gets the `revalidate-cms` hooks. Pages and `generateMetadata` share the cached result, so a read runs once.
+- **Prerendered code holds no request-time values** (`new Date()`, `Math.random()`, cookies): Cache Components fails the build. Read them in a `'use cache'` scope or on the client, as `MiscMenu` does for the year.
 - **Payload, `pg` and `sharp` run in the Node.js runtime only.** Code on the Edge runtime imports none of them.
 - **A remote image host is listed in `images.remotePatterns`** in `next.config.ts` before a page renders it with `next/image`.
 
