@@ -36,6 +36,10 @@ _Avoid_: widget, component block
 The two states of a blog post or experience post (`_status`). Visitors are meant to see published posts only.
 _Avoid_: live, unpublished, private
 
+**Global**:
+A single CMS document shared by every public page: Me or the Main menu.
+_Avoid_: settings, singleton
+
 **Media**:
 An uploaded file, stored on UploadThing, with a required alt text.
 _Avoid_: asset, attachment
@@ -95,3 +99,9 @@ _Avoid_: cache bust, redeploy, rebuild
 **Admin**:
 The Payload admin at `/admin`, where the owner edits everything above.
 _Avoid_: back office, backend
+
+### Performance
+
+**Fast**:
+A public route whose real-visitor p75 metrics pass Core Web Vitals: LCP under 2.5s, INP under 200ms, CLS under 0.1.
+_Avoid_: snappy, performant, quick
