@@ -29,7 +29,7 @@ const DropdownMenuSubTrigger: React.FC<
   return (
     <DropdownMenuPrimitive.SubTrigger
       className={cn(
-        "flex cursor-default items-center rounded-xs px-2 py-1.5 text-sm outline-hidden select-none focus:bg-surface-hover data-[state=open]:bg-surface-hover",
+        "focus:bg-surface-hover data-[state=open]:bg-surface-hover flex cursor-default items-center rounded-xs px-2 py-1.5 text-sm outline-hidden select-none",
         {
           "pl-8": inset,
         },
@@ -55,7 +55,7 @@ const DropdownMenuSubContent: React.FC<
   return (
     <DropdownMenuPrimitive.SubContent
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-surface p-1 text-heading shadow-lg",
+        "ease-smooth data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 border-border bg-surface text-heading z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-lg duration-250",
         className,
       )}
       ref={ref}
@@ -76,7 +76,7 @@ const DropdownMenuContent: React.FC<
     <DropdownMenuPrimitive.Portal>
       <DropdownMenuPrimitive.Content
         className={cn(
-          "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-surface p-1 text-heading shadow-md",
+          "ease-smooth data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 border-border bg-surface text-heading z-50 min-w-[8rem] overflow-hidden rounded-md border p-1 shadow-md duration-250",
           className,
         )}
         ref={ref}
@@ -98,7 +98,7 @@ const DropdownMenuItem: React.FC<
   return (
     <DropdownMenuPrimitive.Item
       className={cn(
-        "relative flex cursor-default items-center rounded-xs px-2 py-1.5 text-sm outline-hidden transition-colors select-none focus:bg-surface-hover focus:text-heading data-disabled:pointer-events-none data-disabled:opacity-50",
+        "focus:bg-surface-hover focus:text-heading relative flex cursor-default items-center rounded-xs px-2 py-1.5 text-sm outline-hidden transition-colors select-none data-disabled:pointer-events-none data-disabled:opacity-50",
         {
           "pl-8": inset,
         },
@@ -121,7 +121,7 @@ const DropdownMenuCheckboxItem: React.FC<
     <DropdownMenuPrimitive.CheckboxItem
       checked={checked}
       className={cn(
-        "relative flex cursor-default items-center rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden transition-colors select-none focus:bg-surface-hover focus:text-heading data-disabled:pointer-events-none data-disabled:opacity-50",
+        "focus:bg-surface-hover focus:text-heading relative flex cursor-default items-center rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden transition-colors select-none data-disabled:pointer-events-none data-disabled:opacity-50",
         className,
       )}
       ref={ref}
@@ -148,7 +148,7 @@ const DropdownMenuRadioItem: React.FC<
   return (
     <DropdownMenuPrimitive.RadioItem
       className={cn(
-        "relative flex cursor-default items-center rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden transition-colors select-none focus:bg-surface-hover focus:text-heading data-disabled:pointer-events-none data-disabled:opacity-50",
+        "focus:bg-surface-hover focus:text-heading relative flex cursor-default items-center rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden transition-colors select-none data-disabled:pointer-events-none data-disabled:opacity-50",
         className,
       )}
       ref={ref}
@@ -196,10 +196,7 @@ const DropdownMenuSeparator: React.FC<
   const { className, ref, ...rest } = props;
   return (
     <DropdownMenuPrimitive.Separator
-      className={cn(
-        "-mx-1 my-1 h-px bg-border",
-        className,
-      )}
+      className={cn("bg-border -mx-1 my-1 h-px", className)}
       ref={ref}
       {...rest}
     />

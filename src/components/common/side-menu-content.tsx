@@ -37,7 +37,7 @@ const SideMenuContent: FC<Props> = (props) => {
 
           return (
             <MenuLinkCard
-              className="shadow-duration-200 px-4 py-5"
+              className="px-4 py-5"
               href={href}
               isActive={isActive}
               key={item.uid}

@@ -9,7 +9,8 @@ One section per feature area. Each answers the same four questions: what exists,
 - The main menu, left: the site owner's name and role (from the **Me** global), then one card per **menu item** of the **Main menu** global, each with the icon of its type (home, blog, experiences, contact, 99Stud; the lab and other types have no icon).
 - The "Other" button at the bottom: a dropdown with "Thibault Walterspieler - <year>", "Legal Notice" and "Open source".
 - On blog and experience routes, the **inner menu**: a second column listing the section's posts.
-- Below `lg`, both menus collapse: a command icon (top right) opens the main menu as an overlay, an X closes it; a back arrow (top left) reopens the inner menu.
+- Below `lg`, both menus collapse: one button (top right, `aria-label` "Open menu" / "Close menu") opens and closes the main menu as an overlay; a back arrow (top left) reopens the inner menu. Picking a post slides the inner menu away.
+- Moving between pages animates the page content only (React `<ViewTransition>`, `PageTransition`); the menus stay put. Every animation follows **Smooth** in `GLOSSARY.md`; the reasons are in `docs/adr/0003-animations-are-css-only.md`.
 
 **How to get to it**: any public page.
 
@@ -25,6 +26,8 @@ One section per feature area. Each answers the same four questions: what exists,
 - The active card is computed after hydration: page text taken straight from the server shows no active state.
 - A menu item whose page is not loaded is dropped silently.
 - The menus animate in. Wait a second before a screenshot, or the inner menu looks empty.
+- On mobile, the main menu's overlay is always in the DOM, `invisible` while closed: read its `data-open`, not whether it exists. Its links are in the DOM twice (column and overlay).
+- When the browser pane is hidden, the page gets no frames: transitions freeze at their start values and view transitions are skipped. Finish them with `document.getAnimations().forEach(a => a.finish())` (skip infinite ones) before reading end states, or show the pane.
 
 ## Home page
 

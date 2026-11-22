@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 
 import Article from "@/components/articles/article";
 import ArticleBreadcrumb from "@/components/articles/article-breadcrumb";
+import PageTransition from "@/components/common/page-transition";
 import { getPublishedPost, getPublishedPosts } from "@/lib/payload/queries";
 import getSchemaNewsArticle from "@/lib/schema-dts/news-article";
 import getMetadata from "@/lib/seo/metadata";
@@ -36,7 +37,7 @@ const ExperiencePage: FC<Props> = async (props) => {
   );
 
   return (
-    <>
+    <PageTransition>
       <script
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
@@ -56,7 +57,7 @@ const ExperiencePage: FC<Props> = async (props) => {
           </div>
         </div>
       </div>
-    </>
+    </PageTransition>
   );
 };
 

@@ -23,7 +23,7 @@ const ArticleBreadcrumb: FC<Props> = async (props) => {
   const dictionary = await getDictionary();
 
   return (
-    <Breadcrumb className="animate-in fade-in mb-5 duration-300">
+    <Breadcrumb className="mb-5">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>

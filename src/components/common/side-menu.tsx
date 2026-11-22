@@ -3,11 +3,9 @@
 import { FC, PropsWithChildren, use } from "react";
 
 import { ChevronLeft, Command, X } from "lucide-react";
-import { AnimatePresence, m, Variants } from "motion/react";
 import Link from "next/link";
 
 import ScrollArea from "@/components/common/scroll-area";
-import LazyMotionProvider from "@/components/motion/lazy-motion-provider";
 import { MenuContext } from "@/contexts/menu-context";
 import { cn } from "@/lib/utils";
 
@@ -17,16 +15,7 @@ type Props = {
   displayReturnButton?: boolean;
 } & PropsWithChildren;
 
-const iconVariants: Variants = {
-  open: {
-    scale: 1,
-    opacity: 1,
-  },
-  closed: {
-    scale: 0.3,
-    opacity: 0,
-  },
-};
+const toggleIconClasses = "col-start-1 row-start-1 transition-[opacity,rotate]";
 
 const SideMenu: FC<Props> = (props) => {
   const { children, isInner, displayReturnButton, collection } = props;
@@ -49,65 +38,56 @@ const SideMenu: FC<Props> = (props) => {
   );
 
   return (
-    <LazyMotionProvider>
-      {!isMainMenuOpen ? (
-        <>
-          <div className="border-border bg-surface/5 fixed top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
-            <m.div
-              animate={isMainMenuOpen ? "open" : "closed"}
-              initial="closed"
-              transition={{
-                type: "spring",
-                stiffness: 400,
-                damping: 17,
-                duration: 0.5,
-              }}
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <Command onClick={openMainMenu} size={24} />
-            </m.div>
-          </div>
-          {displayReturnButton && (
-            <Link
-              className={cn("block", {
-                hidden: isMainMenuOpen || isInnerMenuOpen,
-              })}
-              href={`/${collection}`}
-              onClick={openInnerMenu}
-            >
-              <div className="border-border bg-surface/5 fixed top-8 left-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
-                <ChevronLeft size={24} />
-              </div>
-            </Link>
+    <>
+      {/* One toggle for the whole site: the root layout's menu renders it. */}
+      {!isInner && (
+        <button
+          aria-expanded={isMainMenuOpen}
+          aria-label={isMainMenuOpen ? "Close menu" : "Open menu"}
+          className={cn(
+            "border-border fixed top-8 right-4 z-50 grid rounded-lg border p-2 backdrop-blur transition-[background-color,scale] active:scale-[0.97] md:hidden",
+            isMainMenuOpen ? "bg-surface/80" : "bg-surface/5",
           )}
-        </>
-      ) : (
-        <div className="border-border bg-surface/80 fixed top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
-          <m.div
-            animate={isMainMenuOpen ? "open" : "closed"}
-            initial="closed"
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 17,
-              duration: 0.8,
-            }}
-            variants={iconVariants}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <X onClick={closeMainMenu} size={24} />
-          </m.div>
-        </div>
+          onClick={isMainMenuOpen ? closeMainMenu : openMainMenu}
+          type="button"
+        >
+          <Command
+            aria-hidden
+            className={cn(toggleIconClasses, {
+              "rotate-90 opacity-0": isMainMenuOpen,
+            })}
+            size={24}
+          />
+          <X
+            aria-hidden
+            className={cn(toggleIconClasses, {
+              "-rotate-90 opacity-0": !isMainMenuOpen,
+            })}
+            size={24}
+          />
+        </button>
       )}
-      {isInner ? (
-        // CSS, not motion: the post list must show without waiting for JavaScript.
-        <div
-          className={cn("bg-sidebar animate-slide-in fixed top-0 z-10", {
-            hidden: !isInnerMenuOpen,
-            "md:block": !isInnerMenuOpen || isInnerMenuOpen,
+      {displayReturnButton && (
+        <Link
+          className={cn("block", {
+            hidden: isMainMenuOpen || isInnerMenuOpen,
           })}
+          href={`/${collection}`}
+          onClick={openInnerMenu}
+        >
+          <div className="border-border bg-surface/5 fixed top-8 left-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
+            <ChevronLeft size={24} />
+          </div>
+        </Link>
+      )}
+      {/* CSS, not JavaScript: the inner menu must show without waiting for hydration.
+          On mobile it slides away (rather than vanishing) once a post is picked. */}
+      {isInner ? (
+        <div
+          className={cn(
+            "bg-sidebar fixed top-0 z-10 transition-[translate,visibility] duration-250",
+            { "max-md:invisible max-md:-translate-x-full": !isInnerMenuOpen },
+          )}
         >
           <ScrollArea className={scrollAreaClasses}>{children}</ScrollArea>
         </div>
@@ -121,29 +101,27 @@ const SideMenu: FC<Props> = (props) => {
           >
             {children}
           </ScrollArea>
-          <AnimatePresence>
-            {isMainMenuOpen && (
-              <>
-                <m.div
-                  animate={{ opacity: 1 }}
-                  className="bg-sidebar/80 fixed top-0 left-0 z-40 w-screen backdrop-blur-3xl md:hidden"
-                  exit={{ opacity: 0 }}
-                  initial={{ opacity: 0 }}
-                  transition={{
-                    ease: [0.93, -0.01, 0.17, 1],
-                    duration: 0.6,
-                  }}
-                >
-                  <ScrollArea className={cn(scrollAreaClasses)}>
-                    {children}
-                  </ScrollArea>
-                </m.div>
-              </>
+          {/*
+            Always mounted, so closing can fade out too; invisible keeps it out
+            of the tab order and the accessibility tree while closed. Its items
+            read data-open to stagger in (main-menu-items.tsx).
+          */}
+          <div
+            className={cn(
+              "group/overlay bg-sidebar/80 fixed top-0 left-0 z-40 w-screen backdrop-blur-3xl transition-[opacity,visibility] md:hidden",
+              isMainMenuOpen
+                ? "visible opacity-100 duration-400"
+                : "invisible opacity-0 duration-250",
             )}
-          </AnimatePresence>
+            data-open={isMainMenuOpen}
+          >
+            <ScrollArea className={cn(scrollAreaClasses)}>
+              {children}
+            </ScrollArea>
+          </div>
         </>
       )}
-    </LazyMotionProvider>
+    </>
   );
 };
 

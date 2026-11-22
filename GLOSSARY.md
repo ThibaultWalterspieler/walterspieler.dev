@@ -105,3 +105,7 @@ _Avoid_: back office, backend
 **Fast**:
 A public route whose real-visitor p75 metrics pass Core Web Vitals: LCP under 2.5s, INP under 200ms, CLS under 0.1.
 _Avoid_: snappy, performant, quick
+
+**Smooth**:
+An animation that moves only position, scale, rotation or opacity, never hides content after the first paint, never delays a tap or click, lasts roughly 150–400ms, and is switched off for visitors who ask for reduced motion. Only loading indicators loop; decoration moves in answer to the visitor, then stops.
+_Avoid_: fluid, silky, polished

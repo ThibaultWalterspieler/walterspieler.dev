@@ -1,19 +1,21 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @theme {
   --font-sans:
     var(--font-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
-  --animate-accordion-down: accordion-down 0.2s ease-out;
-  --animate-accordion-up: accordion-up 0.2s ease-out;
-  --animate-flip: flip 6s infinite steps(2, end);
-  --animate-rotate: rotate 3s linear infinite both;
+  /*
+    Smooth timing (see GLOSSARY.md): one easing and three durations.
+    150ms: hover, press, colour (the default below). 250ms: things that
+    appear or leave: menus, dropdowns, routes. 400ms: the main menu opening on mobile.
+  */
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --default-transition-duration: 150ms;
+  --default-transition-timing-function: var(--ease-smooth);
+
   --animate-text-gradient: text-gradient 2.5s linear infinite;
-  /* Moves in without fading: content stays visible from the first paint (LCP). */
-  --animate-enter: enter 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-  --animate-pop: pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
-  --animate-slide-in: slide-in 0.5s ease both;
 
   /*
     Ayu Dark, from the IDE palette in ayu-colors v9.1.0
@@ -42,53 +44,12 @@
   --color-accent-muted: #6cbfa5;
   --color-danger: #f07178;
 
-  --shadow-glow: 0 0 20px color-mix(in srgb, var(--color-muted) 40%, transparent);
+  --shadow-glow: 0 0 20px
+    color-mix(in srgb, var(--color-muted) 40%, transparent);
 
-  @keyframes accordion-down {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--radix-accordion-content-height);
-    }
-  }
-  @keyframes accordion-up {
-    from {
-      height: var(--radix-accordion-content-height);
-    }
-    to {
-      height: 0;
-    }
-  }
-  @keyframes flip {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  @keyframes rotate {
-    to {
-      transform: rotate(90deg);
-    }
-  }
   @keyframes text-gradient {
     to {
       background-position: 200% center;
-    }
-  }
-  @keyframes enter {
-    from {
-      transform: translateY(1.5rem);
-    }
-  }
-  @keyframes slide-in {
-    from {
-      transform: translateX(-100%);
-    }
-  }
-  @keyframes pop {
-    from {
-      opacity: 0;
-      transform: scale(0.3);
     }
   }
 }
@@ -133,9 +94,16 @@
   height: 100dvh;
   z-index: -100;
   background:
-    linear-gradient(90deg, color-mix(in srgb, var(--color-foreground) 10%, transparent) 1px, transparent 1px 60px)
+    linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--color-foreground) 10%, transparent) 1px,
+        transparent 1px 60px
+      )
       50% 50% / 60px 60px,
-    linear-gradient(color-mix(in srgb, var(--color-foreground) 10%, transparent) 1px, transparent 1px 60px)
+    linear-gradient(
+        color-mix(in srgb, var(--color-foreground) 10%, transparent) 1px,
+        transparent 1px 60px
+      )
       50% 50% / 60px 60px;
   mask: linear-gradient(-15deg, transparent 30%, white);
 }
@@ -148,6 +116,39 @@
     0 0 8px color-mix(in srgb, var(--color-heading) 30%, transparent);
 }
 
+/*
+  Route transitions: only the page content takes part (<PageTransition>).
+  The root is left out so the menus update in place instead of cross-fading.
+*/
+:root {
+  view-transition-name: none;
+}
+
+::view-transition {
+  pointer-events: none;
+}
+
+::view-transition-old(.page-exit) {
+  animation: page-exit 150ms var(--ease-smooth) both;
+}
+
+::view-transition-new(.page-enter) {
+  animation: page-enter 250ms var(--ease-smooth) both;
+}
+
+@keyframes page-exit {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
@@ -155,5 +156,12 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
   }
 }

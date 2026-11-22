@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { CSSProperties, FC } from "react";
 
 import {
   PreparedNavigationLink,
@@ -22,11 +22,14 @@ const MainMenuItems: FC<{ items: MainMenu["menuItems"] }> = (props) => {
       {/* Mobile */}
       <nav className={cn("flex h-full flex-col gap-3 pt-20 md:hidden md:pt-0")}>
         {preparedItems.map((item, index) => (
-          // The mobile menu mounts when it opens, so the stagger runs on every open.
+          // Shown only in the main menu on mobile, whose overlay stays mounted: items pop
+          // in one after another when it opens, and leave together when it closes.
           <div
-            className="animate-pop"
+            className="scale-90 opacity-0 transition-[opacity,scale] duration-250 group-data-[open=true]/overlay:scale-100 group-data-[open=true]/overlay:opacity-100 group-data-[open=true]/overlay:delay-(--stagger-delay)"
             key={item.id}
-            style={{ animationDelay: `${index * 0.1 + 1.1}s` }}
+            style={
+              { "--stagger-delay": `${150 + index * 40}ms` } as CSSProperties
+            }
           >
             <NavigationLink
               external={item.external}
