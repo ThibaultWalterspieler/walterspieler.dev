@@ -67,7 +67,7 @@ const Skeleton = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
-  return <div className={cn("rounded-md bg-black/10", className)} {...props} />;
+  return <div className={cn("rounded-md bg-surface", className)} {...props} />;
 };
 
 export const TweetSkeleton = ({
@@ -138,7 +138,7 @@ export const TweetHeader = ({ tweet }: { tweet: EnrichedTweet }) => (
         </a>
         <div className="flex items-center space-x-1">
           <a
-            className="text-sm text-gray-500 transition-all duration-75"
+            className="text-sm text-muted transition-all duration-75"
             href={tweet.user.url}
             rel="noreferrer"
             target="_blank"
@@ -165,7 +165,7 @@ export const TweetBody = ({ tweet }: { tweet: EnrichedTweet }) => (
         case "mention":
           return (
             <a
-              className="text-sm font-normal text-gray-500"
+              className="text-sm font-normal text-muted"
               href={entity.href}
               key={idx}
               rel="noopener noreferrer"
@@ -250,7 +250,7 @@ export const MagicTweet = ({
   return (
     <div
       className={cn(
-        "border-grey relative flex size-full max-w-lg flex-col gap-2 overflow-hidden rounded-lg border bg-black p-4 backdrop-blur-md",
+        "border-border relative flex size-full max-w-lg flex-col gap-2 overflow-hidden rounded-lg border bg-surface p-4 backdrop-blur-md",
         className,
       )}
       {...props}

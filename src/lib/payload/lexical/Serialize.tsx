@@ -249,7 +249,7 @@ const SerializeLexical = async ({ nodes }: Props) => {
 
               return (
                 <div
-                  className="bg-chinese-black m-auto my-5 flex w-fit flex-col justify-center shadow-2xl"
+                  className="bg-surface m-auto my-5 flex w-fit flex-col justify-center shadow-2xl"
                   key={node.id}
                 >
                   <Image
@@ -263,7 +263,7 @@ const SerializeLexical = async ({ nodes }: Props) => {
                     src={value.url}
                     width={value.width ?? 0}
                   />
-                  <div className="bg-chinese-black rounded-b px-2 py-1 text-center text-xs text-stone-400 lg:max-w-[900px]">
+                  <div className="bg-surface rounded-b px-2 py-1 text-center text-xs text-muted lg:max-w-[900px]">
                     {value.alt}
                   </div>
                 </div>

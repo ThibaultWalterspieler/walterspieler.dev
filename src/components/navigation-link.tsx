@@ -57,7 +57,7 @@ const NavigationLink: FC<{
       </div>
       {type === "contact" && (
         <ExternalLink
-          className={cn("absolute right-4 w-4 text-stone-400")}
+          className={cn("absolute right-4 w-4 text-muted")}
           strokeWidth={1}
         />
       )}

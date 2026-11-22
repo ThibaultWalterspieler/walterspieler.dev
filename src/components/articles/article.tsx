@@ -46,13 +46,13 @@ const Article: FC<Props> = (props) => {
       <div className="mb-8 flex flex-col">
         <H1 className="mb-5">{content.title}</H1>
         <time
-          className="mb-5 text-sm text-stone-400"
+          className="mb-5 text-sm text-muted"
           dateTime={content.createdAt}
         >
           {formatDateToDayMonthYear(content.createdAt)}
         </time>
         <Separator />
-        <span className="mt-5 mb-5 text-stone-400">
+        <span className="mt-5 mb-5 text-muted">
           <P>{content.description}</P>
         </span>
         {content.mainImage &&

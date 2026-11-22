@@ -21,28 +21,11 @@ const MenuContextProvider: FC<PropsWithChildren> = (props) => {
 
   const closeMainMenu = () => {
     setIsMainMenuOpen(false);
-
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) {
-      meta.setAttribute("content", "dark");
-    }
-
     document.body.classList.remove("overflow-hidden", "h-screen");
   };
 
   const openMainMenu = () => {
     setIsMainMenuOpen(true);
-
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) {
-      meta.setAttribute("content", "#16181b");
-    } else {
-      const newMeta = document.createElement("meta");
-      newMeta.name = "theme-color";
-      newMeta.content = "#16181b";
-      document.head.appendChild(newMeta);
-    }
-
     document.body.classList.add("overflow-hidden", "h-screen");
   };
 

@@ -46,7 +46,7 @@ const Home: FC = async () => {
               {me.fullName}
               <span
                 className={cn(
-                  "mt-3 block text-xl font-normal text-stone-400 md:text-2xl",
+                  "mt-3 block text-xl font-normal text-muted md:text-2xl",
                 )}
               >
                 {me.role}

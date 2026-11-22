@@ -60,12 +60,9 @@ const RootLayout: FC<Props> = async (props) => {
       <PostHogProvider>
         <body
           className={cn(
-            "dark",
             "overflow-hidden",
             "relative",
-            "bg-background min-h-dvh font-sans antialiased",
-            "bg-eerie-light",
-            "text-white",
+            "bg-background text-foreground min-h-dvh font-sans antialiased",
             spaceGrotesk.variable,
           )}
         >

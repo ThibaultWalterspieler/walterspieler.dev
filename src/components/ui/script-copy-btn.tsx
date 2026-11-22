@@ -67,20 +67,20 @@ export default function ScriptCopyBtn({
         <div className="mb-2 flex items-center justify-between">
           {showMultiplePackageOptions && (
             <div className="relative">
-              <div className="inline-flex cursor-pointer overflow-hidden rounded-md border border-stone-200 text-xs dark:border-stone-800">
+              <div className="inline-flex cursor-pointer overflow-hidden rounded-md border border-border text-xs">
                 {packageManagers.map((pm, index) => (
                   <div className="flex items-center" key={pm}>
                     {index > 0 && (
                       <div
                         aria-hidden="true"
-                        className="dark:bg-metal h-4 w-px bg-stone-200"
+                        className="h-4 w-px bg-border"
                       />
                     )}
                     <Button
-                      className={`bg-metal hover:bg-eerie-light relative rounded-none px-2 py-1 ${
+                      className={`bg-surface hover:bg-surface-hover relative rounded-none px-2 py-1 ${
                         packageManager === pm
-                          ? "text-stone-900 dark:text-stone-50"
-                          : "text-stone-500 dark:text-stone-400"
+                          ? "text-heading"
+                          : "text-muted"
                       }`}
                       onClick={() => setPackageManager(pm)}
                       size="sm"
@@ -89,7 +89,7 @@ export default function ScriptCopyBtn({
                       {pm}
                       {packageManager === pm && (
                         <motion.div
-                          className="bg-pearl-light absolute inset-x-0 bottom-[1px] mx-auto h-0.5 w-[90%]"
+                          className="bg-accent absolute inset-x-0 bottom-[1px] mx-auto h-0.5 w-[90%]"
                           initial={false}
                           layoutId="activeTab"
                           transition={{
@@ -114,7 +114,7 @@ export default function ScriptCopyBtn({
                 dangerouslySetInnerHTML={{ __html: highlightedCode }}
               />
             ) : (
-              <pre className="bg-metal border-grey rounded-md border p-2 px-4 font-mono">
+              <pre className="bg-surface border-border rounded-md border p-2 px-4 font-mono">
                 {command}
               </pre>
             )}

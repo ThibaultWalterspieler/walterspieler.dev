@@ -69,7 +69,7 @@ const Content: FC<Props> = (props) => {
                 className="my-5"
                 codeLanguage="shell"
                 commandMap={content.commandMap}
-                darkTheme="one-dark-pro"
+                darkTheme="ayu-dark"
                 key={content?.id}
                 showMultiplePackageOptions={true}
               />
