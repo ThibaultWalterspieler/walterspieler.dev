@@ -17,7 +17,7 @@ A fresh checkout or git worktree lacks four things:
 
 - **Env file**: `.env.local` is gitignored, so a worktree has none. Copy it from the main checkout (`git worktree list` names it). Set `NEXT_PUBLIC_BASE_URL=http://localhost:2499` in the copy. `PAYLOAD_SECRET` and `DATABASE_URI` must be set.
 - **Database**: `docker compose up -d` starts Postgres on port 5432. Compose names the volume after the folder, so each worktree gets its own empty database, and two checkouts can't run theirs at the same time (port clash). Stop the other one first, or point `DATABASE_URI` at it.
-- **Schema**: `pnpm payload migrate` cannot build an empty database (migration `20241129_174207` calls the Local API with today's schema and fails). On an empty local database, run `pnpm seed` instead: Payload's development schema push creates the tables, then the seed fills them.
+- **Schema**: `pnpm payload migrate` cannot build an empty database (migration `20241129_174207` calls the Local API with today's schema and fails). On an empty local database, run `pnpm seed` instead: Payload's development schema push creates the tables, then the seed fills them. The push runs only when `DATABASE_URI` points at localhost (`src/payload/is-local-database.ts`); against any other host, dev mode leaves the schema alone.
 - **Content and first user**: `pnpm seed` creates sample posts, experiences, pages, social links, the main menu and the admin user listed in the README, "Database Seeding". It **first deletes every page, post, experience and social link**, and refuses to run unless `NODE_ENV=development`. Never point it at a database you care about.
 
 ```bash

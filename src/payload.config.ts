@@ -18,9 +18,11 @@ import { Socials } from "@/payload/collections/socials";
 import { Users } from "@/payload/collections/users";
 import { MainMenu } from "@/payload/globals/main-menu";
 import { Me } from "@/payload/globals/me";
+import { isLocalDatabase } from "@/payload/is-local-database";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
+const databaseUri = process.env.DATABASE_URI || "";
 
 export default buildConfig({
   admin: {
@@ -55,9 +57,14 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || "",
+      connectionString: databaseUri,
     },
     migrationDir: path.resolve(dirname, "payload/migrations"),
+    // In dev mode Payload pushes the schema to the database and marks it as
+    // "dev" in payload_migrations; every later `payload migrate` then stops at
+    // a data-loss prompt, which fails the Vercel build. Only a local database
+    // may be pushed to: remote ones change through migrations.
+    push: isLocalDatabase(databaseUri),
   }),
   sharp,
   plugins: [
