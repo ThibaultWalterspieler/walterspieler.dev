@@ -27,7 +27,6 @@ const RootLayout: FC<Props> = async (props) => {
       <body
         className={cn(
           "dark",
-          "overflow-hidden",
           "relative",
           "bg-background min-h-dvh font-sans antialiased",
           "bg-eerie-light",

@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 
-// What a visitor does that counts as engaging. `scroll` is captured on
-// window because the page scrolls inside an element and the event doesn't bubble.
+// What a visitor does that counts as engaging. Captured on window because
+// `scroll` doesn't bubble, and menus scroll inside their own elements.
 const ENGAGEMENT_EVENTS = ["pointerdown", "keydown", "scroll"] as const;
 const LISTENER_OPTIONS = { capture: true, passive: true } as const;
 

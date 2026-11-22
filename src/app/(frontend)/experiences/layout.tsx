@@ -46,7 +46,7 @@ const ExperiencesLayout = async (props: Props) => {
           />
         </Suspense>
       </SideMenu>
-      <div className="relative flex-1">{children}</div>
+      <div className="relative min-w-0 flex-1">{children}</div>
     </>
   );
 };

@@ -4,7 +4,6 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import Content from "@/components/common/content";
-import ScrollArea from "@/components/common/scroll-area";
 import { H1 } from "@/components/common/typography";
 import { Separator } from "@/components/ui/separator";
 import { getPage } from "@/lib/payload/queries";
@@ -21,9 +20,9 @@ const Stud99Page: FC = async () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
       />
-      <ScrollArea className="flex flex-col">
+      <div className="flex w-full min-w-0 flex-col">
         <div className="content-wrapper">
-          <div className="content animate-in fade-in duration-700">
+          <div className="content animate-enter">
             <H1 className="text-spotlight mb-4 max-w-[60vw] md:mb-4 md:max-w-full">
               {page.title}
             </H1>
@@ -31,7 +30,7 @@ const Stud99Page: FC = async () => {
             <Content content={page.content} />
           </div>
         </div>
-      </ScrollArea>
+      </div>
     </>
   );
 };
