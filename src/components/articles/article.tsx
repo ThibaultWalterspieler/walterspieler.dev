@@ -4,7 +4,6 @@ import Image from "next/image";
 
 import Content from "@/components/common/content";
 import { H1, P } from "@/components/common/typography";
-import MotionArticle from "@/components/motion/motion-article";
 import { Separator } from "@/components/ui/separator";
 import { formatDateToDayMonthYear } from "@/lib/date";
 import { BlogPost, ExperiencePost } from "@payload-types";
@@ -25,24 +24,13 @@ type BlogProps = {
 
 type Props = (WorkProps | BlogProps) & CommonProps;
 
-const variants = {
-  initial: { opacity: 0, y: 25, filter: "blur-[15px]" },
-  animate: { opacity: 1, y: 0, filter: "blur-none" },
-  exit: { opacity: 0, y: -50 },
-};
-
 const Article: FC<Props> = (props) => {
   const { content } = props;
 
   if (typeof content === "number") return null;
 
   return (
-    <MotionArticle
-      animate="animate"
-      initial="initial"
-      transition={{ duration: 0.7 }}
-      variants={variants}
-    >
+    <article className="animate-enter">
       <div className="mb-8 flex flex-col">
         <H1 className="mb-5">{content.title}</H1>
         <time
@@ -70,7 +58,7 @@ const Article: FC<Props> = (props) => {
           )}
       </div>
       <Content content={content.content} />
-    </MotionArticle>
+    </article>
   );
 };
 

@@ -3,10 +3,11 @@
 import { FC, PropsWithChildren, use } from "react";
 
 import { ChevronLeft, Command, X } from "lucide-react";
-import { AnimatePresence, motion, Variants } from "motion/react";
+import { AnimatePresence, m, Variants } from "motion/react";
 import Link from "next/link";
 
 import ScrollArea from "@/components/common/scroll-area";
+import LazyMotionProvider from "@/components/motion/lazy-motion-provider";
 import { MenuContext } from "@/contexts/menu-context";
 import { cn } from "@/lib/utils";
 
@@ -15,11 +16,6 @@ type Props = {
   collection?: "blog" | "experiences";
   displayReturnButton?: boolean;
 } & PropsWithChildren;
-
-const innerMenuVariants: Variants = {
-  closed: { x: "-100%", opacity: 1 },
-  animate: { x: "0%", opacity: 1 },
-};
 
 const iconVariants: Variants = {
   open: {
@@ -53,11 +49,11 @@ const SideMenu: FC<Props> = (props) => {
   );
 
   return (
-    <>
+    <LazyMotionProvider>
       {!isMainMenuOpen ? (
         <>
-          <div className="border-grey bg-metal/5 absolute top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
-            <motion.div
+          <div className="border-grey bg-metal/5 fixed top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
+            <m.div
               animate={isMainMenuOpen ? "open" : "closed"}
               initial="closed"
               transition={{
@@ -70,7 +66,7 @@ const SideMenu: FC<Props> = (props) => {
               whileTap={{ scale: 0.9 }}
             >
               <Command onClick={openMainMenu} size={24} />
-            </motion.div>
+            </m.div>
           </div>
           {displayReturnButton && (
             <Link
@@ -87,8 +83,8 @@ const SideMenu: FC<Props> = (props) => {
           )}
         </>
       ) : (
-        <div className="border-grey bg-metal/80 absolute top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
-          <motion.div
+        <div className="border-grey bg-metal/80 fixed top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
+          <m.div
             animate={isMainMenuOpen ? "open" : "closed"}
             initial="closed"
             transition={{
@@ -102,37 +98,35 @@ const SideMenu: FC<Props> = (props) => {
             whileTap={{ scale: 0.9 }}
           >
             <X onClick={closeMainMenu} size={24} />
-          </motion.div>
+          </m.div>
         </div>
       )}
       {isInner ? (
-        <motion.div
-          animate="animate"
-          className={cn("bg-eerie-dark fixed z-10", {
+        // CSS, not motion: the post list must show without waiting for JavaScript.
+        <div
+          className={cn("bg-eerie-dark animate-slide-in fixed top-0 z-10", {
             hidden: !isInnerMenuOpen,
             "md:block": !isInnerMenuOpen || isInnerMenuOpen,
           })}
-          initial="closed"
-          transition={{
-            duration: 0.5,
-          }}
-          variants={innerMenuVariants}
         >
           <ScrollArea className={scrollAreaClasses}>{children}</ScrollArea>
-        </motion.div>
+        </div>
       ) : (
         <>
           <ScrollArea
-            className={cn(scrollAreaClasses, "bg-eerie-dark hidden md:block")}
+            className={cn(
+              scrollAreaClasses,
+              "bg-eerie-dark hidden md:block lg:sticky lg:top-0 lg:self-start",
+            )}
           >
             {children}
           </ScrollArea>
           <AnimatePresence>
             {isMainMenuOpen && (
               <>
-                <motion.div
+                <m.div
                   animate={{ opacity: 1 }}
-                  className="bg-eerie-dark/80 fixed z-40 w-screen backdrop-blur-3xl md:hidden"
+                  className="bg-eerie-dark/80 fixed top-0 left-0 z-40 w-screen backdrop-blur-3xl md:hidden"
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
                   transition={{
@@ -143,13 +137,13 @@ const SideMenu: FC<Props> = (props) => {
                   <ScrollArea className={cn(scrollAreaClasses)}>
                     {children}
                   </ScrollArea>
-                </motion.div>
+                </m.div>
               </>
             )}
           </AnimatePresence>
         </>
       )}
-    </>
+    </LazyMotionProvider>
   );
 };
 

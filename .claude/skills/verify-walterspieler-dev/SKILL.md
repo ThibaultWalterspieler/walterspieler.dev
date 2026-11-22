@@ -38,7 +38,7 @@ A proof exercises the real user path and shows the observable result.
 - Show the trigger and the stable end state: a screenshot or page text before and after. Menus and articles animate in; wait a second before a screenshot.
 - Verify the side effect, not just the pixels: edit in the admin and reload the public page, read the `<head>` tags, read the JSON-LD.
 - Cover the paths the change can affect: published, draft, missing document (404), logged-out.
-- Check the browser console and the dev server log for new errors. Known noise: `Invalid keyframe value for property filter: blur-[20px]` from the main menu.
+- Check the browser console and the dev server log for new errors.
 
 ## 5. Production build
 
