@@ -97,7 +97,7 @@ One section per feature area. Each answers the same four questions: what exists,
 - **Button**: a link to a page, or to an external URL in a new tab.
 - **MySocials**: one button per picked social link, with an icon for LinkedIn, Stack Overflow, Instagram and Malt.
 - **Experience**: experience cards (see Experiences).
-- **ScriptCopyBtn**: a command with one tab per package manager and a copy button.
+- **ScriptCopyBtn**: a command with one tab per package manager and a copy button. Shiki highlights the commands on the server; a command it cannot highlight shows as plain text.
 - **TweetCard**: an embedded tweet.
 
 **How to get to it**: any page or post that uses the block. `/ui/script-copy-btn` and `/ui/tweet-card` render the last two with fixed data.
