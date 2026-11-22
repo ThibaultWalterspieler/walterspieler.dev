@@ -16,7 +16,7 @@ const Error404: FC<Props> = (props) => {
   const { label, button } = props;
 
   return (
-    <div className="flex h-full w-full flex-col items-center justify-center text-white">
+    <div className="flex h-full w-full flex-col items-center justify-center text-foreground">
       <h2 className="text-9xl font-bold">404</h2>
       <p className="mt-5 text-2xl font-bold">
         {label || "You're lost in the void friend!"}

@@ -10,7 +10,7 @@ const LoadingSpinner: FC = () => {
         className={cn(
           "inline-block",
           "size-4",
-          "text-pearl",
+          "text-accent",
           "animate-spin rounded-full border-[2px] border-current border-t-transparent",
         )}
         role="status"

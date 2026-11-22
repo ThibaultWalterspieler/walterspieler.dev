@@ -26,7 +26,7 @@ const SideMenuContent: FC<Props> = (props) => {
   const { closeInnerMenu } = use(MenuContext) ?? {};
 
   return (
-    <div className="wrapper bg-eerie-dark h-screen w-full">
+    <div className="wrapper bg-sidebar h-screen w-full">
       <div className="w-full px-4 pt-10 md:p-4">
         <span className="text-3xl font-bold md:text-lg">{title}</span>
       </div>
@@ -60,7 +60,7 @@ const SideMenuContent: FC<Props> = (props) => {
                 )}
               </div>
               <ChevronRight
-                className="text-pearl-light z-10"
+                className="text-accent z-10"
                 height={22}
                 strokeLinecap="square"
                 strokeWidth={1}

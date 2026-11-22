@@ -9,7 +9,7 @@ const Card: React.FC<
   return (
     <div
       className={cn(
-        "dark:border-eerie-light dark:bg-metal rounded-lg border border-stone-200 bg-white text-stone-950 shadow-xs dark:text-stone-50",
+        "rounded-lg border border-border bg-surface text-heading shadow-xs",
         className,
       )}
       ref={ref}
@@ -60,7 +60,7 @@ const CardDescription: React.FC<
   const { className, ref, ...rest } = props;
   return (
     <p
-      className={cn("text-sm text-stone-500 dark:text-stone-400", className)}
+      className={cn("text-sm text-muted", className)}
       ref={ref}
       {...rest}
     />

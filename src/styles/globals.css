@@ -1,13 +1,9 @@
 @import "tailwindcss";
 
-@variant dark (&:is(.dark *));
-
 @theme {
   --font-sans:
     var(--font-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-
-  --shadow-grey: 0 0 20px #47505a;
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
@@ -19,16 +15,34 @@
   --animate-pop: pop 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-slide-in: slide-in 0.5s ease both;
 
-  --color-eerie-dark: #15181b;
-  --color-eerie-light: #1a1d21;
+  /*
+    Ayu Dark, from the IDE palette in ayu-colors v9.1.0
+    (https://github.com/ayu-theme/ayu-colors/blob/master/themes/dark.yaml):
+    sidebar = ui.bg, background = editor.bg, surface = ui.panel.bg,
+    surface-hover = ui.line, heading = editor.fg without its alpha,
+    foreground = editor.fg, muted = ui.fg at 65% alpha (both flattened onto
+    background), accent = syntax.regexp, danger = syntax.markup.
+    `border` is lighter than ui.line (1.4:1 on surface instead of 1.08:1) so
+    cards and buttons keep a visible edge.
+    Text colors keep at least 5.5:1 contrast on `surface`.
+    `background` is repeated as `themeColor` in src/app/(frontend)/layout.tsx.
+  */
+  --color-background: #10141c;
+  --color-sidebar: #0d1017;
+  --color-surface: #141821;
+  --color-surface-hover: #1b1f29;
+  --color-border: #2d3340;
+  --color-selection: #3388ff40;
 
-  --color-metal: #1e2226;
+  --color-foreground: #bfbdb6;
+  --color-heading: #fcf8ec;
+  --color-muted: #8592af;
 
-  --color-pearl-light: #29cca4;
-  --color-pearl-dark: #5c9e8a;
+  --color-accent: #95e6cb;
+  --color-accent-muted: #6cbfa5;
+  --color-danger: #f07178;
 
-  --color-grey: #47505a;
-  --color-chinese-black: #111315;
+  --shadow-glow: 0 0 20px color-mix(in srgb, var(--color-muted) 40%, transparent);
 
   @keyframes accordion-down {
     from {
@@ -90,21 +104,13 @@
   }
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
+    border-color: var(--color-border);
   }
 }
 
@@ -127,18 +133,19 @@
   height: 100dvh;
   z-index: -100;
   background:
-    linear-gradient(90deg, hsla(0, 32%, 73%, 0.13) 1px, transparent 1px 60px)
+    linear-gradient(90deg, color-mix(in srgb, var(--color-foreground) 10%, transparent) 1px, transparent 1px 60px)
       50% 50% / 60px 60px,
-    linear-gradient(hsla(0, 32%, 73%, 0.13) 1px, transparent 1px 60px) 50% 50% /
-      60px 60px;
+    linear-gradient(color-mix(in srgb, var(--color-foreground) 10%, transparent) 1px, transparent 1px 60px)
+      50% 50% / 60px 60px;
   mask: linear-gradient(-15deg, transparent 30%, white);
 }
 
+/* #ff8f40 is Ayu's syntax.keyword orange, used only by this glow. */
 .text-spotlight {
   text-shadow:
-    0 5px 20px rgba(0, 87, 255, 0.2),
-    0 -5px 15px rgba(255, 90, 0, 0.15),
-    0 0 8px rgba(255, 255, 255, 0.3);
+    0 5px 20px color-mix(in srgb, var(--color-accent) 20%, transparent),
+    0 -5px 15px rgb(255 143 64 / 0.15),
+    0 0 8px color-mix(in srgb, var(--color-heading) 30%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

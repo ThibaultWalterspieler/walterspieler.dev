@@ -42,7 +42,7 @@ const ExperienceCard: FC<Props> = (props) => {
 
   return (
     <div
-      className="group bg-metal relative my-8 w-full overflow-hidden rounded-xl"
+      className="group bg-surface relative my-8 w-full overflow-hidden rounded-xl"
       // CSS variables, not React state: the glow follows the pointer without re-rendering.
       onPointerMove={(e) => {
         const { left, top } = e.currentTarget.getBoundingClientRect();
@@ -56,8 +56,8 @@ const ExperienceCard: FC<Props> = (props) => {
           "absolute right-5 bottom-0 left-0 h-px w-80 bg-linear-to-l from-transparent via-white/30 via-10% to-transparent",
         )}
       />
-      <div className="pointer-events-none absolute -inset-px rounded-xl bg-[radial-gradient(200px_circle_at_var(--glow-x)_var(--glow-y),rgba(22,24,27,0.4),transparent_80%)] opacity-0 transition duration-300 group-hover:opacity-100" />
-      <div className="relative flex flex-col rounded-xl border border-white/10">
+      <div className="pointer-events-none absolute -inset-px rounded-xl bg-[radial-gradient(200px_circle_at_var(--glow-x)_var(--glow-y),color-mix(in_srgb,var(--color-accent)_8%,transparent),transparent_80%)] opacity-0 transition duration-300 group-hover:opacity-100" />
+      <div className="relative flex flex-col rounded-xl border border-border">
         <div className="flex flex-row items-center gap-4 space-y-2 p-6">
           {/* <PrismicNextImage
             className="max-h-8 w-8"
@@ -66,10 +66,10 @@ const ExperienceCard: FC<Props> = (props) => {
           /> */}
           <div className="grid gap-1">
             <H3 className="text-xl">{title}</H3>
-            <div className="flex items-center text-sm text-stone-400 md:gap-1">
+            <div className="flex items-center text-sm text-muted md:gap-1">
               {duration.start && (
                 <>
-                  <CalendarIcon className="mr-1 size-4 text-stone-400" />
+                  <CalendarIcon className="mr-1 size-4 text-muted" />
                   {!duration.end && <span>Since</span>}
                   <span>{formatDateToMonthYear(duration.start)}</span>
                   {duration.end && (
@@ -101,7 +101,7 @@ const ExperienceCard: FC<Props> = (props) => {
             )}
           </div>
         </div>
-        <div className="p-6 pt-0 text-sm leading-[1.5] text-stone-300">
+        <div className="p-6 pt-0 text-sm leading-[1.5] text-foreground">
           <p>{description}</p>
           <div className="mt-4 flex flex-wrap gap-2">
             {tags.map((tag, idx) => (
@@ -110,7 +110,7 @@ const ExperienceCard: FC<Props> = (props) => {
                 key={idx}
               >
                 <span className="absolute inset-[-1000%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#c2c2c2_0%,#505050_50%,#bebebe_100%)]" />
-                <span className="inline-flex h-full w-full items-center justify-center rounded-full px-3 py-1 text-xs font-medium text-gray-50 backdrop-blur-3xl">
+                <span className="inline-flex h-full w-full items-center justify-center rounded-full px-3 py-1 text-xs font-medium text-heading backdrop-blur-3xl">
                   {tag.name}
                 </span>
               </div>

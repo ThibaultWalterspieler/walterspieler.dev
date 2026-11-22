@@ -56,8 +56,8 @@ export const MenuLinkCard: FC<Props> = (props) => {
         menuLinkBaseClasses,
         menuLinkHighlightClasses,
         {
-          "bg-chinese-black before:opacity-100": isActive,
-          "hover:bg-eerie-light": !isActive,
+          "bg-background before:opacity-100": isActive,
+          "hover:bg-surface-hover": !isActive,
         },
         className,
       )}

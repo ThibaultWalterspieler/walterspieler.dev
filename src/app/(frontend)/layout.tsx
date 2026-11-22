@@ -10,7 +10,15 @@ import { MenuContextProvider } from "@/contexts/menu-context";
 import { getMainMenu, getMe } from "@/lib/payload/queries";
 import { cn } from "@/lib/utils";
 
+import type { Viewport } from "next";
+
 type Props = PropsWithChildren;
+
+export const viewport: Viewport = {
+  // `--color-background` in src/styles/globals.css
+  themeColor: "#10141c",
+  colorScheme: "dark",
+};
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -26,11 +34,8 @@ const RootLayout: FC<Props> = async (props) => {
     <html lang="en">
       <body
         className={cn(
-          "dark",
           "relative",
-          "bg-background min-h-dvh font-sans antialiased",
-          "bg-eerie-light",
-          "text-white",
+          "bg-background text-foreground selection:bg-selection min-h-dvh font-sans antialiased",
           spaceGrotesk.variable,
         )}
       >

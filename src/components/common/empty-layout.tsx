@@ -18,7 +18,7 @@ const EmptyLayout: FC<Props> = (props) => {
       <span
         className={cn(
           // bg-linear-to-r: tailwind-merge drops v3's bg-gradient-to-r next to bg-[200%_auto].
-          "animate-text-gradient via-metal inline-flex bg-linear-to-r from-stone-400 to-stone-400 bg-[200%_auto] bg-clip-text pl-72 text-center text-3xl font-bold text-transparent",
+          "animate-text-gradient via-surface inline-flex bg-linear-to-r from-muted to-muted bg-[200%_auto] bg-clip-text pl-72 text-center text-3xl font-bold text-transparent",
         )}
       >
         {label}
