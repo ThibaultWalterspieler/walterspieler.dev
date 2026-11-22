@@ -10,12 +10,12 @@ These were derived from the code as it stood in November 2026. A rule the owner 
 - **An endpoint that changes server state checks a secret from the environment**, sent as `Authorization: Bearer`, and refuses every call when the secret is unset.
 - **Server code reads the CMS through the Local API, which skips access control**, so it filters what a visitor may see itself: published posts only (`_status: { equals: "published" }`), as `getPublishedPosts` in `src/lib/payload/queries.ts` does.
 - **A collection opens public reads on purpose** with `access: { read: () => true }` (`blog-posts.ts`); without it the REST and GraphQL APIs need a logged-in user, which here means an admin, since `users` is the only auth collection (`pages.ts`, `socials.ts`, `users.ts`).
-- **CMS text reaches `dangerouslySetInnerHTML` escaped.** See `escapeHtml` in `src/lib/payload/lexical/Serialize.tsx`. The JSON-LD scripts (`JSON.stringify` of Me fields) and the `ScriptCopyBtn` fallback `<pre>` don't escape yet.
+- **CMS text reaches `dangerouslySetInnerHTML` escaped.** See `escapeHtml` in `src/lib/payload/lexical/Serialize.tsx`; shiki escapes the code it highlights (`src/components/ui/highlight-commands.test.ts`). The JSON-LD scripts (`JSON.stringify` of Me fields) don't escape yet.
 
 ## Public pages keep rendering
 
 - **A page that reads one CMS document calls `notFound()` when it is missing**, so the section's `not-found.tsx` renders. See `getExperiencePost` in `src/app/(frontend)/experiences/[slug]/page.tsx`.
-- **Optional CMS fields fall back to built-in values**, never to a crash: see `getMetadata` in `src/lib/seo/metadata.ts` (owner's name, default share image) and `getImage` in `src/lib/plaiceholder.ts`.
+- **Optional CMS fields fall back to built-in values**, never to a crash: see `getMetadata` in `src/lib/seo/metadata.ts` (owner's name, default share image) and the Lexical image, which renders without a blur placeholder when its media has none (`Serialize.tsx`).
 - **A side effect of a CMS save never fails the save.** It catches, logs through `payload.logger`, and returns. See `src/payload/hooks/revalidate-cms.ts`.
 
 ## Payload and data

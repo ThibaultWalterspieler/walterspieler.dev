@@ -3,7 +3,6 @@ import { JSX } from "react";
 import Image from "next/image";
 
 import { A, H1, H2, H3, H4, LI, P, UL } from "@/components/common/typography";
-import { getImage } from "@/lib/plaiceholder";
 import { Media } from "@payload-types";
 
 import {
@@ -242,8 +241,6 @@ const SerializeLexical = async ({ nodes }: Props) => {
             const value = node.value as Media;
 
             if (value.mimeType?.includes("image") && value.url) {
-              const { base64 } = await getImage(value.url);
-
               const isImageThePriority =
                 nodes.findIndex((node) => node.type === "upload") === index;
 
@@ -254,10 +251,10 @@ const SerializeLexical = async ({ nodes }: Props) => {
                 >
                   <Image
                     alt={value.alt}
-                    blurDataURL={base64}
+                    blurDataURL={value.blurDataUrl ?? undefined}
                     className="rounded-t-lg object-cover lg:max-h-[550px] lg:max-w-full"
                     height={value.height ?? 0}
-                    placeholder="blur"
+                    placeholder={value.blurDataUrl ? "blur" : "empty"}
                     priority={isImageThePriority}
                     sizes="(min-width: 1280px) calc(100vw - 657px), (min-width: 1024px) calc(100vw - 609px), calc(100vw - 48px)"
                     src={value.url}

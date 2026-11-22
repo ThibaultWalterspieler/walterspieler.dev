@@ -128,6 +128,16 @@ pnpm payload migrate:create <name>
 pnpm payload generate:types
 ```
 
+### Blur Placeholders
+
+Images get their blur placeholder when they are uploaded (`docs/adr/0002`). Images uploaded before that have none; fill them once, against the database in `.env.local`:
+
+```bash
+pnpm backfill:blur
+```
+
+It only touches images without a placeholder, so it is safe to rerun. Pages show the placeholders after their next Revalidation (any save in the admin).
+
 ### Dependency Installation
 
 Install necessary project dependencies:
