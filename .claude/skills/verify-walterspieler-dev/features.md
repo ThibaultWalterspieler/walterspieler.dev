@@ -9,6 +9,7 @@ One section per feature area. Each answers the same four questions: what exists,
 - The main menu, left: the site owner's name and role (from the **Me** global), then one card per **menu item** of the **Main menu** global, each with the icon of its type (home, blog, experiences, contact, 99Stud; the lab and other types have no icon).
 - The "Other" button at the bottom: a dropdown with "Thibault Walterspieler - <year>", "Legal Notice" and "Open source".
 - On blog and experience routes, the **inner menu**: a second column listing the section's posts.
+- From `lg` up, both menus are pinned to the viewport (`position: fixed`): they stay put while the page scrolls, including the overscroll bounce at the top and bottom on macOS and iOS.
 - Below `lg`, both menus collapse: one button (top right, `aria-label` "Open menu" / "Close menu") opens and closes the main menu as an overlay; a back arrow (top left) reopens the inner menu. Picking a post slides the inner menu away.
 - Following a link of the site (`PageLink`) animates the page content only (React `<ViewTransition>`, `PageTransition`): the old page vanishes and the new one fades in. The menus stay put. Content streaming in on first load, browser back and forward don't animate. Opening a post keeps the current one on screen until the next has loaded: there is no loading screen per post. Every animation follows **Smooth** in `GLOSSARY.md`; the reasons are in `docs/adr/0003-animations-are-css-only.md`.
 
@@ -26,6 +27,7 @@ One section per feature area. Each answers the same four questions: what exists,
 - The active card is rendered on the server: the page HTML already marks it, so it shows from the first paint.
 - A menu item whose page is not loaded is dropped silently.
 - On a fresh load the inner menu and the article stream in after the main menu (about 400ms later on Vercel). Wait for them before a screenshot, or the inner menu looks empty.
+- Scripts can't trigger the overscroll bounce. To check the menus stay put, read the computed `position` (`fixed`) of the main menu's `.scrollable-area` and of the inner menu's wrapper (the parent of its `.scrollable-area`), plus each menu's `getBoundingClientRect().top` (`0`) at both scroll ends. A seeded post fits a 900px viewport, so shrink the viewport height to make it scroll.
 - On mobile, the main menu's overlay is always in the DOM, `invisible` while closed: read its `data-open`, not whether it exists. Its links are in the DOM twice (column and overlay).
 - When the browser pane is hidden, the page gets no frames: transitions freeze at their start values and view transitions are skipped. Finish them with `document.getAnimations().forEach(a => a.finish())` (skip infinite ones) before reading end states, or show the pane. To watch animations frame by frame, or emulate reduced motion (`Emulation.setEmulatedMedia`), drive a headless Chrome over the DevTools protocol instead: it renders frames while hidden.
 - A route transition that ends within a frame or two was skipped by the browser: an element it captured stopped rendering mid-transition (for example a class switching it to `display: none`).

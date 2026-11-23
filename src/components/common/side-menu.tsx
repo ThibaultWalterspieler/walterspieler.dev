@@ -98,14 +98,16 @@ const SideMenu: FC<Props> = (props) => {
         </div>
       ) : (
         <>
-          <ScrollArea
-            className={cn(
-              scrollAreaClasses,
-              "bg-sidebar hidden md:block lg:sticky lg:top-0 lg:self-start",
-            )}
-          >
-            {children}
-          </ScrollArea>
+          {/* Fixed, not sticky: a sticky menu rides the page's overscroll
+              bounce. The wrapper keeps the menu's box in the row: its width,
+              and its height, which pages centring on `h-full` rely on. */}
+          <div className="hidden shrink-0 md:block lg:h-dvh lg:w-60 xl:w-72">
+            <ScrollArea
+              className={cn(scrollAreaClasses, "bg-sidebar lg:fixed lg:top-0")}
+            >
+              {children}
+            </ScrollArea>
+          </div>
           {/*
             Always mounted, so closing can fade out too; invisible keeps it out
             of the tab order and the accessibility tree while closed. Its items

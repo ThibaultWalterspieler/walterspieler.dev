@@ -60,7 +60,7 @@ _Avoid_: network, handle
 
 **Main menu**:
 The global listing the menu items of the left column, in order.
-_Avoid_: navbar, top nav
+_Avoid_: navbar, top nav, side menu
 
 **Menu item**:
 One entry of the main menu: a label, a type that picks its icon (home, blog, lab, experiences, contact, 99Stud, other), and either a page or an external path.
