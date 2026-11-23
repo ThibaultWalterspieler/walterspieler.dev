@@ -1,7 +1,6 @@
 import { JSX } from "react";
 
-import Image from "next/image";
-
+import MediaImage from "@/components/common/media-image";
 import { A, H1, H2, H3, H4, LI, P, UL } from "@/components/common/typography";
 import { Media } from "@payload-types";
 
@@ -241,24 +240,14 @@ const SerializeLexical = async ({ nodes }: Props) => {
             const value = node.value as Media;
 
             if (value.mimeType?.includes("image") && value.url) {
-              const isImageThePriority =
-                nodes.findIndex((node) => node.type === "upload") === index;
-
               return (
                 <div
                   className="bg-surface m-auto my-5 flex w-fit flex-col justify-center shadow-2xl"
                   key={node.id}
                 >
-                  <Image
-                    alt={value.alt}
-                    blurDataURL={value.blurDataUrl ?? undefined}
+                  <MediaImage
                     className="rounded-t-lg object-cover lg:max-h-[550px] lg:max-w-full"
-                    height={value.height ?? 0}
-                    placeholder={value.blurDataUrl ? "blur" : "empty"}
-                    priority={isImageThePriority}
-                    sizes="(min-width: 1280px) calc(100vw - 657px), (min-width: 1024px) calc(100vw - 609px), calc(100vw - 48px)"
-                    src={value.url}
-                    width={value.width ?? 0}
+                    media={value}
                   />
                   <div className="bg-surface rounded-b px-2 py-1 text-center text-xs text-muted lg:max-w-[900px]">
                     {value.alt}

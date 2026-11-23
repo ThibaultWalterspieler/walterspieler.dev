@@ -47,7 +47,7 @@ One section per feature area. Each answers the same four questions: what exists,
 **What exists**
 
 - `/blog`: the inner menu lists every blog post (title, month of creation); the main area says "Select a blog post" on desktop.
-- `/blog/<slug>`: breadcrumb (Home / Blog / title), title, creation date, description, main image, then the post's blocks. A `NewsArticle` JSON-LD script.
+- `/blog/<slug>`: breadcrumb (Home / Blog / title), title, creation date, description, main image (preloaded, with a blurred placeholder), then the post's blocks. A `NewsArticle` JSON-LD script.
 - An unknown slug shows "This blog post does not exist." with "Return to blog".
 
 **How to get to it**: the "Blog" menu card, then a post in the inner menu.
@@ -99,7 +99,7 @@ One section per feature area. Each answers the same four questions: what exists,
 
 **What exists**: the blocks an editor can add to a page or post, rendered by `Content`:
 
-- **Paragraph**: rich text (bold, italic, underline, strikethrough, code, sub/superscript, headings h1 to h4, bullet lists, checklists, links (in a new tab when the editor ticks it), inline images with a blurred placeholder).
+- **Paragraph**: rich text (bold, italic, underline, strikethrough, code, sub/superscript, headings h1 to h4, bullet lists, checklists, links (in a new tab when the editor ticks it), inline images with a blurred placeholder, loaded lazily).
 - **Button**: a link to a page, or to an external URL in a new tab.
 - **MySocials**: one button per picked social link, with an icon for LinkedIn, Stack Overflow, Instagram and Malt.
 - **Experience**: experience cards (see Experiences).
@@ -112,6 +112,7 @@ One section per feature area. Each answers the same four questions: what exists,
 
 **Gotchas**
 
+- Images are served from UploadThing (`https://utfs.io/f/<key>`, docs/adr/0003) through `/_next/image`, except GIFs, which load straight from UploadThing: the optimizer can't resize them. Only a post's main image gets a `<link rel="preload">`.
 - **Image, Code and Quote blocks render nothing**: the admin offers them, but `Content` has no case for them.
 - ScriptCopyBtn ignores its "Code language" and "Show multiple package options" fields.
 - A rich-text link to an internal document renders "Internal link coming soon".
@@ -176,6 +177,8 @@ One section per feature area. Each answers the same four questions: what exists,
 **Gotchas**
 
 - Media uploads go to UploadThing and need `UPLOADTHING_TOKEN`; the file is renamed `walterspieler_<uuid>`.
+- A media document's URL is `https://utfs.io/f/<key>`, built from its `_key` when read; Payload's `/api/media/file/<filename>` answers 404 (docs/adr/0003).
+- The seed creates no media, and without the token nothing can be uploaded. To see images locally, insert a `media` row (plus its `media_locales` alt) whose `_key` is an existing production file's, copied from the public `/api/media` on production, then attach it to a post.
 - The REST API is public for blog posts, experience posts, experiences and media; pages, socials and users answer 403 when logged out.
 
 ## Analytics

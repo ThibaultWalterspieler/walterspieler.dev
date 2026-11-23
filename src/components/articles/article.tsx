@@ -1,8 +1,7 @@
 import { FC } from "react";
 
-import Image from "next/image";
-
 import Content from "@/components/common/content";
+import MediaImage from "@/components/common/media-image";
 import { H1, P } from "@/components/common/typography";
 import { Separator } from "@/components/ui/separator";
 import { formatDateToDayMonthYear } from "@/lib/date";
@@ -43,19 +42,13 @@ const Article: FC<Props> = (props) => {
         <span className="mt-5 mb-5 text-muted">
           <P>{content.description}</P>
         </span>
-        {content.mainImage &&
-          typeof content.mainImage !== "number" &&
-          content.mainImage.url && (
-            <Image
-              alt={content.mainImage.alt || "Main article image"}
-              className="rounded-lg object-cover lg:max-h-[550px] lg:max-w-full"
-              height={content.mainImage.height || 0}
-              priority={true}
-              sizes="(min-width: 1280px) calc(100vw - 657px), (min-width: 1024px) calc(100vw - 609px), calc(100vw - 48px)"
-              src={content.mainImage.url}
-              width={content.mainImage.width || 0}
-            />
-          )}
+        {content.mainImage && typeof content.mainImage !== "number" && (
+          <MediaImage
+            className="rounded-lg object-cover lg:max-h-[550px] lg:max-w-full"
+            media={content.mainImage}
+            preload={true}
+          />
+        )}
       </div>
       <Content content={content.content} />
     </article>

@@ -96,7 +96,8 @@ export default buildConfig({
     }),
     uploadthingStorage({
       collections: {
-        media: true,
+        // Media URLs point straight at UploadThing instead of Payload's file proxy (docs/adr/0003).
+        media: { disablePayloadAccessControl: true },
       },
       options: {
         token: process.env.UPLOADTHING_TOKEN,
