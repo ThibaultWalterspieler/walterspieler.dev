@@ -23,9 +23,7 @@ const ExperiencesLayout = async (props: Props) => {
   const activeUid = Array.isArray(slug) ? slug[0] : slug;
 
   return (
-    // A new section's layout is newly inserted DOM, so the page's own
-    // PageTransition can't run when entering or leaving it: animate the section.
-    <PageTransition>
+    <>
       <SideMenu collection="experiences" displayReturnButton isInner>
         <Suspense fallback={<LoadingSpinner />}>
           <SideMenuContent
@@ -49,8 +47,16 @@ const ExperiencesLayout = async (props: Props) => {
           />
         </Suspense>
       </SideMenu>
-      <div className="relative min-w-0 flex-1">{children}</div>
-    </PageTransition>
+      {/*
+        Entering or leaving the section inserts or removes this column, so the
+        page's own PageTransition inside it can't run: animate the column here.
+        Not the inner menu: menus stay put, and it hides its back link on mount,
+        which would end a transition that had captured it.
+      */}
+      <PageTransition>
+        <div className="relative min-w-0 flex-1">{children}</div>
+      </PageTransition>
+    </>
   );
 };
 

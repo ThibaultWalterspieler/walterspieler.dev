@@ -27,7 +27,8 @@ One section per feature area. Each answers the same four questions: what exists,
 - A menu item whose page is not loaded is dropped silently.
 - The menus animate in. Wait a second before a screenshot, or the inner menu looks empty.
 - On mobile, the main menu's overlay is always in the DOM, `invisible` while closed: read its `data-open`, not whether it exists. Its links are in the DOM twice (column and overlay).
-- When the browser pane is hidden, the page gets no frames: transitions freeze at their start values and view transitions are skipped. Finish them with `document.getAnimations().forEach(a => a.finish())` (skip infinite ones) before reading end states, or show the pane.
+- When the browser pane is hidden, the page gets no frames: transitions freeze at their start values and view transitions are skipped. Finish them with `document.getAnimations().forEach(a => a.finish())` (skip infinite ones) before reading end states, or show the pane. To watch animations frame by frame, or emulate reduced motion (`Emulation.setEmulatedMedia`), drive a headless Chrome over the DevTools protocol instead: it renders frames while hidden.
+- A route transition that ends within a frame or two was skipped by the browser: an element it captured stopped rendering mid-transition (for example a class switching it to `display: none`).
 
 ## Home page
 
