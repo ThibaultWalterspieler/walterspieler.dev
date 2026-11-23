@@ -59,7 +59,7 @@ One section per feature area. Each answers the same four questions: what exists,
 **Gotchas**
 
 - **Drafts leak today**: a never-published draft appears in the inner menu, at its URL and in `/api/blogPosts`, logged out. Only `sitemap.xml` filters on `_status: published`.
-- A missing post renders the 404 view with HTTP 200 and `noindex`, because the section's loading state has already streamed. Check the page text, not the status code.
+- A missing post renders the 404 view with HTTP 404 and `noindex` in a production build. `next dev` can still answer 200, because it streams the section's loading state first: check the page text there, not the status code.
 
 ## Experiences
 
