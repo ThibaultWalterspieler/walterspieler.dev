@@ -2,6 +2,7 @@ import { FC } from "react";
 
 import clsx from "clsx";
 
+import CodeBlockSection from "@/components/blocks/code-block";
 import EditorNoteBlock from "@/components/blocks/editor-note-block";
 import ExperiencesBlock from "@/components/blocks/experiences-block";
 import SocialsBlock from "@/components/blocks/social-block";
@@ -72,11 +73,20 @@ const Content: FC<Props> = (props) => {
                 className="my-5"
                 codeLanguage="shell"
                 commandMap={content.commandMap}
-                darkTheme="ayu-dark"
                 key={content?.id}
                 showMultiplePackageOptions={true}
               />
             );
+          case "Code":
+            return content.code ? (
+              <CodeBlockSection
+                code={content.code}
+                key={content.id}
+                language={content.language}
+                lineNumbers={content.lineNumbers}
+                title={content.title}
+              />
+            ) : null;
           case "EditorNote":
             return (
               <EditorNoteBlock

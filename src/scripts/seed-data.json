@@ -104,10 +104,10 @@
         },
         {
           "blockType": "Code",
-          "code": {
-            "code": "// app/page.tsx\nexport default async function Home() {\n  // Fetch data directly in the component\n  const data = await fetch('https://api.example.com/data');\n  const json = await data.json();\n  \n  return (\n    <main>\n      <h1>Welcome to Next.js 15</h1>\n      <p>Data: {json.message}</p>\n    </main>\n  );\n}",
-            "language": "typescript"
-          }
+          "code": "// app/page.tsx\nexport default async function Home() {\n  // Fetch data directly in the component\n  const data = await fetch('https://api.example.com/data');\n  const json = await data.json();\n  \n  return (\n    <main>\n      <h1>Welcome to Next.js 15</h1>\n      <p>Data: {json.message}</p>\n    </main>\n  );\n}",
+          "language": "typescript",
+          "title": "app/page.tsx",
+          "lineNumbers": true
         },
         {
           "blockType": "Paragraph",
@@ -156,10 +156,8 @@
         },
         {
           "blockType": "Code",
-          "code": {
-            "code": "// ✅ Good: Use strict type definitions\ninterface User {\n  id: string;\n  name: string;\n  email: string;\n  role: 'admin' | 'user' | 'guest';\n}\n\n// ✅ Good: Use type guards\nfunction isAdmin(user: User): user is User & { role: 'admin' } {\n  return user.role === 'admin';\n}",
-            "language": "typescript"
-          }
+          "code": "// ✅ Good: Use strict type definitions\ninterface User {\n  id: string;\n  name: string;\n  email: string;\n  role: 'admin' | 'user' | 'guest';\n}\n\n// ✅ Good: Use type guards\nfunction isAdmin(user: User): user is User & { role: 'admin' } {\n  return user.role === 'admin';\n}",
+          "language": "typescript"
         },
         {
           "blockType": "Quote",
@@ -218,10 +216,8 @@
         },
         {
           "blockType": "Code",
-          "code": {
-            "code": "import { buildConfig } from 'payload';\n\nexport default buildConfig({\n  collections: [\n    // Your collections here\n  ],\n});",
-            "language": "typescript"
-          }
+          "code": "import { buildConfig } from 'payload';\n\nexport default buildConfig({\n  collections: [\n    // Your collections here\n  ],\n});",
+          "language": "typescript"
         },
         {
           "blockType": "Quote",
@@ -252,10 +248,18 @@
       "companyWebsite": "https://wearestudio99.fr",
       "startDate": "2020-01-01T00:00:00.000Z",
       "usedTechnologies": [
-        { "technology": "Next.js" },
-        { "technology": "TypeScript" },
-        { "technology": "React" },
-        { "technology": "Node.js" }
+        {
+          "technology": "Next.js"
+        },
+        {
+          "technology": "TypeScript"
+        },
+        {
+          "technology": "React"
+        },
+        {
+          "technology": "Node.js"
+        }
       ]
     },
     {
@@ -264,9 +268,15 @@
       "startDate": "2018-06-01T00:00:00.000Z",
       "endDate": "2019-12-31T00:00:00.000Z",
       "usedTechnologies": [
-        { "technology": "JavaScript" },
-        { "technology": "React" },
-        { "technology": "Vue.js" }
+        {
+          "technology": "JavaScript"
+        },
+        {
+          "technology": "React"
+        },
+        {
+          "technology": "Vue.js"
+        }
       ]
     }
   ],
@@ -338,10 +348,8 @@
         },
         {
           "blockType": "Code",
-          "code": {
-            "code": "const greeting = (name: string): string => {\n  return `Hello, ${name}! Welcome to my portfolio.`;\n};\n\nconsole.log(greeting('World'));",
-            "language": "typescript"
-          }
+          "code": "const greeting = (name: string): string => {\n  return `Hello, ${name}! Welcome to my portfolio.`;\n};\n\nconsole.log(greeting('World'));",
+          "language": "typescript"
         },
         {
           "blockType": "Paragraph",
@@ -691,10 +699,8 @@
         },
         {
           "blockType": "Code",
-          "code": {
-            "code": "// Example architecture pattern used at Studio 99\nimport { NextRequest, NextResponse } from 'next/server';\n\nexport async function middleware(request: NextRequest) {\n  const session = await getSession(request);\n  \n  if (!session) {\n    return NextResponse.redirect('/login');\n  }\n  \n  return NextResponse.next();\n}",
-            "language": "typescript"
-          }
+          "code": "// Example architecture pattern used at Studio 99\nimport { NextRequest, NextResponse } from 'next/server';\n\nexport async function middleware(request: NextRequest) {\n  const session = await getSession(request);\n  \n  if (!session) {\n    return NextResponse.redirect('/login');\n  }\n  \n  return NextResponse.next();\n}",
+          "language": "typescript"
         },
         {
           "blockType": "Quote",
@@ -763,10 +769,8 @@
         },
         {
           "blockType": "Code",
-          "code": {
-            "code": "// Reusable component pattern from freelance projects\nimport { useState, useCallback } from 'react';\n\nfunction useAsync<T>(asyncFn: () => Promise<T>) {\n  const [loading, setLoading] = useState(false);\n  const [error, setError] = useState<Error | null>(null);\n  const [data, setData] = useState<T | null>(null);\n\n  const execute = useCallback(async () => {\n    setLoading(true);\n    try {\n      const result = await asyncFn();\n      setData(result);\n    } catch (err) {\n      setError(err as Error);\n    } finally {\n      setLoading(false);\n    }\n  }, [asyncFn]);\n\n  return { data, loading, error, execute };\n}",
-            "language": "typescript"
-          }
+          "code": "// Reusable component pattern from freelance projects\nimport { useState, useCallback } from 'react';\n\nfunction useAsync<T>(asyncFn: () => Promise<T>) {\n  const [loading, setLoading] = useState(false);\n  const [error, setError] = useState<Error | null>(null);\n  const [data, setData] = useState<T | null>(null);\n\n  const execute = useCallback(async () => {\n    setLoading(true);\n    try {\n      const result = await asyncFn();\n      setData(result);\n    } catch (err) {\n      setError(err as Error);\n    } finally {\n      setLoading(false);\n    }\n  }, [asyncFn]);\n\n  return { data, loading, error, execute };\n}",
+          "language": "typescript"
         },
         {
           "blockType": "Quote",

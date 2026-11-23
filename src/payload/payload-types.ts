@@ -556,7 +556,27 @@ export interface Page {
             blockType: 'ScriptCopyBtn';
           }
         | {
+            /**
+             * Shown above the code, e.g. a file name.
+             */
+            title?: string | null;
+            language:
+              | 'bash'
+              | 'css'
+              | 'diff'
+              | 'html'
+              | 'javascript'
+              | 'json'
+              | 'jsonc'
+              | 'jsx'
+              | 'markdown'
+              | 'python'
+              | 'sql'
+              | 'tsx'
+              | 'typescript'
+              | 'yaml';
             code?: string | null;
+            lineNumbers?: boolean | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'Code';
@@ -720,7 +740,27 @@ export interface ExperiencePost {
             blockType: 'Image';
           }
         | {
+            /**
+             * Shown above the code, e.g. a file name.
+             */
+            title?: string | null;
+            language:
+              | 'bash'
+              | 'css'
+              | 'diff'
+              | 'html'
+              | 'javascript'
+              | 'json'
+              | 'jsonc'
+              | 'jsx'
+              | 'markdown'
+              | 'python'
+              | 'sql'
+              | 'tsx'
+              | 'typescript'
+              | 'yaml';
             code?: string | null;
+            lineNumbers?: boolean | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'Code';
@@ -1214,7 +1254,27 @@ export interface BlogPost {
             blockType: 'Image';
           }
         | {
+            /**
+             * Shown above the code, e.g. a file name.
+             */
+            title?: string | null;
+            language:
+              | 'bash'
+              | 'css'
+              | 'diff'
+              | 'html'
+              | 'javascript'
+              | 'json'
+              | 'jsonc'
+              | 'jsx'
+              | 'markdown'
+              | 'python'
+              | 'sql'
+              | 'tsx'
+              | 'typescript'
+              | 'yaml';
             code?: string | null;
+            lineNumbers?: boolean | null;
             id?: string | null;
             blockName?: string | null;
             blockType: 'Code';
@@ -1806,7 +1866,10 @@ export interface PagesSelect<T extends boolean = true> {
         Code?:
           | T
           | {
+              title?: T;
+              language?: T;
               code?: T;
+              lineNumbers?: T;
               id?: T;
               blockName?: T;
             };
@@ -1896,7 +1959,10 @@ export interface BlogPostsSelect<T extends boolean = true> {
         Code?:
           | T
           | {
+              title?: T;
+              language?: T;
               code?: T;
+              lineNumbers?: T;
               id?: T;
               blockName?: T;
             };
@@ -1982,7 +2048,10 @@ export interface ExperiencePostsSelect<T extends boolean = true> {
         Code?:
           | T
           | {
+              title?: T;
+              language?: T;
               code?: T;
+              lineNumbers?: T;
               id?: T;
               blockName?: T;
             };
