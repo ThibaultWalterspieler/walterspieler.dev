@@ -1689,6 +1689,21 @@ export interface BlogPost {
             blockName?: string | null;
             blockType: 'EditorNote';
           }
+        | {
+            kind: 'line' | 'bar';
+            title: string;
+            /**
+             * Paste CSV or spreadsheet cells: a header row, then one row per x value. The first column is the x-axis; each other column is a numeric series (at most 5). Leave a cell empty for a gap.
+             */
+            data: string;
+            /**
+             * Shown under the chart as "Source: …".
+             */
+            source: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'Chart';
+          }
       )[]
     | null;
   relatedExperiencePosts?: (number | ExperiencePost)[] | null;
@@ -1995,6 +2010,16 @@ export interface BlogPostsSelect<T extends boolean = true> {
               kind?: T;
               date?: T;
               body?: T;
+              id?: T;
+              blockName?: T;
+            };
+        Chart?:
+          | T
+          | {
+              kind?: T;
+              title?: T;
+              data?: T;
+              source?: T;
               id?: T;
               blockName?: T;
             };

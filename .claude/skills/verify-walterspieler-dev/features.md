@@ -106,6 +106,7 @@ One section per feature area. Each answers the same four questions: what exists,
 - **ScriptCopyBtn**: a command with one tab per package manager and a copy button, in the same frame as a Code block. Shiki highlights the commands on the server.
 - **Code**: a code block (adapted from shadcn/ui's Code Block): optional title header, optional line numbers, a copy button (in the header, or floating top-right on hover without a title), highlighted on the server in Ayu Dark. A language outside `CODE_LANGUAGES` or empty code: plain text, or nothing for empty code.
 - **TweetCard**: an embedded tweet.
+- **Chart** (blog posts only): a titled line or bar chart (shadcn/ui chart on Recharts) with "Source: …" under it and a "Show the data" table. The chart mounts, and draws in over 800ms, the first time a third of it is on screen; Recharts' code is only fetched on posts with a chart. Hovering shows each series' value; two or more series get a legend. The admin refuses data that doesn't parse (`parseChartData`), naming the row and column.
 - **Editor's note** (blog posts only): an aside labelled "Update · <date>" (accent border) or "Correction · <date>" (red border) above its rich text. The newest Update sets the post's Updated date; corrections don't.
 
 **How to get to it**: any page or post that uses the block. `/ui/script-copy-btn` and `/ui/tweet-card` render the last two with fixed data.
@@ -118,6 +119,7 @@ One section per feature area. Each answers the same four questions: what exists,
 - **Image and Quote blocks render nothing**: the admin offers them, but `Content` has no case for them.
 - ScriptCopyBtn ignores its "Code language" and "Show multiple package options" fields.
 - A rich-text link to an internal document renders "Internal link coming soon".
+- A chart below the fold stays an empty box until scrolled to: scroll it a third into view before reading its SVG, and wait a second for the draw-in.
 - TweetCard fetches the tweet from X when the page renders and caches it for a day; offline, or for a deleted tweet, it shows a "not found" card.
 
 ## SEO metadata, sitemap, robots

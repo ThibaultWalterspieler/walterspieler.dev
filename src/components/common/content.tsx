@@ -2,6 +2,7 @@ import { FC } from "react";
 
 import clsx from "clsx";
 
+import ChartBlock from "@/components/blocks/chart-block";
 import CodeBlockSection from "@/components/blocks/code-block";
 import EditorNoteBlock from "@/components/blocks/editor-note-block";
 import ExperiencesBlock from "@/components/blocks/experiences-block";
@@ -87,6 +88,16 @@ const Content: FC<Props> = (props) => {
                 title={content.title}
               />
             ) : null;
+          case "Chart":
+            return (
+              <ChartBlock
+                data={content.data}
+                key={content.id}
+                kind={content.kind}
+                source={content.source}
+                title={content.title}
+              />
+            );
           case "EditorNote":
             return (
               <EditorNoteBlock

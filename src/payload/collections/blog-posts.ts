@@ -1,3 +1,4 @@
+import { ChartBlock } from "@/payload/blocks/Chart";
 import { CodeBlock } from "@/payload/blocks/Code";
 import { EditorNoteBlock } from "@/payload/blocks/EditorNote";
 import { ImageBlock } from "@/payload/blocks/Image";
@@ -64,6 +65,7 @@ export const BlogPosts: CollectionConfig = {
         QuoteBlock,
         TweetCardBlock,
         EditorNoteBlock,
+        ChartBlock,
       ],
       localized: true,
     },
