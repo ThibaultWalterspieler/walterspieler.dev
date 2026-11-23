@@ -23,7 +23,7 @@ One section per feature area. Each answers the same four questions: what exists,
 
 **Gotchas**
 
-- The active card is computed after hydration: page text taken straight from the server shows no active state.
+- The active card is rendered on the server: the page HTML already marks it, so it shows from the first paint.
 - A menu item whose page is not loaded is dropped silently.
 - The menus animate in. Wait a second before a screenshot, or the inner menu looks empty.
 - On mobile, the main menu's overlay is always in the DOM, `invisible` while closed: read its `data-open`, not whether it exists. Its links are in the DOM twice (column and overlay).

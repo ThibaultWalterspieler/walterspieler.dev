@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, PropsWithChildren, useSyncExternalStore } from "react";
+import { FC, PropsWithChildren } from "react";
 
 import { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
@@ -20,8 +20,6 @@ type Props = PropsWithChildren<{
   isActive?: boolean;
   onClick?: () => void;
 }>;
-
-const subscribeNoop = () => () => {};
 
 // The pathname only changes once the next page has arrived, so a card shows as
 // selected from the click instead: while its navigation is pending it carries
@@ -52,19 +50,14 @@ export const MenuLinkCard: FC<Props> = (props) => {
     onClick,
   } = props;
 
+  // Read on the server too, so the prerendered page already marks the active
+  // card: waiting for hydration showed every card inactive on first paint.
   const pathname = usePathname();
-  // useSyncExternalStore, not setState in an effect: React's set-state-in-effect rule
-  // forbids the latter. The server snapshot keeps the link inactive until hydration.
-  const isHydrated = useSyncExternalStore(
-    subscribeNoop,
-    () => true,
-    () => false,
-  );
 
   const isActive =
     typeof isActiveProp === "boolean"
       ? isActiveProp
-      : isMenuPathActive(isHydrated ? pathname : "", href, { external });
+      : isMenuPathActive(pathname, href, { external });
 
   const handleClick = () => {
     onClick?.();
