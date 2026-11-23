@@ -1,10 +1,10 @@
 import { FC } from "react";
 
 import clsx from "clsx";
-import Link from "next/link";
 
 import ExperiencesBlock from "@/components/blocks/experiences-block";
 import SocialsBlock from "@/components/blocks/social-block";
+import PageLink from "@/components/common/page-link";
 import { Button } from "@/components/ui/button";
 import ScriptCopyBtn from "@/components/ui/script-copy-btn";
 import { TweetCard } from "@/components/ui/tweet-card";
@@ -58,7 +58,9 @@ const Content: FC<Props> = (props) => {
                   </Button>
                 ) : content.page && typeof content.page !== "number" ? (
                   <Button asChild variant="outline">
-                    <Link href={content.page?.slug || ""}>{content.label}</Link>
+                    <PageLink href={content.page?.slug || ""}>
+                      {content.label}
+                    </PageLink>
                   </Button>
                 ) : null}
               </div>

@@ -20,7 +20,11 @@ const MainMenuItems: FC<{ items: MainMenu["menuItems"] }> = (props) => {
       className={cn("flex h-full w-full flex-col justify-between p-4 text-sm")}
     >
       {/* Mobile */}
-      <nav className={cn("flex h-full flex-col gap-3 pt-20 md:hidden md:pt-0")}>
+      <nav
+        className={cn(
+          "group/menu flex h-full flex-col gap-3 pt-20 md:hidden md:pt-0",
+        )}
+      >
         {preparedItems.map((item, index) => (
           // Shown only in the main menu on mobile, whose overlay stays mounted: items pop
           // in one after another when it opens, and leave together when it closes.
@@ -42,7 +46,11 @@ const MainMenuItems: FC<{ items: MainMenu["menuItems"] }> = (props) => {
       </nav>
 
       {/* Desktop */}
-      <nav className={cn("hidden h-full flex-col gap-3 pt-20 md:flex md:pt-0")}>
+      <nav
+        className={cn(
+          "group/menu hidden h-full flex-col gap-3 pt-20 md:flex md:pt-0",
+        )}
+      >
         {preparedItems.map((item) => (
           <NavigationLink
             external={item.external}

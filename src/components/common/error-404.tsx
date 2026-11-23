@@ -1,7 +1,6 @@
 import { FC } from "react";
 
-import Link from "next/link";
-
+import PageLink from "@/components/common/page-link";
 import PageTransition from "@/components/common/page-transition";
 import { Button } from "@/components/ui/button";
 
@@ -24,7 +23,7 @@ const Error404: FC<Props> = (props) => {
           {label || "You're lost in the void friend!"}
         </p>
         <Button asChild className="mt-5" variant="secondary">
-          <Link href={button.path || "/"}>{button.label}</Link>
+          <PageLink href={button.path || "/"}>{button.label}</PageLink>
         </Button>
       </div>
     </PageTransition>

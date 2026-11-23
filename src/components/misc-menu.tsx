@@ -2,8 +2,7 @@
 
 import { FC, use, useSyncExternalStore } from "react";
 
-import Link from "next/link";
-
+import PageLink from "@/components/common/page-link";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -49,10 +48,10 @@ const MiscMenu: FC<Props> = (props) => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem asChild onClick={closeMainMenu}>
-            <Link href="/legal/notice">{labels.legalNotice}</Link>
+            <PageLink href="/legal/notice">{labels.legalNotice}</PageLink>
           </DropdownMenuItem>
           <DropdownMenuItem asChild onClick={closeMainMenu}>
-            <Link href="/open-source">Open source</Link>
+            <PageLink href="/open-source">Open source</PageLink>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

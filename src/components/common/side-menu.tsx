@@ -3,8 +3,8 @@
 import { FC, PropsWithChildren, use } from "react";
 
 import { ChevronLeft, Command, X } from "lucide-react";
-import Link from "next/link";
 
+import PageLink from "@/components/common/page-link";
 import ScrollArea from "@/components/common/scroll-area";
 import { MenuContext } from "@/contexts/menu-context";
 import { cn } from "@/lib/utils";
@@ -72,7 +72,7 @@ const SideMenu: FC<Props> = (props) => {
         </button>
       )}
       {displayReturnButton && (
-        <Link
+        <PageLink
           className={cn("block", {
             hidden: isMainMenuOpen || isInnerMenuOpen,
           })}
@@ -82,7 +82,7 @@ const SideMenu: FC<Props> = (props) => {
           <div className="border-border bg-surface/5 fixed top-8 left-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
             <ChevronLeft size={24} />
           </div>
-        </Link>
+        </PageLink>
       )}
       {/* CSS, not JavaScript: the inner menu must show without waiting for hydration.
           On mobile it slides away (rather than vanishing) once a post is picked. */}

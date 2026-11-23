@@ -2,9 +2,10 @@
 
 import { FC, PropsWithChildren, useSyncExternalStore } from "react";
 
-import Link from "next/link";
+import { useLinkStatus } from "next/link";
 import { usePathname } from "next/navigation";
 
+import PageLink from "@/components/common/page-link";
 import {
   isMenuPathActive,
   menuLinkBaseClasses,
@@ -21,6 +22,25 @@ type Props = PropsWithChildren<{
 }>;
 
 const subscribeNoop = () => () => {};
+
+// The pathname only changes once the next page has arrived, so a card shows as
+// selected from the click instead: while its navigation is pending it carries
+// this marker, the card styles itself as selected, and the selected card of the
+// same list (the group/menu around the cards) yields to it.
+const PendingMarker: FC = () => {
+  const { pending } = useLinkStatus();
+
+  return pending ? <span aria-hidden data-link-pending="" hidden /> : null;
+};
+
+const selectedClasses =
+  "border-accent-muted/50 bg-background before:opacity-100";
+
+const pendingClasses =
+  "has-[[data-link-pending]]:border-accent-muted/50 has-[[data-link-pending]]:bg-background has-[[data-link-pending]]:before:opacity-100 not-has-[[data-link-pending]]:hover:bg-surface-hover";
+
+const yieldsToPendingClasses =
+  "group-has-[[data-link-pending]]/menu:border-border group-has-[[data-link-pending]]/menu:bg-surface group-has-[[data-link-pending]]/menu:before:opacity-0";
 
 export const MenuLinkCard: FC<Props> = (props) => {
   const {
@@ -51,14 +71,14 @@ export const MenuLinkCard: FC<Props> = (props) => {
   };
 
   return (
-    <Link
+    <PageLink
       className={cn(
         menuLinkBaseClasses,
         menuLinkHighlightClasses,
-        {
-          "bg-background before:opacity-100": isActive,
-          "hover:bg-surface-hover": !isActive,
-        },
+        isActive
+          ? [selectedClasses, yieldsToPendingClasses]
+          : !external && pendingClasses,
+        external && "hover:bg-surface-hover",
         className,
       )}
       href={href}
@@ -66,8 +86,9 @@ export const MenuLinkCard: FC<Props> = (props) => {
       rel={external ? "noreferrer nofollow" : undefined}
       target={external ? "_blank" : undefined}
     >
+      {!external && <PendingMarker />}
       {children}
-    </Link>
+    </PageLink>
   );
 };
 

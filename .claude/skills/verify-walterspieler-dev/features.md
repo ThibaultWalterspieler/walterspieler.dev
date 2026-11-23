@@ -10,7 +10,7 @@ One section per feature area. Each answers the same four questions: what exists,
 - The "Other" button at the bottom: a dropdown with "Thibault Walterspieler - <year>", "Legal Notice" and "Open source".
 - On blog and experience routes, the **inner menu**: a second column listing the section's posts.
 - Below `lg`, both menus collapse: one button (top right, `aria-label` "Open menu" / "Close menu") opens and closes the main menu as an overlay; a back arrow (top left) reopens the inner menu. Picking a post slides the inner menu away.
-- Moving between pages animates the page content only (React `<ViewTransition>`, `PageTransition`); the menus stay put. Every animation follows **Smooth** in `GLOSSARY.md`; the reasons are in `docs/adr/0003-animations-are-css-only.md`.
+- Following a link of the site (`PageLink`) animates the page content only (React `<ViewTransition>`, `PageTransition`): the old page vanishes and the new one fades in. The menus stay put. Content streaming in on first load, browser back and forward don't animate. Opening a post keeps the current one on screen until the next has loaded: there is no loading screen per post. Every animation follows **Smooth** in `GLOSSARY.md`; the reasons are in `docs/adr/0003-animations-are-css-only.md`.
 
 **How to get to it**: any public page.
 
@@ -52,14 +52,14 @@ One section per feature area. Each answers the same four questions: what exists,
 
 **Driving it**
 
-- Open a post from the inner menu; check the card turns active and the breadcrumb links back.
+- Open a post from the inner menu; check the card turns selected as soon as it is clicked (before the post arrives), and the breadcrumb links back.
 - Open `/blog/does-not-exist`.
 - Create a draft post in the admin and look for it on `/blog`, logged out.
 
 **Gotchas**
 
 - **Drafts leak today**: a never-published draft appears in the inner menu, at its URL and in `/api/blogPosts`, logged out. Only `sitemap.xml` filters on `_status: published`.
-- A missing post renders the 404 view with HTTP 200 and `noindex`, because the loading state has already streamed. Check the page text, not the status code.
+- A missing post renders the 404 view with HTTP 200 and `noindex`, because the section's loading state has already streamed. Check the page text, not the status code.
 
 ## Experiences
 

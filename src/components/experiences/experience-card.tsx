@@ -3,8 +3,8 @@
 import { FC } from "react";
 
 import { CalendarIcon } from "lucide-react";
-import Link from "next/link";
 
+import PageLink from "@/components/common/page-link";
 import { A, H3 } from "@/components/common/typography";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -121,14 +121,14 @@ const ExperienceCard: FC<Props> = (props) => {
           {relatedWorkPostSlug && (
             <div className="flex">
               <Button asChild variant="outline">
-                <Link
+                <PageLink
                   aria-label={`Read more about ${title}`}
                   // Stretched over the whole card, which used to navigate with router.push.
                   className="after:absolute after:inset-0 after:content-['']"
                   href={`/experiences/${relatedWorkPostSlug}`}
                 >
                   {buttonLabel} {title}
-                </Link>
+                </PageLink>
               </Button>
             </div>
           )}
