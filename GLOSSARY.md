@@ -29,8 +29,16 @@ The rendered body of a blog post or experience post: title, creation date, descr
 _Avoid_: post body, detail view
 
 **Block**:
-One section of a page's or post's content, picked by the editor: Paragraph, Image, Code, Quote, Button, MySocials, Experience, ScriptCopyBtn, TweetCard.
+One section of a page's or post's content, picked by the editor: Paragraph, Image, Code, Quote, Button, MySocials, Experience, ScriptCopyBtn, TweetCard, Editor's note.
 _Avoid_: widget, component block
+
+**Editor's note**:
+A dated note added to a blog post after it was published, of one of two kinds. An **Update** says the world changed since the article was written; a **Correction** says the article was wrong when it was written.
+_Avoid_: update block, changelog, erratum
+
+**Updated date**:
+The date of a blog post's most recent Update, shown in its header after the creation date. Corrections leave it alone; a post without an Update has none.
+_Avoid_: last modified, revision date
 
 **Draft / Published**:
 The two states of a blog post or experience post (`_status`). Visitors are meant to see published posts only.

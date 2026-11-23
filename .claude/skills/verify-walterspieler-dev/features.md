@@ -47,7 +47,7 @@ One section per feature area. Each answers the same four questions: what exists,
 **What exists**
 
 - `/blog`: the inner menu lists every blog post (title, month of creation); the main area says "Select a blog post" on desktop.
-- `/blog/<slug>`: breadcrumb (Home / Blog / title), title, creation date, description, main image (preloaded, with a blurred placeholder), then the post's blocks. A `NewsArticle` JSON-LD script.
+- `/blog/<slug>`: breadcrumb (Home / Blog / title), title, creation date (followed by "· Updated <date>" when the post has an Update editor's note), description, main image (preloaded, with a blurred placeholder), then the post's blocks. A `NewsArticle` JSON-LD script.
 - An unknown slug shows "This blog post does not exist." with "Return to blog".
 
 **How to get to it**: the "Blog" menu card, then a post in the inner menu.
@@ -105,6 +105,7 @@ One section per feature area. Each answers the same four questions: what exists,
 - **Experience**: experience cards (see Experiences).
 - **ScriptCopyBtn**: a command with one tab per package manager and a copy button. Shiki highlights the commands on the server; a command it cannot highlight shows as plain text.
 - **TweetCard**: an embedded tweet.
+- **Editor's note** (blog posts only): an aside labelled "Update · <date>" (accent border) or "Correction · <date>" (red border) above its rich text. The newest Update sets the post's Updated date; corrections don't.
 
 **How to get to it**: any page or post that uses the block. `/ui/script-copy-btn` and `/ui/tweet-card` render the last two with fixed data.
 

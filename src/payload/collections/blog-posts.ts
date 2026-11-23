@@ -1,4 +1,5 @@
 import { CodeBlock } from "@/payload/blocks/Code";
+import { EditorNoteBlock } from "@/payload/blocks/EditorNote";
 import { ImageBlock } from "@/payload/blocks/Image";
 import { ParagraphBlock } from "@/payload/blocks/Paragraph";
 import { QuoteBlock } from "@/payload/blocks/Quote";
@@ -62,6 +63,7 @@ export const BlogPosts: CollectionConfig = {
         ScriptCopyBtnBlock,
         QuoteBlock,
         TweetCardBlock,
+        EditorNoteBlock,
       ],
       localized: true,
     },
