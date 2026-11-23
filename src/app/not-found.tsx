@@ -14,8 +14,9 @@ export default function NotFoundPage() {
       <body
         className={cn(
           "h-screen w-screen",
-          "bg-eerie-light",
-          "text-white",
+          "bg-background",
+          "text-foreground",
+          "selection:bg-selection",
           "font-sans",
           spaceGrotesk.variable,
         )}

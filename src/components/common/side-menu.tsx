@@ -40,7 +40,7 @@ const SideMenu: FC<Props> = (props) => {
   } = use(MenuContext) ?? {};
 
   const scrollAreaClasses = cn(
-    "lg:flex lg:flex-col border-r border-grey z-50 justify-between",
+    "lg:flex lg:flex-col border-r border-border z-50 justify-between",
     "dot-grid",
     {
       "w-screen lg:w-72 xl:w-72": isInner,
@@ -52,7 +52,7 @@ const SideMenu: FC<Props> = (props) => {
     <LazyMotionProvider>
       {!isMainMenuOpen ? (
         <>
-          <div className="border-grey bg-metal/5 fixed top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
+          <div className="border-border bg-surface/5 fixed top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
             <m.div
               animate={isMainMenuOpen ? "open" : "closed"}
               initial="closed"
@@ -76,14 +76,14 @@ const SideMenu: FC<Props> = (props) => {
               href={`/${collection}`}
               onClick={openInnerMenu}
             >
-              <div className="border-grey bg-metal/5 fixed top-8 left-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
+              <div className="border-border bg-surface/5 fixed top-8 left-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
                 <ChevronLeft size={24} />
               </div>
             </Link>
           )}
         </>
       ) : (
-        <div className="border-grey bg-metal/80 fixed top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
+        <div className="border-border bg-surface/80 fixed top-8 right-4 z-50 rounded-lg border p-2 backdrop-blur lg:hidden">
           <m.div
             animate={isMainMenuOpen ? "open" : "closed"}
             initial="closed"
@@ -104,7 +104,7 @@ const SideMenu: FC<Props> = (props) => {
       {isInner ? (
         // CSS, not motion: the post list must show without waiting for JavaScript.
         <div
-          className={cn("bg-eerie-dark animate-slide-in fixed top-0 z-10", {
+          className={cn("bg-sidebar animate-slide-in fixed top-0 z-10", {
             hidden: !isInnerMenuOpen,
             "md:block": !isInnerMenuOpen || isInnerMenuOpen,
           })}
@@ -116,7 +116,7 @@ const SideMenu: FC<Props> = (props) => {
           <ScrollArea
             className={cn(
               scrollAreaClasses,
-              "bg-eerie-dark hidden md:block lg:sticky lg:top-0 lg:self-start",
+              "bg-sidebar hidden md:block lg:sticky lg:top-0 lg:self-start",
             )}
           >
             {children}
@@ -126,7 +126,7 @@ const SideMenu: FC<Props> = (props) => {
               <>
                 <m.div
                   animate={{ opacity: 1 }}
-                  className="bg-eerie-dark/80 fixed top-0 left-0 z-40 w-screen backdrop-blur-3xl md:hidden"
+                  className="bg-sidebar/80 fixed top-0 left-0 z-40 w-screen backdrop-blur-3xl md:hidden"
                   exit={{ opacity: 0 }}
                   initial={{ opacity: 0 }}
                   transition={{

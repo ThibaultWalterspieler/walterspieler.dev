@@ -21,7 +21,7 @@ const Separator: React.FC<
   return (
     <SeparatorPrimitive.Root
       className={cn(
-        "border-grey bg-metal/50 shadow-grey shrink-0 rounded-lg border",
+        "border-border bg-surface/50 shadow-glow shrink-0 rounded-lg border",
         orientation === "horizontal" ? "h-[5px] w-full" : "h-full w-[1px]",
         className,
       )}

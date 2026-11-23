@@ -9,7 +9,7 @@ const H1: React.FC<
   return (
     <h1
       className={cn(
-        `text-spotlight scroll-m-20 text-4xl font-extrabold tracking-tight text-stone-50 lg:text-5xl`,
+        `text-spotlight scroll-m-20 text-4xl font-extrabold tracking-tight text-heading lg:text-5xl`,
         className,
       )}
       ref={ref}
@@ -28,7 +28,7 @@ const H2: React.FC<
   return (
     <h2
       className={cn(
-        `border-grey scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight text-stone-50 not-first:mt-6 first:mt-0`,
+        `border-border scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight text-heading not-first:mt-6 first:mt-0`,
         className,
       )}
       ref={ref}
@@ -47,7 +47,7 @@ const H3: React.FC<
   return (
     <h3
       className={cn(
-        `scroll-m-20 text-2xl font-semibold tracking-tight text-stone-50`,
+        `scroll-m-20 text-2xl font-semibold tracking-tight text-heading`,
         className,
       )}
       ref={ref}
@@ -66,7 +66,7 @@ const H4: React.FC<
   return (
     <h4
       className={cn(
-        `scroll-m-20 text-xl font-semibold tracking-tight text-stone-50`,
+        `scroll-m-20 text-xl font-semibold tracking-tight text-heading`,
         className,
       )}
       ref={ref}
@@ -84,7 +84,7 @@ const P: React.FC<
   const { className, ref, ...rest } = props;
   return (
     <p
-      className={cn(`leading-7 text-stone-300 not-first:mt-6`, className)}
+      className={cn(`leading-7 text-foreground not-first:mt-6`, className)}
       ref={ref}
       {...rest}
     />
@@ -123,7 +123,7 @@ const A: React.FC<
   return (
     <a
       className={cn(
-        `text-pearl-light decoration-pearl-dark hover:text-pearl-dark text-base hover:underline`,
+        `text-accent decoration-accent-muted hover:text-accent-muted text-base hover:underline`,
         className,
       )}
       ref={ref}

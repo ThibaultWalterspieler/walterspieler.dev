@@ -15,7 +15,7 @@ const ScriptCopyBtnPage: FC = async () => {
       <ScriptCopyBtn
         codeLanguage="shell"
         commandMap={customCommandMap}
-        darkTheme="vitesse-dark"
+        darkTheme="ayu-dark"
         showMultiplePackageOptions={true}
       />
     </>

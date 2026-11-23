@@ -29,7 +29,7 @@ const DropdownMenuSubTrigger: React.FC<
   return (
     <DropdownMenuPrimitive.SubTrigger
       className={cn(
-        "dark:focus:bg-metal flex cursor-default items-center rounded-xs px-2 py-1.5 text-sm outline-hidden select-none focus:bg-stone-100 data-[state=open]:bg-stone-100 dark:data-[state=open]:bg-stone-800",
+        "flex cursor-default items-center rounded-xs px-2 py-1.5 text-sm outline-hidden select-none focus:bg-surface-hover data-[state=open]:bg-surface-hover",
         {
           "pl-8": inset,
         },
@@ -55,7 +55,7 @@ const DropdownMenuSubContent: React.FC<
   return (
     <DropdownMenuPrimitive.SubContent
       className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:border-grey dark:bg-eerie-dark z-50 min-w-[8rem] overflow-hidden rounded-md border border-stone-200 bg-white p-1 text-stone-950 shadow-lg dark:text-stone-50",
+        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-surface p-1 text-heading shadow-lg",
         className,
       )}
       ref={ref}
@@ -76,7 +76,7 @@ const DropdownMenuContent: React.FC<
     <DropdownMenuPrimitive.Portal>
       <DropdownMenuPrimitive.Content
         className={cn(
-          "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-eerie-dark z-50 min-w-[8rem] overflow-hidden rounded-md border border-stone-200 bg-white p-1 text-stone-950 shadow-md dark:border-stone-800 dark:text-stone-50",
+          "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-surface p-1 text-heading shadow-md",
           className,
         )}
         ref={ref}
@@ -98,7 +98,7 @@ const DropdownMenuItem: React.FC<
   return (
     <DropdownMenuPrimitive.Item
       className={cn(
-        "dark:focus:bg-metal relative flex cursor-default items-center rounded-xs px-2 py-1.5 text-sm outline-hidden transition-colors select-none focus:bg-stone-100 focus:text-stone-900 data-disabled:pointer-events-none data-disabled:opacity-50 dark:focus:text-stone-50",
+        "relative flex cursor-default items-center rounded-xs px-2 py-1.5 text-sm outline-hidden transition-colors select-none focus:bg-surface-hover focus:text-heading data-disabled:pointer-events-none data-disabled:opacity-50",
         {
           "pl-8": inset,
         },
@@ -121,7 +121,7 @@ const DropdownMenuCheckboxItem: React.FC<
     <DropdownMenuPrimitive.CheckboxItem
       checked={checked}
       className={cn(
-        "dark:focus:bg-metal relative flex cursor-default items-center rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden transition-colors select-none focus:bg-stone-100 focus:text-stone-900 data-disabled:pointer-events-none data-disabled:opacity-50 dark:focus:text-stone-50",
+        "relative flex cursor-default items-center rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden transition-colors select-none focus:bg-surface-hover focus:text-heading data-disabled:pointer-events-none data-disabled:opacity-50",
         className,
       )}
       ref={ref}
@@ -148,7 +148,7 @@ const DropdownMenuRadioItem: React.FC<
   return (
     <DropdownMenuPrimitive.RadioItem
       className={cn(
-        "dark:focus:bg-metal relative flex cursor-default items-center rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden transition-colors select-none focus:bg-stone-100 focus:text-stone-900 data-disabled:pointer-events-none data-disabled:opacity-50 dark:focus:text-stone-50",
+        "relative flex cursor-default items-center rounded-xs py-1.5 pr-2 pl-8 text-sm outline-hidden transition-colors select-none focus:bg-surface-hover focus:text-heading data-disabled:pointer-events-none data-disabled:opacity-50",
         className,
       )}
       ref={ref}
@@ -197,7 +197,7 @@ const DropdownMenuSeparator: React.FC<
   return (
     <DropdownMenuPrimitive.Separator
       className={cn(
-        "-mx-1 my-1 h-px bg-stone-100 dark:bg-stone-800",
+        "-mx-1 my-1 h-px bg-border",
         className,
       )}
       ref={ref}

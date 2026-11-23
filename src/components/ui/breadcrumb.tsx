@@ -23,7 +23,7 @@ const BreadcrumbList: React.FC<
   return (
     <ol
       className={cn(
-        "flex flex-wrap items-center gap-1.5 text-sm break-words text-stone-500 sm:gap-2.5 dark:text-stone-400",
+        "flex flex-wrap items-center gap-1.5 text-sm break-words text-muted sm:gap-2.5",
         className,
       )}
       ref={ref}
@@ -59,7 +59,7 @@ const BreadcrumbLink: React.FC<
   return (
     <Comp
       className={cn(
-        "transition-colors hover:text-stone-950 dark:hover:text-stone-50",
+        "transition-colors hover:text-heading",
         className,
       )}
       ref={ref}
@@ -77,7 +77,7 @@ const BreadcrumbPage: React.FC<
     <span
       aria-current="page"
       aria-disabled="true"
-      className={cn("font-normal text-stone-950 dark:text-stone-50", className)}
+      className={cn("font-normal text-heading", className)}
       ref={ref}
       role="link"
       {...rest}
