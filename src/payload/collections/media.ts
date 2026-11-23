@@ -28,8 +28,8 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    // Files are served straight from UploadThing (docs/adr/0004), so Payload's
-    // file route has nothing to serve. Answer old /api/media/file links with a
+    // Files are served straight from the media bucket (docs/adr/0004,
+    // docs/adr/0006), so Payload's file route has nothing to serve. Answer old /api/media/file links with a
     // 404 instead of Payload's local-disk fallback, which logs and returns 500.
     handlers: [() => new Response(null, { status: 404 })],
     // Every image is also stored at each width, as WebP, so pages never wait
@@ -42,7 +42,7 @@ export const Media: CollectionConfig = {
       formatOptions: { format: "webp", options: { quality: 80 } },
       // The width's name keeps each file's name unique. Payload's default,
       // `<name>-<w>x<h>`, repeats when a narrow image is kept at its own width
-      // twice, and UploadThing then tracks only one of the uploads.
+      // twice, and the bucket stores files by name: one would overwrite another.
       generateImageName: ({ originalName, sizeName, extension }) =>
         `${originalName}-${sizeName}.${extension}`,
     })),

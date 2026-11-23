@@ -1,6 +1,7 @@
 import { withPayload } from "@payloadcms/next/withPayload";
 
 import { MEDIA_WIDTHS } from "./src/lib/media-widths";
+import { MEDIA_ORIGIN } from "./src/payload/media-storage";
 
 import type { NextConfig } from "next";
 
@@ -25,6 +26,10 @@ const nextConfig: NextConfig = {
       {
         hostname: "pbs.twimg.com",
       },
+      {
+        hostname: new URL(MEDIA_ORIGIN).hostname,
+      },
+      // Pages cached before the move to R2 still point at UploadThing.
       {
         hostname: "utfs.io",
       },

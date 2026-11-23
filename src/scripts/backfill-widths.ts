@@ -10,8 +10,8 @@ import config from "@payload-config";
  * which pages serve as uploaded.
  *
  * Each image is uploaded again under its own name, so Payload resizes it like
- * any upload but keeps the old file: pages cached until the next Revalidation
- * still point at it. Those old files stay on UploadThing; the log lists them.
+ * any upload. On UploadThing, where each upload got a new URL, this left the
+ * old file for pages cached until the next Revalidation; the log lists them.
  *
  * It overwrites each image's file fields, so against a remote database it runs
  * only when CONFIRM_DATABASE_HOST names that database's host.

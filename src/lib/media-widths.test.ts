@@ -10,7 +10,7 @@ import { Media } from "@payload-types";
 const media = (overrides: Partial<Media>): Media => ({
   id: 1,
   alt: "A screenshot",
-  url: "https://utfs.io/f/original",
+  url: "https://media.walterspieler.dev/original",
   mimeType: "image/png",
   width: 1920,
   height: 1080,
@@ -20,9 +20,9 @@ const media = (overrides: Partial<Media>): Media => ({
 });
 
 const sizes = {
-  w640: { url: "https://utfs.io/f/w640" },
-  w1080: { url: "https://utfs.io/f/w1080" },
-  w1600: { url: "https://utfs.io/f/w1600" },
+  w640: { url: "https://media.walterspieler.dev/w640" },
+  w1080: { url: "https://media.walterspieler.dev/w1080" },
+  w1600: { url: "https://media.walterspieler.dev/w1600" },
 };
 
 describe("isServedAtStoredWidths", () => {
@@ -42,23 +42,19 @@ describe("isServedAtStoredWidths", () => {
 describe("getStoredWidths", () => {
   it("lists an image's stored widths, narrowest first", () => {
     expect(getStoredWidths(media({ sizes }))).toEqual([
-      { width: 640, url: "https://utfs.io/f/w640" },
-      { width: 1080, url: "https://utfs.io/f/w1080" },
-      { width: 1600, url: "https://utfs.io/f/w1600" },
+      { width: 640, url: "https://media.walterspieler.dev/w640" },
+      { width: 1080, url: "https://media.walterspieler.dev/w1080" },
+      { width: 1600, url: "https://media.walterspieler.dev/w1600" },
     ]);
   });
 
   it("has none for an image missing any width, until the backfill", () => {
-    expect(getStoredWidths(media({ sizes: { w640: sizes.w640 } }))).toBe(
-      null,
-    );
+    expect(getStoredWidths(media({ sizes: { w640: sizes.w640 } }))).toBe(null);
     expect(getStoredWidths(media({}))).toBe(null);
   });
 
   it("has none for a GIF, even one Payload made widths for", () => {
-    expect(getStoredWidths(media({ mimeType: "image/gif", sizes }))).toBe(
-      null,
-    );
+    expect(getStoredWidths(media({ mimeType: "image/gif", sizes }))).toBe(null);
   });
 });
 
