@@ -12,9 +12,16 @@ type EditorNote = Extract<
 
 type Props = Pick<EditorNote, "kind" | "date" | "body">;
 
-const LABELS: Record<EditorNote["kind"], string> = {
-  update: "Update",
-  correction: "Correction",
+const KINDS: Record<
+  EditorNote["kind"],
+  { label: string; border: string; text: string }
+> = {
+  update: { label: "Update", border: "border-accent", text: "text-accent" },
+  correction: {
+    label: "Correction",
+    border: "border-danger",
+    text: "text-danger",
+  },
 };
 
 const EditorNoteBlock: FC<Props> = ({ kind, date, body }) => {
@@ -22,16 +29,16 @@ const EditorNoteBlock: FC<Props> = ({ kind, date, body }) => {
     <aside
       className={cn(
         "bg-surface my-6 rounded-r-md border-l-2 px-5 py-4",
-        kind === "correction" ? "border-danger" : "border-accent",
+        KINDS[kind].border,
       )}
     >
       <p
         className={cn(
           "text-xs font-semibold tracking-wide uppercase",
-          kind === "correction" ? "text-danger" : "text-accent",
+          KINDS[kind].text,
         )}
       >
-        {LABELS[kind]} ·{" "}
+        {KINDS[kind].label} ·{" "}
         <time dateTime={date}>{formatDateToDayMonthYear(date)}</time>
       </p>
       <div className="[&>p]:mt-2">

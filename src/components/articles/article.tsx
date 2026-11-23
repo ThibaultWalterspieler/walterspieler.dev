@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { getLastUpdateDate } from "@/components/articles/last-update-date";
+import { getUpdatedDate } from "@/components/articles/updated-date";
 import Content from "@/components/common/content";
 import MediaImage from "@/components/common/media-image";
 import { H1, P } from "@/components/common/typography";
@@ -29,9 +29,9 @@ const Article: FC<Props> = (props) => {
 
   if (typeof content === "number") return null;
 
-  const lastUpdateDate =
+  const updatedDate =
     props.collection === "blog"
-      ? getLastUpdateDate(props.content.content)
+      ? getUpdatedDate(props.content.content)
       : undefined;
 
   return (
@@ -42,11 +42,11 @@ const Article: FC<Props> = (props) => {
           <time dateTime={content.createdAt}>
             {formatDateToDayMonthYear(content.createdAt)}
           </time>
-          {lastUpdateDate && (
+          {updatedDate && (
             <>
               {" · Updated "}
-              <time dateTime={lastUpdateDate}>
-                {formatDateToDayMonthYear(lastUpdateDate)}
+              <time dateTime={updatedDate}>
+                {formatDateToDayMonthYear(updatedDate)}
               </time>
             </>
           )}

@@ -1,11 +1,11 @@
 import { BlogPost } from "@payload-types";
 
 /**
- * The date shown as "Updated" in an article's header: the most recent
+ * A blog post's Updated date (GLOSSARY.md): the date of its most recent
  * Editor's note of kind update. Corrections don't count, and Payload's
  * `updatedAt` can't serve: it moves on every save, autosaves included.
  */
-export function getLastUpdateDate(
+export function getUpdatedDate(
   content: BlogPost["content"] | undefined,
 ): string | undefined {
   let latest: string | undefined;

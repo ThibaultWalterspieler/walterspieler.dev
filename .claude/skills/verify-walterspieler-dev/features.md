@@ -47,7 +47,7 @@ One section per feature area. Each answers the same four questions: what exists,
 **What exists**
 
 - `/blog`: the inner menu lists every blog post (title, month of creation); the main area says "Select a blog post" on desktop.
-- `/blog/<slug>`: breadcrumb (Home / Blog / title), title, creation date (followed by "· Updated <date>" when the post has an Update editor's note), description, main image (preloaded, with a blurred placeholder), then the post's blocks. A `NewsArticle` JSON-LD script.
+- `/blog/<slug>`: breadcrumb (Home / Blog / title), title, creation date (followed by "· Updated <date>" when the post has an Update editor's note), description, main image (preloaded, with a blurred placeholder), then the post's blocks. A `NewsArticle` JSON-LD script whose `dateModified` is the Updated date, or the creation date when there is none.
 - An unknown slug shows "This blog post does not exist." with "Return to blog".
 
 **How to get to it**: the "Blog" menu card, then a post in the inner menu.
