@@ -121,6 +121,8 @@ pnpm payload migrate
 
 ### Changing the Schema
 
+In dev mode Payload pushes schema changes straight to the database, but only when `DATABASE_URI` points at localhost. Remote databases change through migrations only: a push leaves a `dev` row in `payload_migrations`, and every later `payload migrate` (and so every Vercel build) stops at a data-loss prompt.
+
 After changing a collection, global or block, generate the migration and the types, and commit both with the change:
 
 ```bash

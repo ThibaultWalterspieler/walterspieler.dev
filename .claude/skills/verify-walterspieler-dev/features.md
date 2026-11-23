@@ -113,7 +113,7 @@ One section per feature area. Each answers the same four questions: what exists,
 - **Image, Code and Quote blocks render nothing**: the admin offers them, but `Content` has no case for them.
 - ScriptCopyBtn ignores its "Code language" and "Show multiple package options" fields.
 - A rich-text link to an internal document renders "Internal link coming soon".
-- TweetCard fetches the tweet from X once a day and caches it, so a post with tweets is prerendered and prefetched whole; offline, or for a deleted tweet, it shows a "not found" card. An uncached fetch would leave a dynamic hole: the post would load on click and skip the route transition.
+- TweetCard fetches the tweet from X when the page renders and caches it for a day; offline, or for a deleted tweet, it shows a "not found" card.
 
 ## SEO metadata, sitemap, robots
 
@@ -150,7 +150,7 @@ One section per feature area. Each answers the same four questions: what exists,
 **Gotchas**
 
 - `pnpm seed` passes `context.disableRevalidate`: outside Next.js there is no cache to expire.
-- `cacheLife("max")` also refreshes a page in the background after 30 days. Embedded tweets are cached apart from the CMS tag and refetched daily (`cacheLife("days")`): a CMS save doesn't refresh them.
+- `cacheLife("max")` also refreshes a page in the background after 30 days. A page with a TweetCard block refreshes daily instead, to pick up the tweet; nothing else does.
 - A failed revalidation is logged and never blocks the save.
 
 ## Redirects

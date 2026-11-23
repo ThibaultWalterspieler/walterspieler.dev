@@ -12,16 +12,6 @@ import { getTweet, type Tweet } from "react-tweet/api";
 
 import { cn } from "@/lib/utils";
 
-// Cached, so a post with tweets is prerendered whole: an uncached fetch leaves a
-// hole that is fetched from X on every visit, and the post can't be prefetched,
-// so opening it waits on X and skips the route transition. Refetched daily.
-const getCachedTweet = async (id: string) => {
-  "use cache";
-  cacheLife("days");
-
-  return getTweet(id);
-};
-
 type TwitterIconProps = {
   className?: string;
   [key: string]: unknown;
@@ -271,6 +261,16 @@ export const MagicTweet = ({
       <TweetMedia tweet={enrichedTweet} />
     </div>
   );
+};
+
+// An uncached fetch is request-time data under Cache Components: the tweet would
+// be fetched from X on every visit and left out of the prerendered page.
+// A failed fetch throws, and a thrown error is never cached.
+const getCachedTweet = async (id: string) => {
+  "use cache";
+  cacheLife("days");
+
+  return getTweet(id);
 };
 
 /**
