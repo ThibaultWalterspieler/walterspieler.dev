@@ -6,6 +6,7 @@ import {
   CartesianGrid,
   Line,
   LineChart,
+  Text,
   XAxis,
   YAxis,
 } from "recharts";
@@ -20,6 +21,7 @@ import {
 } from "@/components/ui/chart";
 
 import type { ChartData } from "@/lib/chart-data";
+import type { TextProps } from "recharts";
 
 export type ChartKind = "line" | "bar";
 
@@ -35,6 +37,42 @@ const animation = {
   animationDuration: 800,
   animationEasing: "ease-out",
 } as const;
+
+type TickProps = TextProps & {
+  payload?: { value: string };
+  visibleTicksCount?: number;
+};
+
+/**
+ * A bar chart labels every bar: a label wraps to its bar's share of the axis
+ * instead of Recharts hiding it when it would touch its neighbour.
+ */
+function WrappedTick({
+  payload,
+  visibleTicksCount = 1,
+  width = 0,
+  x,
+  y,
+  textAnchor,
+  fill,
+}: TickProps) {
+  return (
+    <Text
+      fill={fill}
+      maxLines={4}
+      // Recharts measures words to wrap them; this is the size ChartContainer
+      // draws tick labels at (text-xs), not the page's 16px.
+      style={{ fontSize: 12 }}
+      textAnchor={textAnchor}
+      verticalAnchor="start"
+      width={Number(width) / visibleTicksCount - 4}
+      x={x}
+      y={y}
+    >
+      {payload?.value}
+    </Text>
+  );
+}
 
 export default function DataChart({
   kind,
@@ -64,9 +102,11 @@ export default function DataChart({
       <XAxis
         axisLine={false}
         dataKey="x"
-        minTickGap={24}
         tickLine={false}
         tickMargin={8}
+        {...(kind === "bar"
+          ? { height: 60, interval: 0, tick: <WrappedTick /> }
+          : { minTickGap: 24 })}
       />
       <YAxis
         axisLine={false}
