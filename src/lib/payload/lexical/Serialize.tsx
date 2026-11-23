@@ -13,6 +13,12 @@ import {
   IS_SUPERSCRIPT,
   IS_UNDERLINE,
 } from "./nodeFormat";
+import {
+  HEADER_COLUMN,
+  HEADER_ROW,
+  SerializedTableCellNode,
+  splitTableHead,
+} from "./table";
 
 import type {
   LinkFields,
@@ -31,24 +37,6 @@ import type {
 type Props = {
   nodes: SerializedLexicalNode[];
 };
-
-// Mirrors @lexical/table's SerializedTableCellNode, which this app doesn't depend on directly.
-type SerializedTableCellNode = SerializedElementNode & {
-  /** Bit flags: 1 = in a header row, 2 = in a header column. */
-  headerState: number;
-  colSpan?: number;
-  rowSpan?: number;
-};
-
-const HEADER_ROW = 1;
-const HEADER_COLUMN = 2;
-
-const isHeaderRow = (row: SerializedLexicalNode) =>
-  "children" in row &&
-  (row as SerializedElementNode).children.length > 0 &&
-  (row as SerializedElementNode).children.every(
-    (cell) => (cell as SerializedTableCellNode).headerState & HEADER_ROW,
-  );
 
 function escapeHtml(value: string) {
   const string = String(value);
@@ -232,13 +220,9 @@ const SerializeLexical = async ({ nodes }: Props) => {
             return <blockquote key={index}>{serializedChildren}</blockquote>;
           }
           case "table": {
-            const rows = (_node as SerializedElementNode).children;
-            // Payload's table has no header section: a first row made only of
-            // header cells becomes the <thead>, so its cells label the columns.
-            const [head, body] =
-              rows.length > 1 && isHeaderRow(rows[0])
-                ? [rows.slice(0, 1), rows.slice(1)]
-                : [[], rows];
+            const { head, body } = splitTableHead(
+              (_node as SerializedElementNode).children,
+            );
 
             return (
               <div className="my-6 overflow-x-auto" key={index}>
