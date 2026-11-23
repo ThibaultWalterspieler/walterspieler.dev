@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 
+import { cacheLife } from "next/cache";
 import Image from "next/image";
 import {
   enrichTweet,
@@ -262,6 +263,16 @@ export const MagicTweet = ({
   );
 };
 
+// An uncached fetch is request-time data under Cache Components: the tweet would
+// be fetched from X on every visit and left out of the prerendered page.
+// A failed fetch throws, and a thrown error is never cached.
+const getCachedTweet = async (id: string) => {
+  "use cache";
+  cacheLife("days");
+
+  return getTweet(id);
+};
+
 /**
  * TweetCard
  */
@@ -275,7 +286,7 @@ export const TweetCard = async ({
   className?: string;
 }) => {
   const tweet = id
-    ? await getTweet(id).catch((err) => {
+    ? await getCachedTweet(id).catch((err) => {
         if (onError) {
           onError(err);
         } else {
