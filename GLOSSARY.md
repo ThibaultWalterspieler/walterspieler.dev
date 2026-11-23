@@ -9,7 +9,7 @@ Seeded from the code as it stood in November 2026. `/grill-with-docs` sharpens i
 ### Content
 
 **Page**:
-A CMS document with a title, a slug and blocks. Fixed routes read their page by slug: `home` for `/`, plus `blog`, `experiences`, `99Stud`, `open-source` and `notice` (served at `/legal/notice`).
+A CMS document with a title, a slug and blocks. Fixed routes read their page by slug: `home` for `/`, plus `blog`, `experiences`, `99stud`, `open-source` and `notice` (served at `/legal/notice`).
 _Avoid_: static page, landing page
 
 **Blog post**:
