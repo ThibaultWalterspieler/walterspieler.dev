@@ -1,6 +1,14 @@
 import { FC } from "react";
 
 import ChartOnView from "@/components/ui/chart-on-view";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { parseChartData } from "@/lib/chart-data";
 
 import type { ChartKind } from "@/components/ui/data-chart";
@@ -34,44 +42,35 @@ const ChartBlock: FC<Props> = ({ kind, title, data, source }) => {
         <summary className="hover:text-heading cursor-pointer">
           Show the data
         </summary>
-        <div className="mt-2 overflow-x-auto">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr>
-                <td className="border-border border px-2 py-1" />
-                {series.map((name, index) => (
-                  <th
-                    className="border-border text-heading border px-2 py-1 text-right"
-                    key={index}
-                    scope="col"
-                  >
-                    {name}
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((row, rowIndex) => (
-                <tr key={rowIndex}>
-                  <th
-                    className="border-border border px-2 py-1 text-left font-normal"
-                    scope="row"
-                  >
-                    {row.x}
-                  </th>
-                  {row.values.map((value, index) => (
-                    <td
-                      className="border-border border px-2 py-1 text-right tabular-nums"
-                      key={index}
-                    >
-                      {value?.toLocaleString("en-GB") ?? "–"}
-                    </td>
-                  ))}
-                </tr>
+        <Table className="mt-2 text-xs">
+          <TableHeader>
+            <TableRow>
+              <TableHead />
+              {series.map((name, index) => (
+                <TableHead className="text-right" key={index} scope="col">
+                  {name}
+                </TableHead>
               ))}
-            </tbody>
-          </table>
-        </div>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {rows.map((row, rowIndex) => (
+              <TableRow key={rowIndex}>
+                <TableHead className="text-foreground font-normal" scope="row">
+                  {row.x}
+                </TableHead>
+                {row.values.map((value, index) => (
+                  <TableCell
+                    className="text-foreground text-right tabular-nums"
+                    key={index}
+                  >
+                    {value?.toLocaleString("en-GB") ?? "–"}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </details>
     </figure>
   );
