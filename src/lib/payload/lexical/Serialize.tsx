@@ -2,6 +2,14 @@ import { JSX } from "react";
 
 import MediaImage from "@/components/common/media-image";
 import { A, H1, H2, H3, H4, LI, P, UL } from "@/components/common/typography";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Media } from "@payload-types";
 
 import {
@@ -225,18 +233,16 @@ const SerializeLexical = async ({ nodes }: Props) => {
             );
 
             return (
-              <div className="my-6 overflow-x-auto" key={index}>
-                <table className="w-full border-collapse text-sm">
-                  {head.length > 0 && (
-                    <thead>{SerializeLexical({ nodes: head })}</thead>
-                  )}
-                  <tbody>{SerializeLexical({ nodes: body })}</tbody>
-                </table>
-              </div>
+              <Table className="my-6" key={index}>
+                {head.length > 0 && (
+                  <TableHeader>{SerializeLexical({ nodes: head })}</TableHeader>
+                )}
+                <TableBody>{SerializeLexical({ nodes: body })}</TableBody>
+              </Table>
             );
           }
           case "tablerow": {
-            return <tr key={index}>{serializedChildren}</tr>;
+            return <TableRow key={index}>{serializedChildren}</TableRow>;
           }
           case "tablecell": {
             const node = _node as SerializedTableCellNode;
@@ -246,26 +252,28 @@ const SerializeLexical = async ({ nodes }: Props) => {
               rowSpan:
                 node.rowSpan && node.rowSpan > 1 ? node.rowSpan : undefined,
             };
+            // Prose wraps: shadcn's nowrap suits data tables, not sentences.
+            // py-2 gives header cells the padding TableCell has, so rows align.
             const cellClassName =
-              "border-border border px-3 py-2 text-left align-top [&>p]:leading-6";
+              "py-2 align-top whitespace-normal [&>p]:leading-6";
 
             if (node.headerState & (HEADER_ROW | HEADER_COLUMN)) {
               return (
-                <th
-                  className={`${cellClassName} bg-surface text-heading font-semibold`}
+                <TableHead
+                  className={cellClassName}
                   key={index}
                   scope={node.headerState & HEADER_ROW ? "col" : "row"}
                   {...span}
                 >
                   {serializedChildren}
-                </th>
+                </TableHead>
               );
             }
 
             return (
-              <td className={cellClassName} key={index} {...span}>
+              <TableCell className={cellClassName} key={index} {...span}>
                 {serializedChildren}
-              </td>
+              </TableCell>
             );
           }
           case "link": {
