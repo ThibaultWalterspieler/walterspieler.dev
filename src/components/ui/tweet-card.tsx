@@ -1,5 +1,6 @@
 import { Suspense } from "react";
 
+import { cacheLife } from "next/cache";
 import Image from "next/image";
 import {
   enrichTweet,
@@ -10,6 +11,16 @@ import {
 import { getTweet, type Tweet } from "react-tweet/api";
 
 import { cn } from "@/lib/utils";
+
+// Cached, so a post with tweets is prerendered whole: an uncached fetch leaves a
+// hole that is fetched from X on every visit, and the post can't be prefetched,
+// so opening it waits on X and skips the route transition. Refetched daily.
+const getCachedTweet = async (id: string) => {
+  "use cache";
+  cacheLife("days");
+
+  return getTweet(id);
+};
 
 type TwitterIconProps = {
   className?: string;
@@ -275,7 +286,7 @@ export const TweetCard = async ({
   className?: string;
 }) => {
   const tweet = id
-    ? await getTweet(id).catch((err) => {
+    ? await getCachedTweet(id).catch((err) => {
         if (onError) {
           onError(err);
         } else {
