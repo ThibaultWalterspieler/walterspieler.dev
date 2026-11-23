@@ -86,7 +86,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/fr/99Stud",
-        destination: "/99Stud",
+        destination: "/99stud",
         permanent: true,
       },
       {
@@ -142,7 +142,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/en/99Stud",
-        destination: "/99Stud",
+        destination: "/99stud",
         permanent: true,
       },
       {

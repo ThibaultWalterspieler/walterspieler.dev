@@ -36,7 +36,7 @@ const Stud99Page: FC = async () => {
 };
 
 const getFixedPage = async () => {
-  const page = await getPage("99Stud");
+  const page = await getPage("99stud");
 
   if (!page) {
     notFound();
