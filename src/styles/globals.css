@@ -136,6 +136,23 @@
   animation: page-enter 250ms var(--ease-smooth) both;
 }
 
+/*
+  The browser draws a route transition above the whole page, so without this
+  the page would paint over a fixed menu while it fades or slides away. Each
+  menu-layer element (side-menu.tsx) gets its own snapshot, stacked above the
+  page content in paint order, and the snapshot shows the menu live, so its
+  own CSS transition stays visible. Never give one to an element that can
+  switch to display: none mid-transition: the browser then skips it.
+*/
+::view-transition-group(.menu-layer),
+::view-transition-new(.menu-layer) {
+  animation: none;
+}
+
+::view-transition-old(.menu-layer) {
+  display: none;
+}
+
 @keyframes page-exit {
   to {
     opacity: 0;

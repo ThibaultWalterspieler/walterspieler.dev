@@ -17,6 +17,9 @@ type Props = {
 
 const toggleIconClasses = "col-start-1 row-start-1 transition-[opacity,rotate]";
 
+// Keeps a fixed menu above route transitions (see globals.css).
+const menuLayer = "[view-transition-class:menu-layer]";
+
 const SideMenu: FC<Props> = (props) => {
   const { children, isInner, displayReturnButton, collection } = props;
 
@@ -45,7 +48,8 @@ const SideMenu: FC<Props> = (props) => {
           aria-expanded={isMainMenuOpen}
           aria-label={isMainMenuOpen ? "Close menu" : "Open menu"}
           className={cn(
-            "border-border fixed top-8 right-4 z-50 grid rounded-lg border p-2 backdrop-blur transition-[background-color,scale] active:scale-[0.97] md:hidden",
+            "border-border fixed top-8 right-4 z-50 grid rounded-lg border p-2 backdrop-blur transition-[background-color,scale] [view-transition-name:menu-toggle] active:scale-[0.97] md:hidden",
+            menuLayer,
             isMainMenuOpen ? "bg-surface/80" : "bg-surface/5",
           )}
           onClick={isMainMenuOpen ? closeMainMenu : openMainMenu}
@@ -85,7 +89,8 @@ const SideMenu: FC<Props> = (props) => {
       {isInner ? (
         <div
           className={cn(
-            "bg-sidebar fixed top-0 z-10 transition-[translate,visibility] duration-250",
+            "bg-sidebar fixed top-0 z-10 transition-[translate,visibility] duration-250 [view-transition-name:inner-menu]",
+            menuLayer,
             { "max-md:invisible max-md:-translate-x-full": !isInnerMenuOpen },
           )}
         >
@@ -108,7 +113,8 @@ const SideMenu: FC<Props> = (props) => {
           */}
           <div
             className={cn(
-              "group/overlay bg-sidebar/80 fixed top-0 left-0 z-40 w-screen backdrop-blur-3xl transition-[opacity,visibility] md:hidden",
+              "group/overlay bg-sidebar/80 fixed top-0 left-0 z-40 w-screen backdrop-blur-3xl transition-[opacity,visibility] [view-transition-name:main-menu] md:hidden",
+              menuLayer,
               isMainMenuOpen
                 ? "visible opacity-100 duration-400"
                 : "invisible opacity-0 duration-250",
