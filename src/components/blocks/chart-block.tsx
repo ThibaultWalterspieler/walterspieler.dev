@@ -13,9 +13,9 @@ type Props = {
 };
 
 /**
- * The Chart block: a titled chart with its source line, like a newspaper
- * figure, and the same numbers as a table for screen readers and readers
- * without JavaScript.
+ * The Chart block. The source line credits the numbers, as the press does;
+ * the table carries them for screen readers and for readers without
+ * JavaScript, who would otherwise see an empty box.
  */
 const ChartBlock: FC<Props> = ({ kind, title, data, source }) => {
   const parsed = parseChartData(data);
