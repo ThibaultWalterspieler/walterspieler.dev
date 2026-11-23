@@ -27,7 +27,7 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    // Files are served straight from UploadThing (docs/adr/0003), so Payload's
+    // Files are served straight from UploadThing (docs/adr/0004), so Payload's
     // file route has nothing to serve. Answer old /api/media/file links with a
     // 404 instead of Payload's local-disk fallback, which logs and returns 500.
     handlers: [() => new Response(null, { status: 404 })],

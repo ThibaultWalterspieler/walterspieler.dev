@@ -112,7 +112,7 @@ One section per feature area. Each answers the same four questions: what exists,
 
 **Gotchas**
 
-- Images are served from UploadThing (`https://utfs.io/f/<key>`, docs/adr/0003) through `/_next/image`, except GIFs, which load straight from UploadThing: the optimizer can't resize them. Only a post's main image gets a `<link rel="preload">`.
+- Images are served from UploadThing (`https://utfs.io/f/<key>`, docs/adr/0004) through `/_next/image`, except GIFs, which load straight from UploadThing: the optimizer can't resize them. Only a post's main image gets a `<link rel="preload">`.
 - **Image, Code and Quote blocks render nothing**: the admin offers them, but `Content` has no case for them.
 - ScriptCopyBtn ignores its "Code language" and "Show multiple package options" fields.
 - A rich-text link to an internal document renders "Internal link coming soon".
@@ -177,7 +177,7 @@ One section per feature area. Each answers the same four questions: what exists,
 **Gotchas**
 
 - Media uploads go to UploadThing and need `UPLOADTHING_TOKEN`; the file is renamed `walterspieler_<uuid>`.
-- A media document's URL is `https://utfs.io/f/<key>`, built from its `_key` when read; Payload's `/api/media/file/<filename>` answers 404 (docs/adr/0003).
+- A media document's URL is `https://utfs.io/f/<key>`, built from its `_key` when read; Payload's `/api/media/file/<filename>` answers 404 (docs/adr/0004).
 - The seed creates no media, and without the token nothing can be uploaded. To see images locally, insert a `media` row (plus its `media_locales` alt) whose `_key` is an existing production file's, copied from the public `/api/media` on production, then attach it to a post.
 - The REST API is public for blog posts, experience posts, experiences and media; pages, socials and users answer 403 when logged out.
 
