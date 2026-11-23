@@ -29,7 +29,8 @@ export default function ScriptCopyBtnClient({
   const { command, lines } = commands[selected] ?? commands[0];
 
   return (
-    <CodeBlock className={className}>
+    // Centred and no wider than an install command needs, as before.
+    <CodeBlock className={cn("mx-auto max-w-md", className)}>
       {showMultiplePackageOptions ? (
         <CodeBlockHeader className="py-0">
           <div className="-ms-1.5 flex text-xs">
