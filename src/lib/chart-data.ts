@@ -50,7 +50,8 @@ export function parseChartData(text: string): ParsedChartData {
     const values: (number | null)[] = [];
     for (const [column, cell] of cells.entries()) {
       const value = cell === "" ? null : Number(cell);
-      if (Number.isNaN(value)) {
+      // Number() also reads "Infinity", which no axis can draw.
+      if (value !== null && !Number.isFinite(value)) {
         return fail(
           `Row ${rowNumber}, column "${series[column]}": "${cell}" is not a number.`,
         );

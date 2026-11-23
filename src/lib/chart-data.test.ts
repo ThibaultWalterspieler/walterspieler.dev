@@ -46,6 +46,10 @@ describe("parseChartData", () => {
       "week,eslint\n2024-11,40M",
       'Row 2, column "eslint": "40M" is not a number.',
     ],
+    [
+      "week,eslint\n2024-11,Infinity",
+      'Row 2, column "eslint": "Infinity" is not a number.',
+    ],
     ["week,eslint,biome\n2024-11,40", "Row 2 has 2 cells; the header has 3."],
     [
       "x,a,b,c,d,e,f\n1,1,1,1,1,1,1",
