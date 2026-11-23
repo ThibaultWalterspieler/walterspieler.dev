@@ -1,6 +1,7 @@
 "use client";
 
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { Component, lazy, Suspense, useEffect, useRef, useState } from "react";
+import type { ReactNode } from "react";
 
 import type { ChartKind } from "@/components/ui/data-chart";
 import type { ChartData } from "@/lib/chart-data";
@@ -10,6 +11,26 @@ const DataChart = lazy(loadDataChart);
 
 /** Holds the chart's space until it shows, so the page doesn't jump. */
 const placeholder = <div className="aspect-video w-full" />;
+
+/**
+ * If Recharts' code fails to load (a deploy in between, a dropped
+ * connection), the chart disappears and the rest of the article stays: the
+ * figure keeps its title, source and data table.
+ */
+class ChartLoadBoundary extends Component<
+  { children: ReactNode },
+  { failed: boolean }
+> {
+  state = { failed: false };
+
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+
+  render() {
+    return this.state.failed ? null : this.props.children;
+  }
+}
 
 /**
  * Mounts the chart the first time a third of it is on screen, so Recharts'
@@ -33,7 +54,8 @@ export default function ChartOnView({
     const preload = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;
-        void loadDataChart();
+        // A failure here shows when the chart mounts, in ChartLoadBoundary.
+        loadDataChart().catch(() => {});
         preload.disconnect();
       },
       { rootMargin: "100% 0px" },
@@ -58,9 +80,11 @@ export default function ChartOnView({
   return (
     <div ref={ref}>
       {visible ? (
-        <Suspense fallback={placeholder}>
-          <DataChart data={data} kind={kind} />
-        </Suspense>
+        <ChartLoadBoundary>
+          <Suspense fallback={placeholder}>
+            <DataChart data={data} kind={kind} />
+          </Suspense>
+        </ChartLoadBoundary>
       ) : (
         placeholder
       )}
