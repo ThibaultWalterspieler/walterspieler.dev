@@ -7,11 +7,15 @@
     "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
   /*
-    Smooth timing (see GLOSSARY.md): one easing and three durations.
+    Smooth timing (see GLOSSARY.md): two easings and three durations.
     150ms: hover, press, colour (the default below). 250ms: things that
     appear or leave: menus, dropdowns, routes. 400ms: the main menu opening on mobile.
+    ease-smooth (the default) front-loads the change, right for motion;
+    ease-fade is symmetric, for a colour that cross-fades between two states
+    (a selected menu card), which ease-smooth makes look like a snap.
   */
   --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-fade: cubic-bezier(0.45, 0, 0.55, 1);
   --default-transition-duration: 150ms;
   --default-transition-timing-function: var(--ease-smooth);
 

@@ -1,6 +1,6 @@
 # Animations are CSS only
 
-The public site uses no JavaScript animation library. Moving between routes animates through React's `<ViewTransition>` in each page. Everything else is CSS: keyframes and transitions, elements kept mounted so they can transition out (the main menu on mobile), and `tw-animate-css` for Radix menus, whose exit animation Radix waits on before unmounting. One easing and the 150ms default live in `@theme`; the only other durations are 250ms and 400ms.
+The public site uses no JavaScript animation library. Moving between routes animates through React's `<ViewTransition>` in each page. Everything else is CSS: keyframes and transitions, elements kept mounted so they can transition out (the main menu on mobile), and `tw-animate-css` for Radix menus, whose exit animation Radix waits on before unmounting. Two easings and the 150ms default live in `@theme`: `ease-smooth`, the default, front-loads the change and suits motion; `ease-fade` is symmetric and suits a colour cross-fading between two states, which `ease-smooth` makes look like a snap. The only other durations are 250ms and 400ms.
 
 ## Considered Options
 
