@@ -1,6 +1,7 @@
 import { PropsWithChildren, Suspense } from "react";
 
 import LoadingSpinner from "@/components/common/loading-spinner";
+import PageTransition from "@/components/common/page-transition";
 import SideMenu from "@/components/common/side-menu";
 import SideMenuContent from "@/components/common/side-menu-content";
 import { getDictionary } from "@/lib/i18n/utils";
@@ -46,7 +47,15 @@ const ExperiencesLayout = async (props: Props) => {
           />
         </Suspense>
       </SideMenu>
-      <div className="relative min-w-0 flex-1">{children}</div>
+      {/*
+        Entering or leaving the section inserts or removes this column, so the
+        page's own PageTransition inside it can't run: animate the column here.
+        Not the inner menu: menus stay put, and it hides its back link on mount,
+        which would end a transition that had captured it.
+      */}
+      <PageTransition>
+        <div className="relative min-w-0 flex-1">{children}</div>
+      </PageTransition>
     </>
   );
 };

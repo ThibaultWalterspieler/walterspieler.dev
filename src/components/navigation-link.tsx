@@ -16,13 +16,7 @@ import { MenuContext } from "@/contexts/menu-context";
 import { cn } from "@/lib/utils";
 
 export type NavigationLinkType =
-  | "home"
-  | "blog"
-  | "lab"
-  | "experiences"
-  | "contact"
-  | "99Stud"
-  | "other";
+  "home" | "blog" | "lab" | "experiences" | "contact" | "99Stud" | "other";
 
 const iconMap = {
   home: BoltIcon,
@@ -57,7 +51,9 @@ const NavigationLink: FC<{
       </div>
       {type === "contact" && (
         <ExternalLink
-          className={cn("absolute right-4 w-4 text-muted")}
+          className={cn(
+            "text-muted absolute right-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
+          )}
           strokeWidth={1}
         />
       )}

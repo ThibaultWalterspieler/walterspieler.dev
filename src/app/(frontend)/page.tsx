@@ -4,6 +4,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import Content from "@/components/common/content";
+import PageTransition from "@/components/common/page-transition";
 import { H1 } from "@/components/common/typography";
 import { Separator } from "@/components/ui/separator";
 import { getMe, getPage } from "@/lib/payload/queries";
@@ -25,14 +26,14 @@ const Home: FC = async () => {
   );
 
   return (
-    <>
+    <PageTransition>
       <script
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         type="application/ld+json"
       />
       <div className={cn("flex w-full min-w-0 flex-col")}>
         <div className={cn("content-wrapper")}>
-          <div className={cn("content animate-enter")}>
+          <div className={cn("content")}>
             <H1
               className={cn(
                 "text-spotlight mb-4 max-w-[60vw] md:mb-4 md:max-w-full",
@@ -52,7 +53,7 @@ const Home: FC = async () => {
           </div>
         </div>
       </div>
-    </>
+    </PageTransition>
   );
 };
 

@@ -30,7 +30,7 @@ const Article: FC<Props> = (props) => {
   if (typeof content === "number") return null;
 
   return (
-    <article className="animate-enter">
+    <article>
       <div className="mb-8 flex flex-col">
         <H1 className="mb-5">{content.title}</H1>
         <time

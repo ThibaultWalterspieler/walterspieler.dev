@@ -68,7 +68,7 @@ const Skeleton = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
-  return <div className={cn("rounded-md bg-surface", className)} {...props} />;
+  return <div className={cn("bg-surface rounded-md", className)} {...props} />;
 };
 
 export const TweetSkeleton = ({
@@ -139,7 +139,7 @@ export const TweetHeader = ({ tweet }: { tweet: EnrichedTweet }) => (
         </a>
         <div className="flex items-center space-x-1">
           <a
-            className="text-sm text-muted transition-all duration-75"
+            className="text-muted text-sm"
             href={tweet.user.url}
             rel="noreferrer"
             target="_blank"
@@ -151,7 +151,7 @@ export const TweetHeader = ({ tweet }: { tweet: EnrichedTweet }) => (
     </div>
     <a href={tweet.url} rel="noreferrer" target="_blank">
       <span className="sr-only">Link to tweet</span>
-      <Twitter className="size-5 items-start text-[#3BA9EE] transition-all ease-in-out hover:scale-105" />
+      <Twitter className="size-5 items-start text-[#3BA9EE] transition-transform hover:scale-105" />
     </a>
   </div>
 );
@@ -166,7 +166,7 @@ export const TweetBody = ({ tweet }: { tweet: EnrichedTweet }) => (
         case "mention":
           return (
             <a
-              className="text-sm font-normal text-muted"
+              className="text-muted text-sm font-normal"
               href={entity.href}
               key={idx}
               rel="noopener noreferrer"
@@ -251,7 +251,7 @@ export const MagicTweet = ({
   return (
     <div
       className={cn(
-        "border-border relative flex size-full max-w-lg flex-col gap-2 overflow-hidden rounded-lg border bg-surface p-4 backdrop-blur-md",
+        "border-border bg-surface relative flex size-full max-w-lg flex-col gap-2 overflow-hidden rounded-lg border p-4 backdrop-blur-md",
         className,
       )}
       {...props}

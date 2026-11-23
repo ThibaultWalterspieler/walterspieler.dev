@@ -30,14 +30,14 @@ const SideMenuContent: FC<Props> = (props) => {
       <div className="w-full px-4 pt-10 md:p-4">
         <span className="text-3xl font-bold md:text-lg">{title}</span>
       </div>
-      <div className="content mx-auto flex w-full flex-col gap-3 px-4 pt-10 md:p-4">
+      <div className="content group/menu mx-auto flex w-full flex-col gap-3 px-4 pt-10 md:p-4">
         {data.map((item) => {
           const href = `/${collection}/${item.uid}`;
           const isActive = activeUid ? item.uid === activeUid : undefined;
 
           return (
             <MenuLinkCard
-              className="shadow-duration-200 px-4 py-5"
+              className="px-4 py-5"
               href={href}
               isActive={isActive}
               key={item.uid}

@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 import { Check, Copy } from "lucide-react";
-import { motion } from "motion/react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -59,18 +58,16 @@ export default function ScriptCopyBtnClient({
                       variant="ghost"
                     >
                       {pm}
-                      {packageManager === pm && (
-                        <motion.div
-                          className="bg-accent absolute inset-x-0 bottom-[1px] mx-auto h-0.5 w-[90%]"
-                          initial={false}
-                          layoutId="activeTab"
-                          transition={{
-                            type: "spring",
-                            stiffness: 500,
-                            damping: 30,
-                          }}
-                        />
-                      )}
+                      {/* CSS can't slide one underline across tabs of different widths, so each tab grows its own. */}
+                      <span
+                        aria-hidden
+                        className={cn(
+                          "bg-accent absolute inset-x-0 bottom-px mx-auto h-0.5 w-[90%] transition-[opacity,scale] duration-250",
+                          packageManager === pm
+                            ? "scale-x-100 opacity-100"
+                            : "scale-x-0 opacity-0",
+                        )}
+                      />
                     </Button>
                   </div>
                 ))}
@@ -100,12 +97,12 @@ export default function ScriptCopyBtnClient({
           >
             <span className="sr-only">{copied ? "Copied" : "Copy"}</span>
             <Copy
-              className={`size-4 transition-all duration-300 ${
+              className={`size-4 transition-transform ${
                 copied ? "scale-0" : "scale-100"
               }`}
             />
             <Check
-              className={`absolute inset-0 m-auto size-4 transition-all duration-300 ${
+              className={`absolute inset-0 m-auto size-4 transition-transform ${
                 copied ? "scale-100" : "scale-0"
               }`}
             />

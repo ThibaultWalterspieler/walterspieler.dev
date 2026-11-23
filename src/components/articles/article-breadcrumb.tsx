@@ -1,7 +1,6 @@
 import { FC } from "react";
 
-import Link from "next/link";
-
+import PageLink from "@/components/common/page-link";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -23,22 +22,24 @@ const ArticleBreadcrumb: FC<Props> = async (props) => {
   const dictionary = await getDictionary();
 
   return (
-    <Breadcrumb className="animate-in fade-in mb-5 duration-300">
+    <Breadcrumb className="mb-5">
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/">{dictionary.firstLevelPages.home}</Link>
+            <PageLink href="/">{dictionary.firstLevelPages.home}</PageLink>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
             {collection === "blog" ? (
-              <Link href="/blog">{dictionary.firstLevelPages.blog}</Link>
+              <PageLink href="/blog">
+                {dictionary.firstLevelPages.blog}
+              </PageLink>
             ) : (
-              <Link href="/experiences">
+              <PageLink href="/experiences">
                 {dictionary.firstLevelPages.experiences}
-              </Link>
+              </PageLink>
             )}
           </BreadcrumbLink>
         </BreadcrumbItem>
