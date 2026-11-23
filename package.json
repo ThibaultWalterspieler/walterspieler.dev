@@ -16,6 +16,7 @@
     "payload": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload",
     "ci": "payload migrate && pnpm build",
     "backfill:blur": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload run ./src/scripts/backfill-blur.ts",
+    "backfill:widths": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload run ./src/scripts/backfill-widths.ts",
     "seed": "cross-env NODE_ENV=development PAYLOAD_CONFIG_PATH=src/payload.config.ts payload run ./src/scripts/seed.ts",
     "typecheck": "tsc --noEmit --incremental false",
     "test": "vitest run",

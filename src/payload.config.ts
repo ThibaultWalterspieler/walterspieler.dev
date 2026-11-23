@@ -96,7 +96,7 @@ export default buildConfig({
     }),
     uploadthingStorage({
       collections: {
-        // Media URLs point straight at UploadThing instead of Payload's file proxy (docs/adr/0003).
+        // Media URLs point straight at UploadThing instead of Payload's file proxy (docs/adr/0004).
         media: { disablePayloadAccessControl: true },
       },
       options: {

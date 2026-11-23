@@ -13,6 +13,7 @@ import * as migration_20250916_132141_remove_fr from './20250916_132141_remove_f
 import * as migration_20261121_010248_payload_3_94 from './20261121_010248_payload_3_94';
 import * as migration_20261121_010452_shiki_4_languages from './20261121_010452_shiki_4_languages';
 import * as migration_20261121_015604_media_blur_data_url from './20261121_015604_media_blur_data_url';
+import * as migration_20261123_140054_media_image_sizes from './20261123_140054_media_image_sizes';
 
 export const migrations = [
   {
@@ -88,6 +89,11 @@ export const migrations = [
   {
     up: migration_20261121_015604_media_blur_data_url.up,
     down: migration_20261121_015604_media_blur_data_url.down,
-    name: '20261121_015604_media_blur_data_url'
+    name: '20261121_015604_media_blur_data_url',
+  },
+  {
+    up: migration_20261123_140054_media_image_sizes.up,
+    down: migration_20261123_140054_media_image_sizes.down,
+    name: '20261123_140054_media_image_sizes'
   },
 ];

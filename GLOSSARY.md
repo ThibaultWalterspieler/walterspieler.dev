@@ -44,6 +44,14 @@ _Avoid_: settings, singleton
 An uploaded file, stored on UploadThing, with a required alt text.
 _Avoid_: asset, attachment
 
+**Stored width**:
+One of the fixed widths every still image is also kept at from the moment it is uploaded, so pages never wait for an image to be resized. GIFs and SVGs are always shown as uploaded.
+_Avoid_: variant, thumbnail, rendition
+
+**Backfill**:
+A one-off script that gives media uploaded before a feature existed what new uploads get, such as a blur placeholder or the stored widths.
+_Avoid_: data migration, regeneration
+
 **Seed data**:
 The sample content `pnpm seed` loads into a development database, after deleting the existing content.
 _Avoid_: fixtures, mock data

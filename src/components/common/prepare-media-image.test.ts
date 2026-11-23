@@ -15,17 +15,40 @@ const media = (overrides: Partial<Media>): Media => ({
   ...overrides,
 });
 
+const storedWidths = {
+  w640: { url: "https://utfs.io/f/w640" },
+  w1080: { url: "https://utfs.io/f/w1080" },
+  w1600: { url: "https://utfs.io/f/w1600" },
+};
+
 describe("prepareMediaImage", () => {
   it("serves an animated GIF straight from its file, skipping the optimizer", () => {
-    const image = prepareMediaImage(media({ mimeType: "image/gif" }));
+    const image = prepareMediaImage(
+      media({ mimeType: "image/gif", sizes: storedWidths }),
+    );
 
     expect(image?.unoptimized).toBe(true);
+    expect(image?.loader).toBeUndefined();
   });
 
-  it("sends still images through the optimizer", () => {
-    const image = prepareMediaImage(media({ mimeType: "image/webp" }));
+  it("serves a still image from its stored widths, skipping the optimizer", () => {
+    const image = prepareMediaImage(media({ sizes: storedWidths }));
 
     expect(image?.unoptimized).toBe(false);
+    expect(image?.loader?.({ src: image.src, width: 750 })).toBe(
+      "https://utfs.io/f/w1080",
+    );
+  });
+
+  it("sends an image through the optimizer until every width is stored", () => {
+    const partial = prepareMediaImage(
+      media({ sizes: { w640: storedWidths.w640 } }),
+    );
+    const none = prepareMediaImage(media({}));
+
+    expect(partial?.unoptimized).toBe(false);
+    expect(partial?.loader).toBeUndefined();
+    expect(none?.loader).toBeUndefined();
   });
 
   it("shows the stored blur placeholder while the image loads", () => {

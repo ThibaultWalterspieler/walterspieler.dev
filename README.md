@@ -140,6 +140,16 @@ pnpm backfill:blur
 
 It only touches images without a placeholder, so it is safe to rerun. Pages show the placeholders after their next Revalidation (any save in the admin).
 
+### Stored Widths
+
+Every image is stored at 640, 1080 and 1600px when it is uploaded (`docs/adr/0005`). Images uploaded before that have none and still go through the Vercel image optimizer; give them their widths once, right after the deploy that adds them, against the database in `.env.local` (it needs `UPLOADTHING_TOKEN`). Against a remote database it refuses to run unless `CONFIRM_DATABASE_HOST` names that database's host:
+
+```bash
+CONFIRM_DATABASE_HOST=<host in DATABASE_URI> pnpm backfill:widths
+```
+
+It only touches images missing a width, so it is safe to rerun. Each image is uploaded again under its own name, and the old file stays on UploadThing so cached pages keep working. Pages use the widths after their next Revalidation (any save in the admin).
+
 ### Dependency Installation
 
 Install necessary project dependencies:

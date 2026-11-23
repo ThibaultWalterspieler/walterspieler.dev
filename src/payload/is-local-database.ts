@@ -12,3 +12,15 @@ export const isLocalDatabase = (connectionString: string) => {
     return false;
   }
 };
+
+/**
+ * Whether a script that overwrites data may run against this database: a
+ * local one always, a remote one only when `confirmedHost` names its host.
+ */
+export const isDatabaseConfirmed = (
+  connectionString: string,
+  confirmedHost: string | undefined,
+) =>
+  isLocalDatabase(connectionString) ||
+  (confirmedHost !== undefined &&
+    URL.parse(connectionString)?.hostname === confirmedHost);
