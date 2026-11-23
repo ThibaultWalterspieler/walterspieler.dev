@@ -32,6 +32,24 @@ type Props = {
   nodes: SerializedLexicalNode[];
 };
 
+// Mirrors @lexical/table's SerializedTableCellNode, which this app doesn't depend on directly.
+type SerializedTableCellNode = SerializedElementNode & {
+  /** Bit flags: 1 = in a header row, 2 = in a header column. */
+  headerState: number;
+  colSpan?: number;
+  rowSpan?: number;
+};
+
+const HEADER_ROW = 1;
+const HEADER_COLUMN = 2;
+
+const isHeaderRow = (row: SerializedLexicalNode) =>
+  "children" in row &&
+  (row as SerializedElementNode).children.length > 0 &&
+  (row as SerializedElementNode).children.every(
+    (cell) => (cell as SerializedTableCellNode).headerState & HEADER_ROW,
+  );
+
 function escapeHtml(value: string) {
   const string = String(value);
   const matchHtmlRegExp = /["'&<>]/;
@@ -213,6 +231,59 @@ const SerializeLexical = async ({ nodes }: Props) => {
 
             return <blockquote key={index}>{serializedChildren}</blockquote>;
           }
+          case "table": {
+            const rows = (_node as SerializedElementNode).children;
+            // Payload's table has no header section: a first row made only of
+            // header cells becomes the <thead>, so its cells label the columns.
+            const [head, body] =
+              rows.length > 1 && isHeaderRow(rows[0])
+                ? [rows.slice(0, 1), rows.slice(1)]
+                : [[], rows];
+
+            return (
+              <div className="my-6 overflow-x-auto" key={index}>
+                <table className="w-full border-collapse text-sm">
+                  {head.length > 0 && (
+                    <thead>{SerializeLexical({ nodes: head })}</thead>
+                  )}
+                  <tbody>{SerializeLexical({ nodes: body })}</tbody>
+                </table>
+              </div>
+            );
+          }
+          case "tablerow": {
+            return <tr key={index}>{serializedChildren}</tr>;
+          }
+          case "tablecell": {
+            const node = _node as SerializedTableCellNode;
+            const span = {
+              colSpan:
+                node.colSpan && node.colSpan > 1 ? node.colSpan : undefined,
+              rowSpan:
+                node.rowSpan && node.rowSpan > 1 ? node.rowSpan : undefined,
+            };
+            const cellClassName =
+              "border-border border px-3 py-2 text-left align-top [&>p]:leading-6";
+
+            if (node.headerState & (HEADER_ROW | HEADER_COLUMN)) {
+              return (
+                <th
+                  className={`${cellClassName} bg-surface text-heading font-semibold`}
+                  key={index}
+                  scope={node.headerState & HEADER_ROW ? "col" : "row"}
+                  {...span}
+                >
+                  {serializedChildren}
+                </th>
+              );
+            }
+
+            return (
+              <td className={cellClassName} key={index} {...span}>
+                {serializedChildren}
+              </td>
+            );
+          }
           case "link": {
             const node = _node as SerializedLinkNode;
 
@@ -249,7 +320,7 @@ const SerializeLexical = async ({ nodes }: Props) => {
                     className="rounded-t-lg object-cover lg:max-h-[550px] lg:max-w-full"
                     media={value}
                   />
-                  <div className="bg-surface rounded-b px-2 py-1 text-center text-xs text-muted lg:max-w-[900px]">
+                  <div className="bg-surface text-muted rounded-b px-2 py-1 text-center text-xs lg:max-w-[900px]">
                     {value.alt}
                   </div>
                 </div>
