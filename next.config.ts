@@ -1,5 +1,7 @@
 import { withPayload } from "@payloadcms/next/withPayload";
 
+import { MEDIA_WIDTHS } from "./src/lib/media-widths";
+
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -13,6 +15,10 @@ const nextConfig: NextConfig = {
     resolveExtensions: [".mdx", ".tsx", ".ts", ".jsx", ".js", ".json"],
   },
   images: {
+    // The widths Media stores (docs/adr/0005), so every srcset entry of a Media
+    // image from 640px up is a stored file. Next also lists `imageSizes` (384px
+    // and under), which the loader answers with the 640px file.
+    deviceSizes: [...MEDIA_WIDTHS],
     // One year: media files get a new name on every upload, so a URL's bytes never change.
     minimumCacheTTL: 60 * 60 * 24 * 365,
     remotePatterns: [

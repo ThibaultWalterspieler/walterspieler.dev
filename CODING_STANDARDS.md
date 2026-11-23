@@ -23,7 +23,7 @@ These were derived from the code as it stood in November 2026. A rule the owner 
 - **A schema change ships whole in one PR**: the collection, global or block; its migration (`pnpm payload migrate:create <name>`); and the regenerated `src/payload/payload-types.ts` (`pnpm payload generate:types`). Commit `44f0847` (the TweetCard block) is the model.
 - **Generated files are regenerated, never hand-edited**: `src/payload/payload-types.ts`, `src/payload/migrations/**`, `src/app/(payload)/**`.
 - **A migration moves data with SQL** (``db.execute(sql`…`)``), as `20250916_132141_remove_fr.ts` does. The Local API speaks today's schema: `20241129_174207` calls `payload.update` and can no longer run on an empty database.
-- **A script that deletes or overwrites data refuses to run outside development.** See the `NODE_ENV` check in `src/scripts/seed.ts`.
+- **A script that deletes or overwrites data refuses to run outside development.** See the `NODE_ENV` check in `src/scripts/seed.ts`. The one exception is a backfill meant for production: it checks `isDatabaseConfirmed` (`src/payload/is-local-database.ts`), so it runs against a remote database only when `CONFIRM_DATABASE_HOST` names that database's host.
 - **A route that reads a page by slug owns that slug.** Renaming it in the admin breaks the route; changing it in code needs the seed updated too.
 
 ## Next.js runtime and caching
