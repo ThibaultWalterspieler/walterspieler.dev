@@ -104,10 +104,10 @@
         },
         {
           "blockType": "Code",
-          "code": "// app/page.tsx\nexport default async function Home() {\n  // Fetch data directly in the component\n  const data = await fetch('https://api.example.com/data');\n  const json = await data.json();\n  \n  return (\n    <main>\n      <h1>Welcome to Next.js 15</h1>\n      <p>Data: {json.message}</p>\n    </main>\n  );\n}",
-          "language": "typescript",
           "title": "app/page.tsx",
-          "lineNumbers": true
+          "lineNumbers": true,
+          "code": "// app/page.tsx\nexport default async function Home() {\n  // Fetch data directly in the component\n  const data = await fetch('https://api.example.com/data');\n  const json = await data.json();\n  \n  return (\n    <main>\n      <h1>Welcome to Next.js 15</h1>\n      <p>Data: {json.message}</p>\n    </main>\n  );\n}",
+          "language": "typescript"
         },
         {
           "blockType": "Paragraph",
@@ -248,18 +248,10 @@
       "companyWebsite": "https://wearestudio99.fr",
       "startDate": "2020-01-01T00:00:00.000Z",
       "usedTechnologies": [
-        {
-          "technology": "Next.js"
-        },
-        {
-          "technology": "TypeScript"
-        },
-        {
-          "technology": "React"
-        },
-        {
-          "technology": "Node.js"
-        }
+        { "technology": "Next.js" },
+        { "technology": "TypeScript" },
+        { "technology": "React" },
+        { "technology": "Node.js" }
       ]
     },
     {
@@ -268,15 +260,9 @@
       "startDate": "2018-06-01T00:00:00.000Z",
       "endDate": "2019-12-31T00:00:00.000Z",
       "usedTechnologies": [
-        {
-          "technology": "JavaScript"
-        },
-        {
-          "technology": "React"
-        },
-        {
-          "technology": "Vue.js"
-        }
+        { "technology": "JavaScript" },
+        { "technology": "React" },
+        { "technology": "Vue.js" }
       ]
     }
   ],

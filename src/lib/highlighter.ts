@@ -4,7 +4,6 @@ import { CODE_LANGUAGES } from "@/lib/code-languages";
 
 import type { CodeLanguage } from "@/lib/code-languages";
 
-
 export interface HighlightedToken {
   content: string;
   color?: string;
@@ -22,9 +21,9 @@ const ALIASES: Record<string, string> = {
 
 /**
  * Highlights code on the server with the site's Ayu Dark palette. Returns one
- * list of tokens per line, or `null` for a language not in CODE_LANGUAGES: the
- * caller then shows the code as plain text. Tokens are plain data rendered as
- * React text, so the code is escaped like any other text.
+ * list of tokens per line, or `null` for a language not in CODE_LANGUAGES or
+ * when Shiki fails: the caller then shows the code as plain text. Tokens are
+ * plain data rendered as React text, so the code is escaped like any other text.
  */
 export async function highlightCode(
   code: string,
@@ -34,14 +33,20 @@ export async function highlightCode(
   const lang = ALIASES[name] ?? name;
   if (!isCodeLanguage(lang)) return null;
 
-  const { tokens } = await codeToTokens(code.replace(/\n$/, ""), {
-    lang,
-    theme: "ayu-dark",
-  });
+  try {
+    const { tokens } = await codeToTokens(code.replace(/\n$/, ""), {
+      lang,
+      theme: "ayu-dark",
+    });
 
-  return tokens.map((line) =>
-    line.map(({ content, color }) => ({ content, color })),
-  );
+    return tokens.map((line) =>
+      line.map(({ content, color }) => ({ content, color })),
+    );
+  } catch (error) {
+    // A Shiki failure costs the colours, never the page.
+    console.error("Error highlighting code:", error);
+    return null;
+  }
 }
 
 function isCodeLanguage(name: string): name is CodeLanguage {

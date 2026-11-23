@@ -5,16 +5,9 @@ import { useEffect, useState } from "react";
 import { Check, Copy } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 /** Copies `value`; a polite live region announces "Copied" for screen readers. */
-export default function CodeBlockCopyButton({
-  value,
-  className,
-}: {
-  value: string;
-  className?: string;
-}) {
+export default function CodeBlockCopyButton({ value }: { value: string }) {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -27,7 +20,7 @@ export default function CodeBlockCopyButton({
     <>
       <Button
         aria-label={copied ? "Copied" : "Copy"}
-        className={cn("bg-surface size-7", className)}
+        className="bg-surface size-7"
         data-copied={copied || undefined}
         onClick={() => {
           navigator.clipboard

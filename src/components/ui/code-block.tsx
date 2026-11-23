@@ -150,7 +150,6 @@ export {
   CodeBlockActions,
   CodeBlockContent,
   CodeBlockHeader,
-  CodeBlockLine,
   CodeBlockLines,
   CodeBlockTitle,
 };
