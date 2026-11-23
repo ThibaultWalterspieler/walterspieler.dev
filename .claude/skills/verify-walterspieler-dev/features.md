@@ -178,8 +178,9 @@ One section per feature area. Each answers the same four questions: what exists,
 
 - Media uploads go to the R2 bucket `walterspieler-media` and need `R2_ACCESS_KEY_ID` and `R2_SECRET_ACCESS_KEY`. Local development writes to the production bucket; the file is renamed `walterspieler_<uuid>`, and each image is also stored at 640, 1080 and 1600px as WebP (`sizes.w640` etc., files named `<name>-w640.webp`; an image narrower than a width keeps its own width there).
 - A media document's URL is `https://media.walterspieler.dev/<filename>`, built from its filename when read; Payload's `/api/media/file/<filename>` answers 404 (docs/adr/0004).
-- On a local database from before R2, the first `pnpm dev` stops on Payload's schema push asking to delete the `_key` columns: answer `y` in the dev server's terminal.
-- The seed creates no media, and without the token nothing can be uploaded. To see images locally, insert a `media` row (plus its `media_locales` alt) whose `filename` is an existing production file's, copied from the public `/api/media` on production, then attach it to a post. Fill its `sizes_w640_filename`, `sizes_w1080_filename` and `sizes_w1600_filename` too, or the image goes through the optimizer.
+- On a local database from before R2, the first `pnpm dev` stops on Payload's schema push asking to delete the `_key` and `prefix` columns: answer `y` in the dev server's terminal.
+- The seed creates no media, and without the R2 keys nothing can be uploaded. To see images locally, insert a `media` row (plus its `media_locales` alt) whose `filename` is an existing production file's, copied from the public `/api/media` on production, then attach it to a post. Fill its `sizes_w640_filename`, `sizes_w1080_filename` and `sizes_w1600_filename` too, or the image goes through the optimizer.
+- Never delete such a row, or replace its file, in the local admin: Payload then deletes the production file it names from R2. Remove it with SQL.
 - The REST API is public for blog posts, experience posts, experiences and media; pages, socials and users answer 403 when logged out.
 
 ## Analytics

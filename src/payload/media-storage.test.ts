@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { mediaFileUrl } from "@/payload/media-storage";
 
 describe("mediaFileUrl", () => {
-  it("serves a file from the media domain under its filename", () => {
+  it("serves a file from R2 under its filename", () => {
     expect(mediaFileUrl("walterspieler_1234-w1080.webp")).toBe(
       "https://media.walterspieler.dev/walterspieler_1234-w1080.webp",
     );

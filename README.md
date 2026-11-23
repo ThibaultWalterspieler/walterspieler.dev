@@ -158,7 +158,7 @@ Media moved from UploadThing to Cloudflare R2 (`docs/adr/0006`). Its files are c
 pnpm copy:media-to-r2
 ```
 
-It skips files R2 already has, so it is safe to rerun, and it ends with a count of files copied, skipped and failed.
+It skips files R2 already has, so it is safe to rerun, and it ends with a count of files copied, skipped and failed, and the size of the files in R2. A file that is missing from R2 and has no UploadThing key counts as failed.
 
 ### Dependency Installation
 

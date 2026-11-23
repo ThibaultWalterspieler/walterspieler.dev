@@ -104,8 +104,8 @@ export default buildConfig({
       config: mediaBucketClient,
       collections: {
         media: {
-          // Media URLs point straight at the bucket's domain instead of
-          // Payload's file proxy (docs/adr/0004, docs/adr/0006).
+          // Media URLs point straight at R2 instead of Payload's file proxy
+          // (docs/adr/0004, docs/adr/0006).
           disablePayloadAccessControl: true,
           generateFileURL: ({ filename }) => mediaFileUrl(filename),
         },

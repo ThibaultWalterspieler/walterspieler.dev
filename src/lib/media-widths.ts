@@ -2,8 +2,8 @@ import type { Media } from "@payload-types";
 
 /**
  * The widths every uploaded image is also stored at, and so the widths a page
- * offers the browser (docs/adr/0005). Each one is a file in the media bucket
- * from the moment the image is saved: no visitor ever waits on a resize.
+ * offers the browser (docs/adr/0005). Each one is a file on R2 from the
+ * moment the image is saved: no visitor ever waits on a resize.
  */
 export const MEDIA_WIDTHS = [640, 1080, 1600] as const;
 

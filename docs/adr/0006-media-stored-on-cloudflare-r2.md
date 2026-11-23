@@ -13,8 +13,10 @@ This supersedes docs/adr/0004 for where files live; its reasoning for serving th
 
 ## Consequences
 
-- The bucket name, public domain and account endpoint are fixed in `src/payload/media-storage.ts`; only the R2 access keys are secrets (`R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`). Local development and previews write to the same bucket as production, as they did on UploadThing.
+- The bucket name, public domain and account endpoint are fixed in `src/payload/media-storage.ts`; only the R2 access keys are secrets (`R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`). Local development and previews write to the same bucket as production, as they did on UploadThing, so deleting or replacing a Media file there deletes the production file.
 - A filename is the file's address, so two Media files can never share a name. Payload already renames each upload `walterspieler_<uuid>`, and each stored width has its own name (docs/adr/0005).
-- Existing files were copied once with `pnpm copy:media-to-r2`, which reads UploadThing's keys straight from the database. The UploadThing files and the `_key` columns stay until a clean-up migration, so reverting the switch brings the old URLs back. Uploads made after the switch exist only in R2.
-- Payload's development schema push offers to drop the `_key` columns on a local database that still has them; accept it there.
+- Existing files were copied once with `pnpm copy:media-to-r2`, which reads UploadThing's keys straight from the database. The UploadThing files and the `_key` and `prefix` columns stay until a clean-up migration, so reverting the switch brings the old URLs back. Uploads made after the switch exist only in R2.
+- Migration `20261123_212222_media_on_r2` records the schema without those columns and changes nothing, so later migrations leave them alone; the clean-up migration drops them by hand, with the statements listed in it.
+- Payload's development schema push offers to drop those columns on a local database that still has them; accept it there.
+- A deleted Media file stays in Cloudflare's cache, and loads, for up to a year. To take one down at once, purge its URL in Cloudflare.
 - When the site moves to Workers, `@payloadcms/storage-r2` replaces the S3 adapter with a bucket binding. The bucket, filenames and URLs stay the same.
