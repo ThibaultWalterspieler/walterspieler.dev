@@ -29,12 +29,16 @@ The rendered body of a blog post or experience post: title, creation date, descr
 _Avoid_: post body, detail view
 
 **Block**:
-One section of a page's or post's content, picked by the editor: Paragraph, Image, Code, Quote, Button, MySocials, Experience, ScriptCopyBtn, TweetCard, Editor's note.
+One section of a page's or post's content, picked by the editor: Paragraph, Image, Code, Quote, Button, MySocials, Experience, ScriptCopyBtn, TweetCard, Editor's note, Chart.
 _Avoid_: widget, component block
 
 **Editor's note**:
 A dated note added to a blog post after it was published, of one of two kinds. An **Update** says the world changed since the article was written; a **Correction** says the article was wrong when it was written.
 _Avoid_: update block, changelog, erratum
+
+**Chart**:
+A block holding a titled line or bar chart, the data behind it and its source, shown under it. Its data is pasted as rows: the first column is the x-axis, each other column a series.
+_Avoid_: graph, figure, visualisation
 
 **Updated date**:
 The date of a blog post's most recent Update, shown in its header after the creation date. Corrections leave it alone; a post without an Update has none.
@@ -123,5 +127,5 @@ A public route whose real-visitor p75 metrics pass Core Web Vitals: LCP under 2.
 _Avoid_: snappy, performant, quick
 
 **Smooth**:
-An animation that moves only position, scale, rotation or opacity, never hides content after the first paint, never delays a tap or click, lasts roughly 150–400ms, and is switched off for visitors who ask for reduced motion. Only loading indicators loop; decoration moves in answer to the visitor, then stops.
+An animation that moves only position, scale, rotation or opacity, never hides content after the first paint, never delays a tap or click, lasts roughly 150–400ms, and is switched off for visitors who ask for reduced motion. Only loading indicators loop; decoration moves in answer to the visitor, then stops. The one exception is a Chart, which draws its lines or bars in over 800ms the first time it scrolls into view (docs/adr/0003).
 _Avoid_: fluid, silky, polished

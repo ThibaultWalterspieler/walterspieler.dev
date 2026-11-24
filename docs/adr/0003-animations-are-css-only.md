@@ -11,3 +11,7 @@ The public site uses no JavaScript animation library. Moving between routes anim
 
 - An animation that CSS truly can't do (physics, gesture-driven drag) means revisiting this decision, not quietly adding a library.
 - Browsers without View Transitions switch routes instantly. That's accepted: the content is the same, only the motion is missing.
+
+## Amendment: charts animate in JavaScript (November 2026)
+
+The Chart block is the one exception. Recharts (through shadcn/ui's chart) draws its lines and bars in with its own JavaScript animation, which CSS can't reproduce on marks Recharts lays out itself. The exception stays inside the Chart block: `ChartOnView` mounts the chart the first time it scrolls into view, so the 800ms draw-in plays once, where the reader sees it. Recharts' `isAnimationActive` stays at its default, `"auto"`, which skips the animation when the reader asks for reduced motion. Everything else on the site still animates in CSS.

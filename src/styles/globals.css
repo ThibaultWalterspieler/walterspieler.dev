@@ -79,6 +79,23 @@
   }
 }
 
+:root {
+  /*
+    Chart series, in this fixed order (never cycled). Ayu's syntax colours
+    are too light to tell series apart, so these are a categorical palette
+    stepped for a dark surface, checked on `surface` for lightness band,
+    chroma, colour-blind separation (worst adjacent pair ΔE 8.4) and 3:1
+    contrast. Five slots: parseChartData refuses a sixth series.
+    Outside @theme: Tailwind drops theme variables no class uses, and only the
+    charts' inline styles read these.
+  */
+  --color-chart-1: #3987e5;
+  --color-chart-2: #d95926;
+  --color-chart-3: #199e70;
+  --color-chart-4: #c98500;
+  --color-chart-5: #d55181;
+}
+
 /* Menus scroll on their own; the page itself scrolls the document. */
 .scrollable-area {
   @apply h-dvh overflow-x-hidden overflow-y-auto;

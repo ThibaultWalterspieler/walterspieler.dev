@@ -17,6 +17,7 @@ import * as migration_20261123_140054_media_image_sizes from './20261123_140054_
 import * as migration_20261123_212222_media_on_r2 from './20261123_212222_media_on_r2';
 import * as migration_20261124_101039_editor_note_block from './20261124_101039_editor_note_block';
 import * as migration_20261124_101140_code_block_fields from './20261124_101140_code_block_fields';
+import * as migration_20261124_101245_chart_block from './20261124_101245_chart_block';
 
 export const migrations = [
   {
@@ -112,6 +113,11 @@ export const migrations = [
   {
     up: migration_20261124_101140_code_block_fields.up,
     down: migration_20261124_101140_code_block_fields.down,
-    name: '20261124_101140_code_block_fields'
+    name: '20261124_101140_code_block_fields',
+  },
+  {
+    up: migration_20261124_101245_chart_block.up,
+    down: migration_20261124_101245_chart_block.down,
+    name: '20261124_101245_chart_block'
   },
 ];
