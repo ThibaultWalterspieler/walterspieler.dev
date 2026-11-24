@@ -4,7 +4,10 @@ import { fileURLToPath } from "url";
 import { postgresAdapter } from "@payloadcms/db-postgres";
 import { resendAdapter } from "@payloadcms/email-resend";
 import { seoPlugin } from "@payloadcms/plugin-seo";
-import { lexicalEditor } from "@payloadcms/richtext-lexical";
+import {
+  EXPERIMENTAL_TableFeature,
+  lexicalEditor,
+} from "@payloadcms/richtext-lexical";
 import { s3Storage } from "@payloadcms/storage-s3";
 import { buildConfig } from "payload";
 import sharp from "sharp";
@@ -58,7 +61,13 @@ export default buildConfig({
     ],
     defaultLocale: "en",
   },
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    // Tables render through our own serializer (src/lib/payload/lexical/Serialize.tsx).
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      EXPERIMENTAL_TableFeature(),
+    ],
+  }),
   secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
     pool: {

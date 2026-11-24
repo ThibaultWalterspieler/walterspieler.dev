@@ -99,7 +99,7 @@ One section per feature area. Each answers the same four questions: what exists,
 
 **What exists**: the blocks an editor can add to a page or post, rendered by `Content`:
 
-- **Paragraph**: rich text (bold, italic, underline, strikethrough, code, sub/superscript, headings h1 to h4, bullet lists, checklists, links (in a new tab when the editor ticks it), inline images with a blurred placeholder, loaded lazily).
+- **Paragraph**: rich text (bold, italic, underline, strikethrough, code, sub/superscript, headings h1 to h4, bullet lists, checklists, links (in a new tab when the editor ticks it), inline images with a blurred placeholder, loaded lazily, tables (Payload's experimental table feature): a first row of header cells becomes the `<thead>`, header cells are `<th>` with a column or row scope, and wide tables scroll sideways).
 - **Button**: a link to a page, or to an external URL in a new tab.
 - **MySocials**: one button per picked social link, with an icon for LinkedIn, Stack Overflow, Instagram and Malt.
 - **Experience**: experience cards (see Experiences).

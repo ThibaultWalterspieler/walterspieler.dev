@@ -2,6 +2,14 @@ import { JSX } from "react";
 
 import MediaImage from "@/components/common/media-image";
 import { A, H1, H2, H3, H4, LI, P, UL } from "@/components/common/typography";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Media } from "@payload-types";
 
 import {
@@ -13,6 +21,12 @@ import {
   IS_SUPERSCRIPT,
   IS_UNDERLINE,
 } from "./nodeFormat";
+import {
+  HEADER_COLUMN,
+  HEADER_ROW,
+  SerializedTableCellNode,
+  splitTableHead,
+} from "./table";
 
 import type {
   LinkFields,
@@ -213,6 +227,55 @@ const SerializeLexical = async ({ nodes }: Props) => {
 
             return <blockquote key={index}>{serializedChildren}</blockquote>;
           }
+          case "table": {
+            const { head, body } = splitTableHead(
+              (_node as SerializedElementNode).children,
+            );
+
+            return (
+              <Table className="my-6" key={index}>
+                {head.length > 0 && (
+                  <TableHeader>{SerializeLexical({ nodes: head })}</TableHeader>
+                )}
+                <TableBody>{SerializeLexical({ nodes: body })}</TableBody>
+              </Table>
+            );
+          }
+          case "tablerow": {
+            return <TableRow key={index}>{serializedChildren}</TableRow>;
+          }
+          case "tablecell": {
+            const node = _node as SerializedTableCellNode;
+            const span = {
+              colSpan:
+                node.colSpan && node.colSpan > 1 ? node.colSpan : undefined,
+              rowSpan:
+                node.rowSpan && node.rowSpan > 1 ? node.rowSpan : undefined,
+            };
+            // Prose wraps: shadcn's nowrap suits data tables, not sentences.
+            // py-2 gives header cells the padding TableCell has, so rows align.
+            const cellClassName =
+              "py-2 align-top whitespace-normal [&>p]:leading-6";
+
+            if (node.headerState & (HEADER_ROW | HEADER_COLUMN)) {
+              return (
+                <TableHead
+                  className={cellClassName}
+                  key={index}
+                  scope={node.headerState & HEADER_ROW ? "col" : "row"}
+                  {...span}
+                >
+                  {serializedChildren}
+                </TableHead>
+              );
+            }
+
+            return (
+              <TableCell className={cellClassName} key={index} {...span}>
+                {serializedChildren}
+              </TableCell>
+            );
+          }
           case "link": {
             const node = _node as SerializedLinkNode;
 
@@ -249,7 +312,7 @@ const SerializeLexical = async ({ nodes }: Props) => {
                     className="rounded-t-lg object-cover lg:max-h-[550px] lg:max-w-full"
                     media={value}
                   />
-                  <div className="bg-surface rounded-b px-2 py-1 text-center text-xs text-muted lg:max-w-[900px]">
+                  <div className="bg-surface text-muted rounded-b px-2 py-1 text-center text-xs lg:max-w-[900px]">
                     {value.alt}
                   </div>
                 </div>
