@@ -130,6 +130,15 @@ pnpm payload migrate:create <name>
 pnpm payload generate:types
 ```
 
+### Deployments and Migrations
+
+Every Vercel build runs `pnpm run ci` (`payload migrate && pnpm build`), so a deployment applies the migrations it carries before it builds (`docs/adr/0007`). `DATABASE_URI` has a different value per environment:
+
+- **Production** points at the Neon branch `main`. Production is migrated only by the build of `main`, after the PR is merged.
+- **Preview** points at the Neon branch `preview`, a copy of `main` shared by every preview deployment. A PR's migrations, and anything edited in a preview's admin, land there and never on the live site.
+
+When two PRs' migrations conflict, a migration is rewritten after its preview ran, or a preview needs current content, reset `preview` from `main` (Neon console, Branches, `preview`, Reset from parent), then redeploy the preview.
+
 ### Blur Placeholders
 
 Images get their blur placeholder when they are uploaded (`docs/adr/0002`). Images uploaded before that have none; fill them once, against the database in `.env.local`:
