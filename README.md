@@ -75,7 +75,7 @@ Edit `.env.local` and provide values for:
 - `NEXT_PUBLIC_POSTHOG_KEY`: PostHog API key (for analytics)
 - `NEXT_PUBLIC_POSTHOG_HOST`: PostHog host URL
 - `DATABASE_URI`: PostgreSQL database connection string
-- `UPLOADTHING_TOKEN`: UploadThing token for file uploads
+- `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY`: an R2 API token with Object Read & Write on the `walterspieler-media` bucket, for Media uploads (`docs/adr/0006`)
 - `RESEND_API_KEY`: Resend API key for email functionality
 
 ### Database Setup
@@ -142,13 +142,23 @@ It only touches images without a placeholder, so it is safe to rerun. Pages show
 
 ### Stored Widths
 
-Every image is stored at 640, 1080 and 1600px when it is uploaded (`docs/adr/0005`). Images uploaded before that have none and still go through the Vercel image optimizer; give them their widths once, right after the deploy that adds them, against the database in `.env.local` (it needs `UPLOADTHING_TOKEN`). Against a remote database it refuses to run unless `CONFIRM_DATABASE_HOST` names that database's host:
+Every image is stored at 640, 1080 and 1600px when it is uploaded (`docs/adr/0005`). Images uploaded before that have none and still go through the Vercel image optimizer; give them their widths once, right after the deploy that adds them, against the database in `.env.local` (it needs the R2 keys). Against a remote database it refuses to run unless `CONFIRM_DATABASE_HOST` names that database's host:
 
 ```bash
 CONFIRM_DATABASE_HOST=<host in DATABASE_URI> pnpm backfill:widths
 ```
 
-It only touches images missing a width, so it is safe to rerun. Each image is uploaded again under its own name, and the old file stays on UploadThing so cached pages keep working. Pages use the widths after their next Revalidation (any save in the admin).
+It only touches images missing a width, so it is safe to rerun. Each image is uploaded again under its own name. Pages use the widths after their next Revalidation (any save in the admin).
+
+### Moving Media to R2
+
+Media moved from UploadThing to Cloudflare R2 (`docs/adr/0006`). Its files are copied once, under their filenames, by a script that reads UploadThing's keys from the database and writes only to R2. Run it with the R2 keys against the production database right before the deploy that switches storage, then once more after it, to catch anything uploaded in between:
+
+```bash
+pnpm copy:media-to-r2
+```
+
+It skips files R2 already has, so it is safe to rerun, and it ends with a count of files copied, skipped and failed, and the size of the files in R2. A file that is missing from R2 and has no UploadThing key counts as failed.
 
 ### Dependency Installation
 

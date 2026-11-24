@@ -1,5 +1,7 @@
 # Media is served straight from UploadThing
 
+_Superseded by docs/adr/0006 for where files live: they moved to Cloudflare R2. Serving them straight from storage, not through Payload's file route, still holds._
+
 Media URLs point at UploadThing (`https://utfs.io/f/<key>`) instead of Payload's file route (`/api/media/file/<filename>`), through the storage adapter's `disablePayloadAccessControl` on the Media collection. By default Payload proxies every file so its read access control applies to files too. Each proxied request did a database lookup, an UploadThing signed-URL API call, a `HEAD` request and then the download. It took about 5 s uncached, against 0.4 s from UploadThing directly.
 
 The proxy also made every image a "local" image to the Vercel image optimizer, so `images.minimumCacheTTL` never applied. Every cache miss, which on a low-traffic site means most visits after an eviction, paid that 5 s path before resizing. With remote URLs, the optimizer fetches from UploadThing's CDN and keeps the result for the configured year.

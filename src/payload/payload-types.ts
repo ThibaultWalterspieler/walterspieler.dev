@@ -641,8 +641,6 @@ export interface Media {
   id: number;
   alt: string;
   blurDataUrl?: string | null;
-  _key?: string | null;
-  prefix?: string | null;
   _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -657,7 +655,6 @@ export interface Media {
   focalY?: number | null;
   sizes?: {
     w640?: {
-      _key?: string | null;
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -666,7 +663,6 @@ export interface Media {
       filename?: string | null;
     };
     w1080?: {
-      _key?: string | null;
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -675,7 +671,6 @@ export interface Media {
       filename?: string | null;
     };
     w1600?: {
-      _key?: string | null;
       url?: string | null;
       width?: number | null;
       height?: number | null;
@@ -2038,8 +2033,6 @@ export interface SocialsSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   blurDataUrl?: T;
-  _key?: T;
-  prefix?: T;
   _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2058,7 +2051,6 @@ export interface MediaSelect<T extends boolean = true> {
         w640?:
           | T
           | {
-              _key?: T;
               url?: T;
               width?: T;
               height?: T;
@@ -2069,7 +2061,6 @@ export interface MediaSelect<T extends boolean = true> {
         w1080?:
           | T
           | {
-              _key?: T;
               url?: T;
               width?: T;
               height?: T;
@@ -2080,7 +2071,6 @@ export interface MediaSelect<T extends boolean = true> {
         w1600?:
           | T
           | {
-              _key?: T;
               url?: T;
               width?: T;
               height?: T;

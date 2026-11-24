@@ -10,8 +10,7 @@ import config from "@payload-config";
  * which pages serve as uploaded.
  *
  * Each image is uploaded again under its own name, so Payload resizes it like
- * any upload but keeps the old file: pages cached until the next Revalidation
- * still point at it. Those old files stay on UploadThing; the log lists them.
+ * any upload and the URL that cached pages still show keeps working.
  *
  * It overwrites each image's file fields, so against a remote database it runs
  * only when CONFIRM_DATABASE_HOST names that database's host.
@@ -65,7 +64,7 @@ for (const doc of images) {
       // Outside Next.js there is no page cache to expire.
       context: { disableRevalidate: true, keepFilename: true },
     });
-    payload.logger.info(`✅ ${doc.filename} (old file left: ${doc.url})`);
+    payload.logger.info(`✅ ${doc.filename}`);
   } catch (error) {
     failed += 1;
     payload.logger.error({ err: error }, `❌ ${doc.filename} (${doc.url})`);

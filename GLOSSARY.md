@@ -41,7 +41,7 @@ A single CMS document shared by every public page: Me or the Main menu.
 _Avoid_: settings, singleton
 
 **Media**:
-An uploaded file, stored on UploadThing, with a required alt text.
+An uploaded file, stored on Cloudflare R2, with a required alt text.
 _Avoid_: asset, attachment
 
 **Stored width**:

@@ -6,7 +6,7 @@ import { Media } from "@payload-types";
 const media = (overrides: Partial<Media>): Media => ({
   id: 1,
   alt: "A screenshot",
-  url: "https://utfs.io/f/abc123",
+  url: "https://media.walterspieler.dev/abc123",
   mimeType: "image/webp",
   width: 1200,
   height: 630,
@@ -16,9 +16,9 @@ const media = (overrides: Partial<Media>): Media => ({
 });
 
 const storedWidths = {
-  w640: { url: "https://utfs.io/f/w640" },
-  w1080: { url: "https://utfs.io/f/w1080" },
-  w1600: { url: "https://utfs.io/f/w1600" },
+  w640: { url: "https://media.walterspieler.dev/w640" },
+  w1080: { url: "https://media.walterspieler.dev/w1080" },
+  w1600: { url: "https://media.walterspieler.dev/w1600" },
 };
 
 describe("prepareMediaImage", () => {
@@ -36,7 +36,7 @@ describe("prepareMediaImage", () => {
 
     expect(image?.unoptimized).toBe(false);
     expect(image?.loader?.({ src: image.src, width: 750 })).toBe(
-      "https://utfs.io/f/w1080",
+      "https://media.walterspieler.dev/w1080",
     );
   });
 

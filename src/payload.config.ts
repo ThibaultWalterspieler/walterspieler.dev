@@ -5,7 +5,7 @@ import { postgresAdapter } from "@payloadcms/db-postgres";
 import { resendAdapter } from "@payloadcms/email-resend";
 import { seoPlugin } from "@payloadcms/plugin-seo";
 import { lexicalEditor } from "@payloadcms/richtext-lexical";
-import { uploadthingStorage } from "@payloadcms/storage-uploadthing";
+import { s3Storage } from "@payloadcms/storage-s3";
 import { buildConfig } from "payload";
 import sharp from "sharp";
 
@@ -19,6 +19,11 @@ import { Users } from "@/payload/collections/users";
 import { MainMenu } from "@/payload/globals/main-menu";
 import { Me } from "@/payload/globals/me";
 import { isLocalDatabase } from "@/payload/is-local-database";
+import {
+  MEDIA_BUCKET,
+  mediaBucketClient,
+  mediaFileUrl,
+} from "@/payload/media-storage";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -94,14 +99,16 @@ export default buildConfig({
         },
       ],
     }),
-    uploadthingStorage({
+    s3Storage({
+      bucket: MEDIA_BUCKET,
+      config: mediaBucketClient,
       collections: {
-        // Media URLs point straight at UploadThing instead of Payload's file proxy (docs/adr/0004).
-        media: { disablePayloadAccessControl: true },
-      },
-      options: {
-        token: process.env.UPLOADTHING_TOKEN,
-        acl: "public-read",
+        media: {
+          // Media URLs point straight at R2 instead of Payload's file proxy
+          // (docs/adr/0004, docs/adr/0006).
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename }) => mediaFileUrl(filename),
+        },
       },
     }),
   ],
