@@ -103,18 +103,19 @@ One section per feature area. Each answers the same four questions: what exists,
 - **Button**: a link to a page, or to an external URL in a new tab.
 - **MySocials**: one button per picked social link, with an icon for LinkedIn, Stack Overflow, Instagram and Malt.
 - **Experience**: experience cards (see Experiences).
-- **ScriptCopyBtn**: a command with one tab per package manager and a copy button. Shiki highlights the commands on the server; a command it cannot highlight shows as plain text.
+- **ScriptCopyBtn**: a command with one tab per package manager and a copy button, in the same frame as a Code block. Shiki highlights the commands on the server.
+- **Code**: a code block (adapted from shadcn/ui's Code Block): optional title header, optional line numbers, a copy button (in the header, or floating top-right on hover without a title), highlighted on the server in Ayu Dark. A language outside `CODE_LANGUAGES` or empty code: plain text, or nothing for empty code.
 - **TweetCard**: an embedded tweet.
 - **Editor's note** (blog posts only): an aside labelled "Update · <date>" (accent border) or "Correction · <date>" (red border) above its rich text. The newest Update sets the post's Updated date; corrections don't.
 
 **How to get to it**: any page or post that uses the block. `/ui/script-copy-btn` and `/ui/tweet-card` render the last two with fixed data.
 
-**Driving it**: add the block to a page in the admin, reload the public page, screenshot it. For ScriptCopyBtn, switch tabs and click copy.
+**Driving it**: add the block to a page in the admin, reload the public page, screenshot it. For ScriptCopyBtn and Code, switch tabs and click copy: the button's label turns to "Copied" for 2 seconds.
 
 **Gotchas**
 
 - Images are served from the R2 bucket's domain (`https://media.walterspieler.dev/<filename>`, docs/adr/0006). Each `srcset` entry from 640px up is one of the widths stored at upload (640, 1080, 1600, WebP; docs/adr/0005), straight from R2; the smaller entries Next adds point at the 640px file. An image missing any width (uploaded before them, not yet backfilled) goes through `/_next/image` instead. GIFs load straight from R2 as uploaded. Only a post's main image gets a `<link rel="preload">`.
-- **Image, Code and Quote blocks render nothing**: the admin offers them, but `Content` has no case for them.
+- **Image and Quote blocks render nothing**: the admin offers them, but `Content` has no case for them.
 - ScriptCopyBtn ignores its "Code language" and "Show multiple package options" fields.
 - A rich-text link to an internal document renders "Internal link coming soon".
 - TweetCard fetches the tweet from X when the page renders and caches it for a day; offline, or for a deleted tweet, it shows a "not found" card.

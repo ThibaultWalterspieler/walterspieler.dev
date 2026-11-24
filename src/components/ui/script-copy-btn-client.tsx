@@ -1,18 +1,21 @@
 "use client";
 
-import { useState } from "react";
-
-import { Check, Copy } from "lucide-react";
+import { ReactNode, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import {
+  CodeBlock,
+  CodeBlockActions,
+  CodeBlockContent,
+  CodeBlockHeader,
+} from "@/components/ui/code-block";
+import CodeBlockCopyButton from "@/components/ui/code-block-copy-button";
 import { cn } from "@/lib/utils";
-
-import type { HighlightedCommand } from "@/components/ui/highlight-commands";
 
 interface ScriptCopyBtnClientProps {
   showMultiplePackageOptions: boolean;
-  /** One highlighted command per package manager. */
-  commands: Record<string, HighlightedCommand>;
+  /** One command per package manager, with its highlighted lines. */
+  commands: { packageManager: string; command: string; lines: ReactNode }[];
   className?: string;
 }
 
@@ -21,94 +24,52 @@ export default function ScriptCopyBtnClient({
   commands,
   className,
 }: ScriptCopyBtnClientProps) {
-  const packageManagers = Object.keys(commands);
-  const [packageManager, setPackageManager] = useState(packageManagers[0]);
-  const [copied, setCopied] = useState(false);
-  const { command, html: highlightedCode } = commands[packageManager];
-
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(command);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  const [selected, setSelected] = useState(0);
+  if (commands.length === 0) return null;
+  const { command, lines } = commands[selected] ?? commands[0];
 
   return (
-    <div
-      className={cn(
-        "mx-auto flex max-w-md items-center justify-center",
-        className,
-      )}
-    >
-      <div className="w-full space-y-2">
-        <div className="mb-2 flex items-center justify-between">
-          {showMultiplePackageOptions && (
-            <div className="relative">
-              <div className="border-border inline-flex cursor-pointer overflow-hidden rounded-md border text-xs">
-                {packageManagers.map((pm, index) => (
-                  <div className="flex items-center" key={pm}>
-                    {index > 0 && (
-                      <div aria-hidden="true" className="bg-border h-4 w-px" />
-                    )}
-                    <Button
-                      className={`bg-surface hover:bg-surface-hover relative rounded-none px-2 py-1 ${
-                        packageManager === pm ? "text-heading" : "text-muted"
-                      }`}
-                      onClick={() => setPackageManager(pm)}
-                      size="sm"
-                      variant="ghost"
-                    >
-                      {pm}
-                      {/* CSS can't slide one underline across tabs of different widths, so each tab grows its own. */}
-                      <span
-                        aria-hidden
-                        className={cn(
-                          "bg-accent absolute inset-x-0 bottom-px mx-auto h-0.5 w-[90%] transition-[opacity,scale] duration-250",
-                          packageManager === pm
-                            ? "scale-x-100 opacity-100"
-                            : "scale-x-0 opacity-0",
-                        )}
-                      />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-        <div className="relative flex items-center">
-          <div className="min-w-[300px] grow font-mono">
-            {highlightedCode ? (
-              <div
-                className={`[&>pre]:border-border [&>pre]:bg-surface! [&>pre]:overflow-x-auto [&>pre]:rounded-md [&>pre]:border [&>pre]:p-2 [&>pre]:px-4 [&>pre]:font-mono`}
-                dangerouslySetInnerHTML={{ __html: highlightedCode }}
-              />
-            ) : (
-              <pre className="bg-surface border-border rounded-md border p-2 px-4 font-mono">
-                {command}
-              </pre>
-            )}
+    // Centred and no wider than an install command needs, as before.
+    <CodeBlock className={cn("mx-auto max-w-md", className)}>
+      {showMultiplePackageOptions ? (
+        <CodeBlockHeader className="py-0">
+          <div className="-ms-1.5 flex text-xs">
+            {commands.map(({ packageManager }, index) => (
+              <Button
+                aria-pressed={index === selected}
+                className={cn(
+                  "relative h-8 rounded-none px-2",
+                  index === selected ? "text-heading" : "text-muted",
+                )}
+                key={packageManager}
+                onClick={() => setSelected(index)}
+                size="sm"
+                variant="ghost"
+              >
+                {packageManager}
+                {/* CSS can't slide one underline across tabs of different widths, so each tab grows its own. */}
+                <span
+                  aria-hidden
+                  className={cn(
+                    "bg-accent absolute inset-x-0 bottom-0 mx-auto h-0.5 w-[90%] transition-[opacity,scale] duration-250",
+                    index === selected
+                      ? "scale-x-100 opacity-100"
+                      : "scale-x-0 opacity-0",
+                  )}
+                />
+              </Button>
+            ))}
           </div>
-          <Button
-            aria-label={copied ? "Copied" : "Copy to clipboard"}
-            className="relative ml-2 rounded-md"
-            onClick={copyToClipboard}
-            size="icon"
-            variant="outline"
-          >
-            <span className="sr-only">{copied ? "Copied" : "Copy"}</span>
-            <Copy
-              className={`size-4 transition-transform ${
-                copied ? "scale-0" : "scale-100"
-              }`}
-            />
-            <Check
-              className={`absolute inset-0 m-auto size-4 transition-transform ${
-                copied ? "scale-100" : "scale-0"
-              }`}
-            />
-          </Button>
-        </div>
-      </div>
-    </div>
+          <CodeBlockActions>
+            <CodeBlockCopyButton value={command} />
+          </CodeBlockActions>
+        </CodeBlockHeader>
+      ) : (
+        <CodeBlockActions>
+          <CodeBlockCopyButton value={command} />
+        </CodeBlockActions>
+      )}
+      <CodeBlockContent>{lines}</CodeBlockContent>
+    </CodeBlock>
   );
 }

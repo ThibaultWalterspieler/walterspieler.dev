@@ -10,7 +10,7 @@ These were derived from the code as it stood in November 2026. A rule the owner 
 - **An endpoint that changes server state checks a secret from the environment**, sent as `Authorization: Bearer`, and refuses every call when the secret is unset.
 - **Server code reads the CMS through the Local API, which skips access control**, so it filters what a visitor may see itself: published posts only (`_status: { equals: "published" }`), as `getPublishedPosts` in `src/lib/payload/queries.ts` does.
 - **A collection opens public reads on purpose** with `access: { read: () => true }` (`blog-posts.ts`); without it the REST and GraphQL APIs need a logged-in user, which here means an admin, since `users` is the only auth collection (`pages.ts`, `socials.ts`, `users.ts`).
-- **CMS text reaches `dangerouslySetInnerHTML` escaped.** See `escapeHtml` in `src/lib/payload/lexical/Serialize.tsx`; shiki escapes the code it highlights (`src/components/ui/highlight-commands.test.ts`). The JSON-LD scripts (`JSON.stringify` of Me fields) don't escape yet.
+- **CMS text reaches `dangerouslySetInnerHTML` escaped.** See `escapeHtml` in `src/lib/payload/lexical/Serialize.tsx`. Highlighted code never goes through it: `highlightCode` (`src/lib/highlighter.ts`) returns tokens that React renders as text. The JSON-LD scripts (`JSON.stringify` of Me fields) don't escape yet.
 
 ## Public pages keep rendering
 
@@ -37,7 +37,7 @@ These were derived from the code as it stood in November 2026. A rule the owner 
 
 - **Pages fetch, components render.** A page under `src/app/(frontend)/` reads the CMS and passes plain data down; components in `src/components/` don't call `getPayload`. See `blog/layout.tsx` and `side-menu-content.tsx`.
 - **Rules and data shaping live in small pure functions** in `src/lib/` or beside their component as a `.ts` file: `isMenuPathActive` in `src/lib/navigation.ts`, `prepareMainMenuItems` in `src/components/common/prepare-main-menu-items.ts`. The component holds state and markup.
-- **A new block is wired end to end**: its config in `src/payload/blocks/`, added to the collections that offer it, and a case in `src/components/common/content.tsx`, as TweetCard was (`44f0847`). Image, Code and Quote have no case today and render nothing.
+- **A new block is wired end to end**: its config in `src/payload/blocks/`, added to the collections that offer it, and a case in `src/components/common/content.tsx`, as TweetCard was (`44f0847`). Image and Quote have no case today and render nothing.
 - **New names come from `GLOSSARY.md`.** A new domain word in a diff either matches the glossary or is added to it in the same PR.
 
 ## Tests

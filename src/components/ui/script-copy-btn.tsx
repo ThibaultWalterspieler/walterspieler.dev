@@ -1,12 +1,12 @@
 import { cacheLife } from "next/cache";
 
-import { highlightCommands } from "@/components/ui/highlight-commands";
+import { CodeBlockLines } from "@/components/ui/code-block";
 import ScriptCopyBtnClient from "@/components/ui/script-copy-btn-client";
+import { highlightCode } from "@/lib/highlighter";
 
 interface ScriptCopyBtnProps {
   showMultiplePackageOptions?: boolean;
   codeLanguage: string;
-  darkTheme: string;
   commandMap: Record<string, string>;
   className?: string;
 }
@@ -15,7 +15,6 @@ interface ScriptCopyBtnProps {
 export default async function ScriptCopyBtn({
   showMultiplePackageOptions = true,
   codeLanguage,
-  darkTheme,
   commandMap,
   className,
 }: ScriptCopyBtnProps) {
@@ -24,7 +23,18 @@ export default async function ScriptCopyBtn({
   "use cache";
   cacheLife("max");
 
-  const commands = await highlightCommands(commandMap, codeLanguage, darkTheme);
+  const commands = await Promise.all(
+    Object.entries(commandMap).map(async ([packageManager, command]) => ({
+      packageManager,
+      command,
+      lines: (
+        <CodeBlockLines
+          code={command}
+          lines={await highlightCode(command, codeLanguage)}
+        />
+      ),
+    })),
+  );
 
   return (
     <ScriptCopyBtnClient
