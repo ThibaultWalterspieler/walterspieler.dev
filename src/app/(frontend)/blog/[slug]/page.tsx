@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 
 import Article from "@/components/articles/article";
 import ArticleBreadcrumb from "@/components/articles/article-breadcrumb";
+import { getUpdatedDate } from "@/components/articles/updated-date";
 import PageTransition from "@/components/common/page-transition";
 import { getPublishedPost, getPublishedPosts } from "@/lib/payload/queries";
 import getSchemaNewsArticle from "@/lib/schema-dts/news-article";
@@ -33,7 +34,8 @@ const BlogPostPage: FC<Props> = async (props) => {
   const jsonLd = getSchemaNewsArticle(
     blogPost.meta?.title || blogPost.title,
     blogPost.createdAt,
-    blogPost.updatedAt,
+    // The same date the header shows: `updatedAt` moves on every save.
+    getUpdatedDate(blogPost.content) ?? blogPost.createdAt,
   );
 
   return (

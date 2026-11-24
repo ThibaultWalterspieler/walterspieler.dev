@@ -15,6 +15,7 @@ import * as migration_20261121_010452_shiki_4_languages from './20261121_010452_
 import * as migration_20261121_015604_media_blur_data_url from './20261121_015604_media_blur_data_url';
 import * as migration_20261123_140054_media_image_sizes from './20261123_140054_media_image_sizes';
 import * as migration_20261123_212222_media_on_r2 from './20261123_212222_media_on_r2';
+import * as migration_20261124_101039_editor_note_block from './20261124_101039_editor_note_block';
 
 export const migrations = [
   {
@@ -100,6 +101,11 @@ export const migrations = [
   {
     up: migration_20261123_212222_media_on_r2.up,
     down: migration_20261123_212222_media_on_r2.down,
-    name: '20261123_212222_media_on_r2'
+    name: '20261123_212222_media_on_r2',
+  },
+  {
+    up: migration_20261124_101039_editor_note_block.up,
+    down: migration_20261124_101039_editor_note_block.down,
+    name: '20261124_101039_editor_note_block'
   },
 ];

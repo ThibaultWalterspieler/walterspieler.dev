@@ -2,6 +2,7 @@ import { FC } from "react";
 
 import clsx from "clsx";
 
+import EditorNoteBlock from "@/components/blocks/editor-note-block";
 import ExperiencesBlock from "@/components/blocks/experiences-block";
 import SocialsBlock from "@/components/blocks/social-block";
 import PageLink from "@/components/common/page-link";
@@ -9,10 +10,10 @@ import { Button } from "@/components/ui/button";
 import ScriptCopyBtn from "@/components/ui/script-copy-btn";
 import { TweetCard } from "@/components/ui/tweet-card";
 import SerializeLexical from "@/lib/payload/lexical/Serialize";
-import { Page } from "@payload-types";
+import { BlogPost, ExperiencePost, Page } from "@payload-types";
 
 type Props = {
-  content: Page["content"];
+  content: (Page | BlogPost | ExperiencePost)["content"];
   className?: string;
 };
 
@@ -74,6 +75,15 @@ const Content: FC<Props> = (props) => {
                 darkTheme="ayu-dark"
                 key={content?.id}
                 showMultiplePackageOptions={true}
+              />
+            );
+          case "EditorNote":
+            return (
+              <EditorNoteBlock
+                body={content.body}
+                date={content.date}
+                key={content.id}
+                kind={content.kind}
               />
             );
           case "TweetCard":

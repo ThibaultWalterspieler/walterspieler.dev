@@ -1604,6 +1604,31 @@ export interface BlogPost {
             blockName?: string | null;
             blockType: 'TweetCard';
           }
+        | {
+            /**
+             * Update: the world changed since publishing. Correction: the article was wrong. Only updates set the article's "Updated" date.
+             */
+            kind: 'update' | 'correction';
+            date: string;
+            body: {
+              root: {
+                type: string;
+                children: {
+                  type: any;
+                  version: number;
+                  [k: string]: unknown;
+                }[];
+                direction: ('ltr' | 'rtl') | null;
+                format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                indent: number;
+                version: number;
+              };
+              [k: string]: unknown;
+            };
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'EditorNote';
+          }
       )[]
     | null;
   relatedExperiencePosts?: (number | ExperiencePost)[] | null;
@@ -1895,6 +1920,15 @@ export interface BlogPostsSelect<T extends boolean = true> {
           | T
           | {
               tweetId?: T;
+              id?: T;
+              blockName?: T;
+            };
+        EditorNote?:
+          | T
+          | {
+              kind?: T;
+              date?: T;
+              body?: T;
               id?: T;
               blockName?: T;
             };
