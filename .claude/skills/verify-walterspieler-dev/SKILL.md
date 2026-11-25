@@ -50,7 +50,7 @@ pnpm build && pnpm start
 
 The build reads the database to pre-render posts, so it needs the same env and a seeded database. After a CMS save, the next request should show the change; before it, pages are served from the cache (`x-nextjs-cache: HIT`).
 
-A Vercel preview deployment reads the Neon branch `preview`, not production (`docs/adr/0007`): admin edits there are safe to make and never reach the live site, but Media uploads still go to the production bucket.
+A Vercel preview deployment reads the Neon branch `preview`, not production (`docs/adr/0007`), so its admin edits stay out of production. Media is the exception: never delete or replace a Media file in a preview's admin, since that deletes the production file (`docs/adr/0006`).
 
 ## 6. Report
 

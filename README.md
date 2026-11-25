@@ -132,12 +132,12 @@ pnpm payload generate:types
 
 ### Deployments and Migrations
 
-Every Vercel build runs `pnpm run ci` (`payload migrate && pnpm build`), so a deployment applies the migrations it carries before it builds (`docs/adr/0007`). `DATABASE_URI` has a different value per environment:
+Every Vercel build runs `pnpm run ci` (`payload migrate && pnpm build`), so a deployment applies the migrations it carries before it builds. `DATABASE_URI` has a different value per environment (`docs/adr/0007`):
 
-- **Production** points at the Neon branch `main`. Production is migrated only by the build of `main`, after the PR is merged.
-- **Preview** points at the Neon branch `preview`, a copy of `main` shared by every preview deployment. A PR's migrations, and anything edited in a preview's admin, land there and never on the live site.
+- **Production** points at the Neon branch `main`. Only production deployments migrate it, and they build the git branch `main`, so a PR's migrations reach production when it is merged.
+- **Preview** points at the Neon branch `preview`, a copy of Neon `main` shared by every preview deployment. A PR's migrations and a preview's admin edits land there, not in production. Media files are the exception: a preview writes them to the production R2 bucket, so deleting or replacing a Media file in a preview's admin deletes the production file and breaks that image in production (`docs/adr/0006`).
 
-When two PRs' migrations conflict, a migration is rewritten after its preview ran, or a preview needs current content, reset `preview` from `main` (Neon console, Branches, `preview`, Reset from parent), then redeploy the preview.
+When two PRs' migrations conflict, a migration is rewritten after its preview ran, or a preview needs current content, reset `preview` from `main`: Neon console, Branches, `preview`, Reset from parent. Then redeploy the preview. A reset drops anything edited in a preview's admin.
 
 ### Blur Placeholders
 
